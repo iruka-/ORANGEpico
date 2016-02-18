@@ -1,0 +1,1279 @@
+
+main32.elf:     file format elf32-littlemips
+
+
+Disassembly of section .bootrom:
+
+9fc0000c <_startup>:
+9fc0000c:	3c1da000 	lui	sp,0xa000
+9fc00010:	27bd2000 	addiu	sp,sp,8192
+9fc00014:	41626000 	di	v0
+9fc00018:	3c1ca001 	lui	gp,0xa001
+9fc0001c:	279c8000 	addiu	gp,gp,-32768
+9fc00020:	40096002 	mfc0	t1,c0_srsctl
+9fc00024:	01205820 	add	t3,t1,zero
+9fc00028:	7d2a1e80 	ext	t2,t1,0x1a,0x4
+9fc0002c:	7d494984 	ins	t1,t2,0x6,0x4
+9fc00030:	40896002 	mtc0	t1,c0_srsctl
+9fc00034:	41dce000 	wrpgpr	gp,gp
+9fc00038:	408b6002 	mtc0	t3,c0_srsctl
+9fc0003c:	3c08a000 	lui	t0,0xa000
+9fc00040:	25080004 	addiu	t0,t0,4
+9fc00044:	3c09a000 	lui	t1,0xa000
+9fc00048:	252902f0 	addiu	t1,t1,752
+
+9fc0004c <_bss_init>:
+9fc0004c:	ad000000 	sw	zero,0(t0)
+9fc00050:	25080004 	addiu	t0,t0,4
+
+9fc00054 <_bss_check>:
+9fc00054:	0109082b 	sltu	at,t0,t1
+9fc00058:	1420fffc 	bnez	at,9fc0004c <_bss_init>
+9fc0005c:	00000000 	nop
+9fc00060:	3c089fc0 	lui	t0,0x9fc0
+9fc00064:	25080b94 	addiu	t0,t0,2964
+9fc00068:	3c09a000 	lui	t1,0xa000
+9fc0006c:	25290004 	addiu	t1,t1,4
+9fc00070:	3c0aa000 	lui	t2,0xa000
+9fc00074:	254a0004 	addiu	t2,t2,4
+
+9fc00078 <_init_data>:
+9fc00078:	8d0b0000 	lw	t3,0(t0)
+9fc0007c:	ad2b0000 	sw	t3,0(t1)
+9fc00080:	25080004 	addiu	t0,t0,4
+9fc00084:	25290004 	addiu	t1,t1,4
+
+9fc00088 <_init_check>:
+9fc00088:	012a082b 	sltu	at,t1,t2
+9fc0008c:	1420fffa 	bnez	at,9fc00078 <_init_data>
+9fc00090:	00000000 	nop
+9fc00094:	40804800 	mtc0	zero,c0_count
+9fc00098:	240affff 	li	t2,-1
+9fc0009c:	408a5800 	mtc0	t2,c0_compare
+9fc000a0:	3c099fc0 	lui	t1,0x9fc0
+9fc000a4:	25290000 	addiu	t1,t1,0
+9fc000a8:	40897801 	mtc0	t1,c0_ebase
+9fc000ac:	3c090000 	lui	t1,0x0
+9fc000b0:	25290001 	addiu	t1,t1,1
+9fc000b4:	240a0000 	li	t2,0
+9fc000b8:	7d2a4944 	ins	t2,t1,0x5,0x5
+9fc000bc:	408a6001 	mtc0	t2,c0_intctl
+9fc000c0:	3c090080 	lui	t1,0x80
+9fc000c4:	40896800 	mtc0	t1,c0_cause
+9fc000c8:	40088000 	mfc0	t0,c0_config
+9fc000cc:	7d090580 	ext	t1,t0,0x16,0x1
+9fc000d0:	00094c40 	sll	t1,t1,0x11
+9fc000d4:	40086000 	mfc0	t0,c0_status
+9fc000d8:	3c010058 	lui	at,0x58
+9fc000dc:	01014024 	and	t0,t0,at
+9fc000e0:	01284025 	or	t0,t1,t0
+9fc000e4:	3c01ffbf 	lui	at,0xffbf
+9fc000e8:	3421ffff 	ori	at,at,0xffff
+9fc000ec:	01014024 	and	t0,t0,at
+9fc000f0:	77f0003e 	jalx	9fc000f8 <main>
+9fc000f4:	40886000 	mtc0	t0,c0_status
+
+9fc000f8 <main>:
+9fc000f8:	64c3      	save	24,ra
+9fc000fa:	b329      	lw	v1,9fc0019c <_GEN_EXCPT_ADDR+0x1c>
+9fc000fc:	6a80      	li	v0,128
+9fc000fe:	ab80      	lhu	a0,0(v1)
+9fc00100:	ea8d      	or	v0,a0
+9fc00102:	b428      	lw	a0,9fc001a0 <_GEN_EXCPT_ADDR+0x20>
+9fc00104:	cb40      	sh	v0,0(v1)
+9fc00106:	675c      	move	v0,gp
+9fc00108:	f010 da84 	sw	a0,-32764(v0)
+9fc0010c:	b226      	lw	v0,9fc001a4 <_GEN_EXCPT_ADDR+0x24>
+9fc0010e:	6b01      	li	v1,1
+9fc00110:	9a40      	lw	v0,0(v0)
+9fc00112:	325e      	srl	v0,7
+9fc00114:	ea6c      	and	v0,v1
+9fc00116:	ea11      	zeb	v0
+9fc00118:	2220      	beqz	v0,9fc0015a <main+0x62>
+9fc0011a:	b224      	lw	v0,9fc001a8 <_GEN_EXCPT_ADDR+0x28>
+9fc0011c:	9a40      	lw	v0,0(v0)
+9fc0011e:	325a      	srl	v0,6
+9fc00120:	eb4c      	and	v1,v0
+9fc00122:	eb11      	zeb	v1
+9fc00124:	2b16      	bnez	v1,9fc00152 <main+0x5a>
+9fc00126:	b322      	lw	v1,9fc001ac <_GEN_EXCPT_ADDR+0x2c>
+9fc00128:	6a09      	li	v0,9
+9fc0012a:	ab80      	lhu	a0,0(v1)
+9fc0012c:	ea4b      	neg	v0
+9fc0012e:	ea8c      	and	v0,a0
+9fc00130:	1a1f 01df 	jal	9fc0077c <io_setDigital>
+9fc00134:	cb40      	sh	v0,0(v1)
+9fc00136:	1a1f 01e8 	jal	9fc007a0 <io_setRemap>
+9fc0013a:	6500      	nop
+9fc0013c:	f010 6d00 	li	a1,32768
+9fc00140:	b71c      	lw	a3,9fc001b0 <_GEN_EXCPT_ADDR+0x30>
+9fc00142:	b21d      	lw	v0,9fc001b4 <_GEN_EXCPT_ADDR+0x34>
+9fc00144:	6c01      	li	a0,1
+9fc00146:	f402 6e00 	li	a2,5120
+9fc0014a:	1a1f 009b 	jal	9fc0026c <SerialConfigure>
+9fc0014e:	daa0      	sw	a1,0(v0)
+9fc00150:	101a      	b	9fc00186 <_GEN_EXCPT_ADDR+0x6>
+9fc00152:	b21a      	lw	v0,9fc001b8 <_GEN_EXCPT_ADDR+0x38>
+9fc00154:	9c60      	lw	v1,0(a0)
+9fc00156:	eb4a      	cmp	v1,v0
+9fc00158:	61e6      	btnez	9fc00126 <main+0x2e>
+9fc0015a:	6a00      	li	v0,0
+9fc0015c:	dc40      	sw	v0,0(a0)
+9fc0015e:	b218      	lw	v0,9fc001bc <_GEN_EXCPT_ADDR+0x3c>
+9fc00160:	9a60      	lw	v1,0(v0)
+9fc00162:	4b01      	addiu	v1,1
+9fc00164:	2302      	beqz	v1,9fc0016a <main+0x72>
+9fc00166:	eac0      	jalrc	v0
+9fc00168:	17ff      	b	9fc00168 <main+0x70>
+9fc0016a:	b316      	lw	v1,9fc001c0 <_GEN_EXCPT_ADDR+0x40>
+9fc0016c:	f002 4a00 	addiu	v0,4096
+9fc00170:	ea6a      	cmp	v0,v1
+9fc00172:	61f6      	btnez	9fc00160 <main+0x68>
+9fc00174:	17d8      	b	9fc00126 <main+0x2e>
+9fc00176:	1a1f 00c6 	jal	9fc00318 <Serial1GetKey>
+9fc0017a:	6500      	nop
+9fc0017c:	7255      	cmpi	v0,85
+9fc0017e:	6103      	btnez	9fc00186 <_GEN_EXCPT_ADDR+0x6>
+9fc00180:	1a1f 0274 	jal	9fc009d0 <UARTmonit>
+9fc00184:	6500      	nop
+9fc00186:	1a1f 00c6 	jal	9fc00318 <Serial1GetKey>
+9fc0018a:	6500      	nop
+9fc0018c:	72aa      	cmpi	v0,170
+9fc0018e:	60f3      	bteqz	9fc00176 <main+0x7e>
+9fc00190:	72a5      	cmpi	v0,165
+9fc00192:	61f9      	btnez	9fc00186 <_GEN_EXCPT_ADDR+0x6>
+9fc00194:	1e1f 02c8 	jalx	9fc00b20 <Serial1WriteChar>
+9fc00198:	6c55      	li	a0,85
+9fc0019a:	17f5      	b	9fc00186 <_GEN_EXCPT_ADDR+0x6>
+9fc0019c:	6110      	btnez	9fc001be <_GEN_EXCPT_ADDR+0x3e>
+9fc0019e:	bf88      	lwu	a0,32(a3)
+9fc001a0:	0000      	addiu	s0,sp,0
+9fc001a2:	a000      	lbu	s0,0(s0)
+9fc001a4:	6120      	btnez	9fc001e6 <SerialSetDataRate+0x22>
+9fc001a6:	bf88      	lwu	a0,32(a3)
+9fc001a8:	f600 bf80 	lwu	a0,1536(a3)
+9fc001ac:	f200 bf80 	lwu	a0,512(a3)
+9fc001b0:	a120      	lbu	s1,0(s1)
+9fc001b2:	0007      	addiu	s0,sp,28
+9fc001b4:	6114      	btnez	9fc001de <SerialSetDataRate+0x1a>
+9fc001b6:	bf88      	lwu	a0,32(a3)
+9fc001b8:	5678      	slti	a2,120
+9fc001ba:	1234      	b	9fc00624 <vector_32_ISR_wrapper+0x10>
+9fc001bc:	0000      	addiu	s0,sp,0
+9fc001be:	9d00      	lw	s0,0(a1)
+9fc001c0:	6000      	bteqz	9fc001c2 <_GEN_EXCPT_ADDR+0x42>
+9fc001c2:	9d00      	lw	s0,0(a1)
+
+9fc001c4 <SerialSetDataRate>:
+9fc001c4:	b20c      	lw	v0,9fc001f4 <SerialSetDataRate+0x30>
+9fc001c6:	eaa3      	sltu	v0,a1
+9fc001c8:	6104      	btnez	9fc001d2 <SerialSetDataRate+0xe>
+9fc001ca:	5d26      	sltiu	a1,38
+9fc001cc:	6003      	bteqz	9fc001d4 <SerialSetDataRate+0x10>
+9fc001ce:	6d26      	li	a1,38
+9fc001d0:	1001      	b	9fc001d4 <SerialSetDataRate+0x10>
+9fc001d2:	67a2      	move	a1,v0
+9fc001d4:	b409      	lw	a0,9fc001f8 <SerialSetDataRate+0x34>
+9fc001d6:	6b08      	li	v1,8
+9fc001d8:	acc0      	lhu	a2,0(a0)
+9fc001da:	ebcd      	or	v1,a2
+9fc001dc:	cc60      	sh	v1,0(a0)
+9fc001de:	33a7      	sra	v1,a1,1
+9fc001e0:	e349      	addu	v0,v1,v0
+9fc001e2:	eaba      	div	zero,v0,a1
+9fc001e4:	2d01      	bnez	a1,9fc001e8 <SerialSetDataRate+0x24>
+9fc001e6:	e8e5      	break	7
+9fc001e8:	b305      	lw	v1,9fc001fc <SerialSetDataRate+0x38>
+9fc001ea:	ea12      	mflo	v0
+9fc001ec:	4aff      	addiu	v0,-1
+9fc001ee:	e820      	jr	ra
+9fc001f0:	db40      	sw	v0,0(v1)
+9fc001f2:	6500      	nop
+9fc001f4:	9680      	lw	a2,512(sp)
+9fc001f6:	0098      	addiu	s0,sp,608
+9fc001f8:	6000      	bteqz	9fc001fa <SerialSetDataRate+0x36>
+9fc001fa:	bf80      	lwu	a0,0(a3)
+9fc001fc:	6040      	bteqz	9fc0027e <SerialConfigure+0x12>
+9fc001fe:	bf80      	lwu	a0,0(a3)
+
+9fc00200 <SerialPinConfigure>:
+9fc00200:	b306      	lw	v1,9fc00218 <SerialPinConfigure+0x18>
+9fc00202:	6a11      	li	v0,17
+9fc00204:	ab80      	lhu	a0,0(v1)
+9fc00206:	ea4b      	neg	v0
+9fc00208:	ea8c      	and	v0,a0
+9fc0020a:	cb40      	sh	v0,0(v1)
+9fc0020c:	b304      	lw	v1,9fc0021c <SerialPinConfigure+0x1c>
+9fc0020e:	6a10      	li	v0,16
+9fc00210:	a380      	lbu	a0,0(v1)
+9fc00212:	ea8d      	or	v0,a0
+9fc00214:	e820      	jr	ra
+9fc00216:	c340      	sb	v0,0(v1)
+9fc00218:	6110      	btnez	9fc0023a <SerialIntConfigure+0x1a>
+9fc0021a:	bf88      	lwu	a0,32(a3)
+9fc0021c:	6010      	bteqz	9fc0023e <SerialIntConfigure+0x1e>
+9fc0021e:	bf88      	lwu	a0,32(a3)
+
+9fc00220 <SerialIntConfigure>:
+9fc00220:	64f4      	save	32,ra,s0-s1
+9fc00222:	6725      	move	s1,a1
+9fc00224:	e911      	zeb	s1
+9fc00226:	6c01      	li	a0,1
+9fc00228:	1e1f 02a2 	jalx	9fc00a88 <IntConfigureSystem>
+9fc0022c:	6706      	move	s0,a2
+9fc0022e:	b30e      	lw	v1,9fc00264 <SerialIntConfigure+0x44>
+9fc00230:	6a07      	li	v0,7
+9fc00232:	67b1      	move	a1,s1
+9fc00234:	ed4c      	and	a1,v0
+9fc00236:	32a8      	sll	v0,a1,2
+9fc00238:	6c1d      	li	a0,29
+9fc0023a:	9ba0      	lw	a1,0(v1)
+9fc0023c:	ec8b      	neg	a0
+9fc0023e:	ed8c      	and	a1,a0
+9fc00240:	ed4d      	or	a1,v0
+9fc00242:	e811      	zeb	s0
+9fc00244:	dba0      	sw	a1,0(v1)
+9fc00246:	9bc0      	lw	a2,0(v1)
+9fc00248:	4c19      	addiu	a0,25
+9fc0024a:	6a03      	li	v0,3
+9fc0024c:	ea0c      	and	v0,s0
+9fc0024e:	ee8c      	and	a2,a0
+9fc00250:	ee4d      	or	a2,v0
+9fc00252:	6aff      	li	v0,255
+9fc00254:	dbc0      	sw	a2,0(v1)
+9fc00256:	b305      	lw	v1,9fc00268 <SerialIntConfigure+0x48>
+9fc00258:	4a01      	addiu	v0,1
+9fc0025a:	9b80      	lw	a0,0(v1)
+9fc0025c:	ea8d      	or	v0,a0
+9fc0025e:	db40      	sw	v0,0(v1)
+9fc00260:	6474      	restore	32,ra,s0-s1
+9fc00262:	e8a0      	jrc	ra
+9fc00264:	1110      	b	9fc00486 <NVMemOperation+0x56>
+9fc00266:	bf88      	lwu	a0,32(a3)
+9fc00268:	1070      	b	9fc0034a <Serial1Interrupt+0x16>
+9fc0026a:	bf88      	lwu	a0,32(a3)
+
+9fc0026c <SerialConfigure>:
+9fc0026c:	64f5      	save	40,ra,s0-s1
+9fc0026e:	6765      	move	v1,a1
+9fc00270:	6726      	move	s1,a2
+9fc00272:	6eff      	li	a2,255
+9fc00274:	4e01      	addiu	a2,1
+9fc00276:	6704      	move	s0,a0
+9fc00278:	b512      	lw	a1,9fc002c0 <SerialConfigure+0x54>
+9fc0027a:	b413      	lw	a0,9fc002c4 <SerialConfigure+0x58>
+9fc0027c:	d305      	sw	v1,20(sp)
+9fc0027e:	1a1f 00e8 	jal	9fc003a0 <FIFO_init>
+9fc00282:	d704      	sw	a3,16(sp)
+9fc00284:	b411      	lw	a0,9fc002c8 <SerialConfigure+0x5c>
+9fc00286:	6a11      	li	v0,17
+9fc00288:	aca0      	lhu	a1,0(a0)
+9fc0028a:	ea4b      	neg	v0
+9fc0028c:	eaac      	and	v0,a1
+9fc0028e:	e811      	zeb	s0
+9fc00290:	cc40      	sh	v0,0(a0)
+9fc00292:	b40f      	lw	a0,9fc002cc <SerialConfigure+0x60>
+9fc00294:	6a10      	li	v0,16
+9fc00296:	a4a0      	lbu	a1,0(a0)
+9fc00298:	eaad      	or	v0,a1
+9fc0029a:	c440      	sb	v0,0(a0)
+9fc0029c:	9704      	lw	a3,16(sp)
+9fc0029e:	6790      	move	a0,s0
+9fc002a0:	1a1f 0071 	jal	9fc001c4 <SerialSetDataRate>
+9fc002a4:	67a7      	move	a1,a3
+9fc002a6:	9305      	lw	v1,20(sp)
+9fc002a8:	b20a      	lw	v0,9fc002d0 <SerialConfigure+0x64>
+9fc002aa:	6790      	move	a0,s0
+9fc002ac:	da60      	sw	v1,0(v0)
+9fc002ae:	6d03      	li	a1,3
+9fc002b0:	b209      	lw	v0,9fc002d4 <SerialConfigure+0x68>
+9fc002b2:	6e03      	li	a2,3
+9fc002b4:	1a1f 0088 	jal	9fc00220 <SerialIntConfigure>
+9fc002b8:	da20      	sw	s1,0(v0)
+9fc002ba:	6475      	restore	40,ra,s0-s1
+9fc002bc:	e8a0      	jrc	ra
+9fc002be:	6500      	nop
+9fc002c0:	0020      	addiu	s0,sp,128
+9fc002c2:	a000      	lbu	s0,0(s0)
+9fc002c4:	0120      	addiu	s1,sp,128
+9fc002c6:	a000      	lbu	s0,0(s0)
+9fc002c8:	6110      	btnez	9fc002ea <Serial1Available+0x12>
+9fc002ca:	bf88      	lwu	a0,32(a3)
+9fc002cc:	6010      	bteqz	9fc002ee <Serial1Read+0x2>
+9fc002ce:	bf88      	lwu	a0,32(a3)
+9fc002d0:	6008      	bteqz	9fc002e2 <Serial1Available+0xa>
+9fc002d2:	bf80      	lwu	a0,0(a3)
+9fc002d4:	6018      	bteqz	9fc00306 <Serial1Read+0x1a>
+9fc002d6:	bf80      	lwu	a0,0(a3)
+
+9fc002d8 <Serial1Available>:
+9fc002d8:	64c3      	save	24,ra
+9fc002da:	b404      	lw	a0,9fc002e8 <Serial1Available+0x10>
+9fc002dc:	1a1f 00f8 	jal	9fc003e0 <FIFO_getsize>
+9fc002e0:	6500      	nop
+9fc002e2:	6443      	restore	24,ra
+9fc002e4:	e8a0      	jrc	ra
+9fc002e6:	6500      	nop
+9fc002e8:	0120      	addiu	s1,sp,128
+9fc002ea:	a000      	lbu	s0,0(s0)
+
+9fc002ec <Serial1Read>:
+9fc002ec:	64c4      	save	32,ra
+9fc002ee:	6a00      	li	v0,0
+9fc002f0:	677d      	move	v1,sp
+9fc002f2:	1a1f 00b6 	jal	9fc002d8 <Serial1Available>
+9fc002f6:	c350      	sb	v0,16(v1)
+9fc002f8:	2208      	beqz	v0,9fc0030a <Serial1Read+0x1e>
+9fc002fa:	b407      	lw	a0,9fc00314 <Serial1Read+0x28>
+9fc002fc:	0504      	addiu	a1,sp,16
+9fc002fe:	1a1f 0100 	jal	9fc00400 <FIFO_dequeue>
+9fc00302:	6e01      	li	a2,1
+9fc00304:	677d      	move	v1,sp
+9fc00306:	a350      	lbu	v0,16(v1)
+9fc00308:	1002      	b	9fc0030e <Serial1Read+0x22>
+9fc0030a:	6a01      	li	v0,1
+9fc0030c:	ea4b      	neg	v0
+9fc0030e:	6444      	restore	32,ra
+9fc00310:	e8a0      	jrc	ra
+9fc00312:	6500      	nop
+9fc00314:	0120      	addiu	s1,sp,128
+9fc00316:	a000      	lbu	s0,0(s0)
+
+9fc00318 <Serial1GetKey>:
+9fc00318:	64c3      	save	24,ra
+9fc0031a:	1a1f 00b6 	jal	9fc002d8 <Serial1Available>
+9fc0031e:	6500      	nop
+9fc00320:	2a04      	bnez	v0,9fc0032a <Serial1GetKey+0x12>
+9fc00322:	1a1f 0146 	jal	9fc00518 <led_blink>
+9fc00326:	6500      	nop
+9fc00328:	17f8      	b	9fc0031a <Serial1GetKey+0x2>
+9fc0032a:	1a1f 00bb 	jal	9fc002ec <Serial1Read>
+9fc0032e:	6500      	nop
+9fc00330:	6443      	restore	24,ra
+9fc00332:	e8a0      	jrc	ra
+
+9fc00334 <Serial1Interrupt>:
+9fc00334:	64e4      	save	32,ra,s0
+9fc00336:	b018      	lw	s0,9fc00394 <Serial1Interrupt+0x60>
+9fc00338:	9840      	lw	v0,0(s0)
+9fc0033a:	3342      	srl	v1,v0,8
+9fc0033c:	6a01      	li	v0,1
+9fc0033e:	ea6c      	and	v0,v1
+9fc00340:	220f      	beqz	v0,9fc00360 <Serial1Interrupt+0x2c>
+9fc00342:	b216      	lw	v0,9fc00398 <Serial1Interrupt+0x64>
+9fc00344:	677d      	move	v1,sp
+9fc00346:	9a40      	lw	v0,0(v0)
+9fc00348:	b415      	lw	a0,9fc0039c <Serial1Interrupt+0x68>
+9fc0034a:	0504      	addiu	a1,sp,16
+9fc0034c:	6e01      	li	a2,1
+9fc0034e:	1a1f 00eb 	jal	9fc003ac <FIFO_enqueue>
+9fc00352:	c350      	sb	v0,16(v1)
+9fc00354:	6aff      	li	v0,255
+9fc00356:	9860      	lw	v1,0(s0)
+9fc00358:	4a02      	addiu	v0,2
+9fc0035a:	ea4b      	neg	v0
+9fc0035c:	ea6c      	and	v0,v1
+9fc0035e:	d840      	sw	v0,0(s0)
+9fc00360:	9840      	lw	v0,0(s0)
+9fc00362:	6b01      	li	v1,1
+9fc00364:	3242      	srl	v0,8
+9fc00366:	3246      	srl	v0,1
+9fc00368:	ea6c      	and	v0,v1
+9fc0036a:	b40b      	lw	a0,9fc00394 <Serial1Interrupt+0x60>
+9fc0036c:	2206      	beqz	v0,9fc0037a <Serial1Interrupt+0x46>
+9fc0036e:	9c60      	lw	v1,0(a0)
+9fc00370:	f200 6a01 	li	v0,513
+9fc00374:	ea4b      	neg	v0
+9fc00376:	ea6c      	and	v0,v1
+9fc00378:	dc40      	sw	v0,0(a0)
+9fc0037a:	9840      	lw	v0,0(s0)
+9fc0037c:	b406      	lw	a0,9fc00394 <Serial1Interrupt+0x60>
+9fc0037e:	335e      	srl	v1,v0,7
+9fc00380:	6a01      	li	v0,1
+9fc00382:	ea6c      	and	v0,v1
+9fc00384:	2205      	beqz	v0,9fc00390 <Serial1Interrupt+0x5c>
+9fc00386:	9c60      	lw	v1,0(a0)
+9fc00388:	6a81      	li	v0,129
+9fc0038a:	ea4b      	neg	v0
+9fc0038c:	ea6c      	and	v0,v1
+9fc0038e:	dc40      	sw	v0,0(a0)
+9fc00390:	6464      	restore	32,ra,s0
+9fc00392:	e8a0      	jrc	ra
+9fc00394:	1040      	b	9fc00416 <FIFO_dequeue+0x16>
+9fc00396:	bf88      	lwu	a0,32(a3)
+9fc00398:	6030      	bteqz	9fc003fa <FIFO_getfreesize+0xa>
+9fc0039a:	bf80      	lwu	a0,0(a3)
+9fc0039c:	0120      	addiu	s1,sp,128
+9fc0039e:	a000      	lbu	s0,0(s0)
+
+9fc003a0 <FIFO_init>:
+9fc003a0:	6a00      	li	v0,0
+9fc003a2:	dca0      	sw	a1,0(a0)
+9fc003a4:	dcc1      	sw	a2,4(a0)
+9fc003a6:	dc42      	sw	v0,8(a0)
+9fc003a8:	e820      	jr	ra
+9fc003aa:	dc43      	sw	v0,12(a0)
+
+9fc003ac <FIFO_enqueue>:
+9fc003ac:	9c62      	lw	v1,8(a0)
+9fc003ae:	6a00      	li	v0,0
+9fc003b0:	64b1      	save	8,s0-s1
+9fc003b2:	eac2      	slt	v0,a2
+9fc003b4:	600f      	bteqz	9fc003d4 <FIFO_enqueue+0x28>
+9fc003b6:	e55d      	addu	a3,a1,v0
+9fc003b8:	9c20      	lw	s1,0(a0)
+9fc003ba:	8700      	lb	s0,0(a3)
+9fc003bc:	e17d      	addu	a3,s1,v1
+9fc003be:	4b01      	addiu	v1,1
+9fc003c0:	c700      	sb	s0,0(a3)
+9fc003c2:	9ce1      	lw	a3,4(a0)
+9fc003c4:	ebe2      	slt	v1,a3
+9fc003c6:	6101      	btnez	9fc003ca <FIFO_enqueue+0x1e>
+9fc003c8:	6b00      	li	v1,0
+9fc003ca:	9c23      	lw	s1,12(a0)
+9fc003cc:	eb2a      	cmp	v1,s1
+9fc003ce:	6004      	bteqz	9fc003d8 <FIFO_enqueue+0x2c>
+9fc003d0:	4a01      	addiu	v0,1
+9fc003d2:	17ef      	b	9fc003b2 <FIFO_enqueue+0x6>
+9fc003d4:	dc62      	sw	v1,8(a0)
+9fc003d6:	1001      	b	9fc003da <FIFO_enqueue+0x2e>
+9fc003d8:	6a00      	li	v0,0
+9fc003da:	6431      	restore	8,s0-s1
+9fc003dc:	e8a0      	jrc	ra
+9fc003de:	6500      	nop
+
+9fc003e0 <FIFO_getsize>:
+9fc003e0:	9c62      	lw	v1,8(a0)
+9fc003e2:	9ca3      	lw	a1,12(a0)
+9fc003e4:	e3ab      	subu	v0,v1,a1
+9fc003e6:	5200      	slti	v0,0
+9fc003e8:	6002      	bteqz	9fc003ee <FIFO_getsize+0xe>
+9fc003ea:	9c61      	lw	v1,4(a0)
+9fc003ec:	e269      	addu	v0,v1
+9fc003ee:	e8a0      	jrc	ra
+
+9fc003f0 <FIFO_getfreesize>:
+9fc003f0:	64e3      	save	24,ra,s0
+9fc003f2:	1a1f 00f8 	jal	9fc003e0 <FIFO_getsize>
+9fc003f6:	6704      	move	s0,a0
+9fc003f8:	9861      	lw	v1,4(s0)
+9fc003fa:	6463      	restore	24,ra,s0
+9fc003fc:	e820      	jr	ra
+9fc003fe:	e34b      	subu	v0,v1,v0
+
+9fc00400 <FIFO_dequeue>:
+9fc00400:	9c63      	lw	v1,12(a0)
+9fc00402:	6a00      	li	v0,0
+9fc00404:	64a1      	save	8,s0
+9fc00406:	eac2      	slt	v0,a2
+9fc00408:	6010      	bteqz	9fc0042a <FIFO_dequeue+0x2a>
+9fc0040a:	9ce2      	lw	a3,8(a0)
+9fc0040c:	ebea      	cmp	v1,a3
+9fc0040e:	600c      	bteqz	9fc00428 <FIFO_dequeue+0x28>
+9fc00410:	9c00      	lw	s0,0(a0)
+9fc00412:	e07d      	addu	a3,s0,v1
+9fc00414:	4b01      	addiu	v1,1
+9fc00416:	8700      	lb	s0,0(a3)
+9fc00418:	e55d      	addu	a3,a1,v0
+9fc0041a:	c700      	sb	s0,0(a3)
+9fc0041c:	9ce1      	lw	a3,4(a0)
+9fc0041e:	ebe2      	slt	v1,a3
+9fc00420:	6101      	btnez	9fc00424 <FIFO_dequeue+0x24>
+9fc00422:	6b00      	li	v1,0
+9fc00424:	4a01      	addiu	v0,1
+9fc00426:	17ef      	b	9fc00406 <FIFO_dequeue+0x6>
+9fc00428:	6767      	move	v1,a3
+9fc0042a:	dc63      	sw	v1,12(a0)
+9fc0042c:	6421      	restore	8,s0
+9fc0042e:	e8a0      	jrc	ra
+
+9fc00430 <NVMemOperation>:
+9fc00430:	64f5      	save	40,ra,s0-s1
+9fc00432:	f008 6800 	li	s0,16384
+9fc00436:	1e1f 016d 	jalx	9fc005b4 <INTDisableInterrupts>
+9fc0043a:	6724      	move	s1,a0
+9fc0043c:	6791      	move	a0,s1
+9fc0043e:	ec0d      	or	a0,s0
+9fc00440:	b110      	lw	s1,9fc00480 <NVMemOperation+0x50>
+9fc00442:	d980      	sw	a0,0(s1)
+9fc00444:	6c07      	li	a0,7
+9fc00446:	1a1f 015c 	jal	9fc00570 <delay_us>
+9fc0044a:	d204      	sw	v0,16(sp)
+9fc0044c:	b30e      	lw	v1,9fc00484 <NVMemOperation+0x54>
+9fc0044e:	b20f      	lw	v0,9fc00488 <NVMemOperation+0x58>
+9fc00450:	9504      	lw	a1,16(sp)
+9fc00452:	da60      	sw	v1,0(v0)
+9fc00454:	b30e      	lw	v1,9fc0048c <NVMemOperation+0x5c>
+9fc00456:	da60      	sw	v1,0(v0)
+9fc00458:	f010 6b00 	li	v1,32768
+9fc0045c:	b20d      	lw	v0,9fc00490 <NVMemOperation+0x60>
+9fc0045e:	da60      	sw	v1,0(v0)
+9fc00460:	9940      	lw	v0,0(s1)
+9fc00462:	ea6c      	and	v0,v1
+9fc00464:	2afd      	bnez	v0,9fc00460 <NVMemOperation+0x30>
+9fc00466:	b20c      	lw	v0,9fc00494 <NVMemOperation+0x64>
+9fc00468:	6785      	move	a0,a1
+9fc0046a:	1e1f 016f 	jalx	9fc005bc <INTRestoreInterrupts>
+9fc0046e:	da00      	sw	s0,0(v0)
+9fc00470:	b204      	lw	v0,9fc00480 <NVMemOperation+0x50>
+9fc00472:	9a60      	lw	v1,0(v0)
+9fc00474:	f006 6a00 	li	v0,12288
+9fc00478:	6475      	restore	40,ra,s0-s1
+9fc0047a:	e820      	jr	ra
+9fc0047c:	ea6c      	and	v0,v1
+9fc0047e:	6500      	nop
+9fc00480:	f400 bf80 	lwu	a0,1024(a3)
+9fc00484:	6655      	0x6655
+9fc00486:	aa99      	lhu	a0,50(v0)
+9fc00488:	f410 bf80 	lwu	a0,-31744(a3)
+9fc0048c:	99aa      	lw	a1,40(s1)
+9fc0048e:	5566      	slti	a1,102
+9fc00490:	f408 bf80 	lwu	a0,17408(a3)
+9fc00494:	f404 bf80 	lwu	a0,9216(a3)
+
+9fc00498 <NVMemErasePage>:
+9fc00498:	b206      	lw	v0,9fc004b0 <NVMemErasePage+0x18>
+9fc0049a:	64c3      	save	24,ra
+9fc0049c:	ec4c      	and	a0,v0
+9fc0049e:	b206      	lw	v0,9fc004b4 <NVMemErasePage+0x1c>
+9fc004a0:	da80      	sw	a0,0(v0)
+9fc004a2:	f008 6c04 	li	a0,16388
+9fc004a6:	1a1f 010c 	jal	9fc00430 <NVMemOperation>
+9fc004aa:	6500      	nop
+9fc004ac:	6443      	restore	24,ra
+9fc004ae:	e8a0      	jrc	ra
+9fc004b0:	ffff      	daddiu	a3,sp,124
+9fc004b2:	1fff f420 	jalx	9fffd080 <_DBG_CODE_ADDR+0x3fabf0>
+9fc004b6:	bf80      	lwu	a0,0(a3)
+
+9fc004b8 <NVMemWriteWord>:
+9fc004b8:	b207      	lw	v0,9fc004d4 <NVMemWriteWord+0x1c>
+9fc004ba:	64c3      	save	24,ra
+9fc004bc:	ec4c      	and	a0,v0
+9fc004be:	b207      	lw	v0,9fc004d8 <NVMemWriteWord+0x20>
+9fc004c0:	da80      	sw	a0,0(v0)
+9fc004c2:	b207      	lw	v0,9fc004dc <NVMemWriteWord+0x24>
+9fc004c4:	f008 6c01 	li	a0,16385
+9fc004c8:	1a1f 010c 	jal	9fc00430 <NVMemOperation>
+9fc004cc:	daa0      	sw	a1,0(v0)
+9fc004ce:	6443      	restore	24,ra
+9fc004d0:	e8a0      	jrc	ra
+9fc004d2:	6500      	nop
+9fc004d4:	ffff      	daddiu	a3,sp,124
+9fc004d6:	1fff f420 	jalx	9fffd080 <_DBG_CODE_ADDR+0x3fabf0>
+9fc004da:	bf80      	lwu	a0,0(a3)
+9fc004dc:	f430 bf80 	lwu	a0,-31712(a3)
+
+9fc004e0 <NVMemWriteRow>:
+9fc004e0:	b207      	lw	v0,9fc004fc <NVMemWriteRow+0x1c>
+9fc004e2:	b308      	lw	v1,9fc00500 <NVMemWriteRow+0x20>
+9fc004e4:	ec4c      	and	a0,v0
+9fc004e6:	ed4c      	and	a1,v0
+9fc004e8:	64c3      	save	24,ra
+9fc004ea:	db80      	sw	a0,0(v1)
+9fc004ec:	b206      	lw	v0,9fc00504 <NVMemWriteRow+0x24>
+9fc004ee:	f008 6c03 	li	a0,16387
+9fc004f2:	1a1f 010c 	jal	9fc00430 <NVMemOperation>
+9fc004f6:	daa0      	sw	a1,0(v0)
+9fc004f8:	6443      	restore	24,ra
+9fc004fa:	e8a0      	jrc	ra
+9fc004fc:	ffff      	daddiu	a3,sp,124
+9fc004fe:	1fff f420 	jalx	9fffd080 <_DBG_CODE_ADDR+0x3fabf0>
+9fc00502:	bf80      	lwu	a0,0(a3)
+9fc00504:	f440 bf80 	lwu	a0,1088(a3)
+
+9fc00508 <NVMemClearError>:
+9fc00508:	64c3      	save	24,ra
+9fc0050a:	f008 6c00 	li	a0,16384
+9fc0050e:	1a1f 010c 	jal	9fc00430 <NVMemOperation>
+9fc00512:	6500      	nop
+9fc00514:	6443      	restore	24,ra
+9fc00516:	e8a0      	jrc	ra
+
+9fc00518 <led_blink>:
+9fc00518:	677c      	move	v1,gp
+9fc0051a:	b409      	lw	a0,9fc0053c <led_blink+0x24>
+9fc0051c:	f010 9b4c 	lw	v0,-32756(v1)
+9fc00520:	4a01      	addiu	v0,1
+9fc00522:	ec42      	slt	a0,v0
+9fc00524:	6103      	btnez	9fc0052c <led_blink+0x14>
+9fc00526:	f010 db4c 	sw	v0,-32756(v1)
+9fc0052a:	e8a0      	jrc	ra
+9fc0052c:	6a00      	li	v0,0
+9fc0052e:	f010 db4c 	sw	v0,-32756(v1)
+9fc00532:	f010 6b00 	li	v1,32768
+9fc00536:	b203      	lw	v0,9fc00540 <led_blink+0x28>
+9fc00538:	e820      	jr	ra
+9fc0053a:	da60      	sw	v1,0(v0)
+9fc0053c:	869f      	lb	a0,31(a2)
+9fc0053e:	0001      	addiu	s0,sp,4
+9fc00540:	613c      	btnez	9fc005ba <INTDisableInterrupts+0x6>
+9fc00542:	bf88      	lwu	a0,32(a3)
+
+9fc00544 <memcpy>:
+9fc00544:	e4c9      	addu	v0,a0,a2
+9fc00546:	ea8a      	cmp	v0,a0
+9fc00548:	6006      	bteqz	9fc00556 <memcpy+0x12>
+9fc0054a:	8560      	lb	v1,0(a1)
+9fc0054c:	4c01      	addiu	a0,1
+9fc0054e:	4d01      	addiu	a1,1
+9fc00550:	f7ff c47f 	sb	v1,-1(a0)
+9fc00554:	17f8      	b	9fc00546 <memcpy+0x2>
+9fc00556:	e8a0      	jrc	ra
+
+9fc00558 <memset>:
+9fc00558:	e4c9      	addu	v0,a0,a2
+9fc0055a:	ea8a      	cmp	v0,a0
+9fc0055c:	6003      	bteqz	9fc00564 <memset+0xc>
+9fc0055e:	c4a0      	sb	a1,0(a0)
+9fc00560:	4c01      	addiu	a0,1
+9fc00562:	17fb      	b	9fc0055a <memset+0x2>
+9fc00564:	e8a0      	jrc	ra
+9fc00566:	6500      	nop
+
+9fc00568 <wait_nloop>:
+9fc00568:	6500      	nop
+9fc0056a:	4cff      	addiu	a0,-1
+9fc0056c:	2cfd      	bnez	a0,9fc00568 <wait_nloop>
+9fc0056e:	e8a0      	jrc	ra
+
+9fc00570 <delay_us>:
+9fc00570:	3284      	sll	v0,a0,1
+9fc00572:	348c      	sll	a0,3
+9fc00574:	64c3      	save	24,ra
+9fc00576:	1a1f 015a 	jal	9fc00568 <wait_nloop>
+9fc0057a:	e291      	addu	a0,v0,a0
+9fc0057c:	6443      	restore	24,ra
+9fc0057e:	e8a0      	jrc	ra
+
+9fc00580 <wait_ms>:
+9fc00580:	64f4      	save	32,ra,s0-s1
+9fc00582:	6724      	move	s1,a0
+9fc00584:	6800      	li	s0,0
+9fc00586:	e822      	slt	s0,s1
+9fc00588:	6006      	bteqz	9fc00596 <wait_ms+0x16>
+9fc0058a:	f704 6c10 	li	a0,10000
+9fc0058e:	1a1f 015a 	jal	9fc00568 <wait_nloop>
+9fc00592:	4801      	addiu	s0,1
+9fc00594:	17f8      	b	9fc00586 <wait_ms+0x6>
+9fc00596:	6474      	restore	32,ra,s0-s1
+9fc00598:	e8a0      	jrc	ra
+9fc0059a:	6500      	nop
+
+9fc0059c <led_test>:
+9fc0059c:	64c3      	save	24,ra
+9fc0059e:	f010 6b00 	li	v1,32768
+9fc005a2:	b204      	lw	v0,9fc005b0 <led_test+0x14>
+9fc005a4:	f1e0 6c14 	li	a0,500
+9fc005a8:	1a1f 0160 	jal	9fc00580 <wait_ms>
+9fc005ac:	da60      	sw	v1,0(v0)
+9fc005ae:	17f7      	b	9fc0059e <led_test+0x2>
+9fc005b0:	613c      	btnez	9fc0062a <vector_32_ISR_wrapper+0x16>
+9fc005b2:	bf88      	lwu	a0,32(a3)
+
+9fc005b4 <INTDisableInterrupts>:
+9fc005b4:	03e00008 	jr	ra
+9fc005b8:	41626000 	di	v0
+
+9fc005bc <INTRestoreInterrupts>:
+9fc005bc:	30840001 	andi	a0,a0,0x1
+9fc005c0:	14800003 	bnez	a0,9fc005d0 <INTRestoreInterrupts+0x14>
+9fc005c4:	00000000 	nop
+9fc005c8:	03e00008 	jr	ra
+9fc005cc:	41606000 	di
+9fc005d0:	03e00008 	jr	ra
+9fc005d4:	41606020 	ei
+
+Disassembly of section .reset:
+
+bfc00000 <_reset>:
+bfc00000:	3c1a9fc0 	lui	k0,0x9fc0
+bfc00004:	275a000c 	addiu	k0,k0,12
+bfc00008:	03400008 	jr	k0
+
+Disassembly of section .vector_32:
+
+9fc00600 <.vector_32>:
+9fc00600:	0bf00185 	j	9fc00614 <vector_32_ISR_wrapper>
+9fc00604:	00000000 	nop
+9fc00608:	00000000 	nop
+
+Disassembly of section .text:
+
+9fc00610 <Default_Handler>:
+9fc00610:	42000018 	eret
+
+9fc00614 <vector_32_ISR_wrapper>:
+9fc00614:	415de800 	rdpgpr	sp,sp
+9fc00618:	401a6800 	mfc0	k0,c0_cause
+9fc0061c:	401b7000 	mfc0	k1,c0_epc
+9fc00620:	27bdff88 	addiu	sp,sp,-120
+9fc00624:	afbb0074 	sw	k1,116(sp)
+9fc00628:	401b6000 	mfc0	k1,c0_status
+9fc0062c:	001ad282 	srl	k0,k0,0xa
+9fc00630:	afbb0070 	sw	k1,112(sp)
+9fc00634:	7f5b7a84 	ins	k1,k0,0xa,0x6
+9fc00638:	0000d012 	mflo	k0
+9fc0063c:	afba006c 	sw	k0,108(sp)
+9fc00640:	0000d010 	mfhi	k0
+9fc00644:	afba0068 	sw	k0,104(sp)
+9fc00648:	7c1b2044 	ins	k1,zero,0x1,0x4
+9fc0064c:	409b6000 	mtc0	k1,c0_status
+9fc00650:	afbf0064 	sw	ra,100(sp)
+9fc00654:	afbe0060 	sw	s8,96(sp)
+9fc00658:	afb9005c 	sw	t9,92(sp)
+9fc0065c:	afb80058 	sw	t8,88(sp)
+9fc00660:	afaf0054 	sw	t7,84(sp)
+9fc00664:	afae0050 	sw	t6,80(sp)
+9fc00668:	afad004c 	sw	t5,76(sp)
+9fc0066c:	afac0048 	sw	t4,72(sp)
+9fc00670:	afab0044 	sw	t3,68(sp)
+9fc00674:	afaa0040 	sw	t2,64(sp)
+9fc00678:	afa9003c 	sw	t1,60(sp)
+9fc0067c:	afa80038 	sw	t0,56(sp)
+9fc00680:	afa70034 	sw	a3,52(sp)
+9fc00684:	afa60030 	sw	a2,48(sp)
+9fc00688:	afa5002c 	sw	a1,44(sp)
+9fc0068c:	afa40028 	sw	a0,40(sp)
+9fc00690:	afa30024 	sw	v1,36(sp)
+9fc00694:	afa20020 	sw	v0,32(sp)
+9fc00698:	03a0f021 	move	s8,sp
+9fc0069c:	77f000cd 	jalx	9fc00334 <Serial1Interrupt>
+9fc006a0:	00000000 	nop
+9fc006a4:	03c0e821 	move	sp,s8
+9fc006a8:	8fbf0064 	lw	ra,100(sp)
+9fc006ac:	8fbe0060 	lw	s8,96(sp)
+9fc006b0:	8fb9005c 	lw	t9,92(sp)
+9fc006b4:	8fb80058 	lw	t8,88(sp)
+9fc006b8:	8faf0054 	lw	t7,84(sp)
+9fc006bc:	8fae0050 	lw	t6,80(sp)
+9fc006c0:	8fad004c 	lw	t5,76(sp)
+9fc006c4:	8fac0048 	lw	t4,72(sp)
+9fc006c8:	8fab0044 	lw	t3,68(sp)
+9fc006cc:	8faa0040 	lw	t2,64(sp)
+9fc006d0:	8fa9003c 	lw	t1,60(sp)
+9fc006d4:	8fa80038 	lw	t0,56(sp)
+9fc006d8:	8fa70034 	lw	a3,52(sp)
+9fc006dc:	8fa60030 	lw	a2,48(sp)
+9fc006e0:	8fa5002c 	lw	a1,44(sp)
+9fc006e4:	8fa40028 	lw	a0,40(sp)
+9fc006e8:	8fa30024 	lw	v1,36(sp)
+9fc006ec:	8fa20020 	lw	v0,32(sp)
+9fc006f0:	41606000 	di
+9fc006f4:	000000c0 	ehb
+9fc006f8:	8fba006c 	lw	k0,108(sp)
+9fc006fc:	03400013 	mtlo	k0
+9fc00700:	8fba0068 	lw	k0,104(sp)
+9fc00704:	03400011 	mthi	k0
+9fc00708:	8fba0074 	lw	k0,116(sp)
+9fc0070c:	409a7000 	mtc0	k0,c0_epc
+9fc00710:	8fba0070 	lw	k0,112(sp)
+9fc00714:	27bd0078 	addiu	sp,sp,120
+9fc00718:	409a6000 	mtc0	k0,c0_status
+9fc0071c:	42000018 	eret
+
+9fc00720 <system_unlock>:
+9fc00720:	6b00      	li	v1,0
+9fc00722:	b204      	lw	v0,9fc00730 <system_unlock+0x10>
+9fc00724:	da60      	sw	v1,0(v0)
+9fc00726:	b304      	lw	v1,9fc00734 <system_unlock+0x14>
+9fc00728:	da60      	sw	v1,0(v0)
+9fc0072a:	b304      	lw	v1,9fc00738 <system_unlock+0x18>
+9fc0072c:	e820      	jr	ra
+9fc0072e:	da60      	sw	v1,0(v0)
+9fc00730:	f230 bf80 	lwu	a0,-32224(a3)
+9fc00734:	6655      	0x6655
+9fc00736:	aa99      	lhu	a0,50(v0)
+9fc00738:	99aa      	lw	a1,40(s1)
+9fc0073a:	5566      	slti	a1,102
+
+9fc0073c <reset_device>:
+9fc0073c:	64c3      	save	24,ra
+9fc0073e:	b30c      	lw	v1,9fc0076c <reset_device+0x30>
+9fc00740:	6aff      	li	v0,255
+9fc00742:	4a02      	addiu	v0,2
+9fc00744:	9b80      	lw	a0,0(v1)
+9fc00746:	ea4b      	neg	v0
+9fc00748:	ea8c      	and	v0,a0
+9fc0074a:	1e1f 016d 	jalx	9fc005b4 <INTDisableInterrupts>
+9fc0074e:	db40      	sw	v0,0(v1)
+9fc00750:	675c      	move	v0,gp
+9fc00752:	b308      	lw	v1,9fc00770 <reset_device+0x34>
+9fc00754:	f010 9a44 	lw	v0,-32764(v0)
+9fc00758:	1a1f 01c8 	jal	9fc00720 <system_unlock>
+9fc0075c:	da60      	sw	v1,0(v0)
+9fc0075e:	6b01      	li	v1,1
+9fc00760:	b205      	lw	v0,9fc00774 <reset_device+0x38>
+9fc00762:	da60      	sw	v1,0(v0)
+9fc00764:	b205      	lw	v0,9fc00778 <reset_device+0x3c>
+9fc00766:	9a40      	lw	v0,0(v0)
+9fc00768:	17ff      	b	9fc00768 <reset_device+0x2c>
+9fc0076a:	6500      	nop
+9fc0076c:	1070      	b	9fc0084e <search_flash_end+0x16>
+9fc0076e:	bf88      	lwu	a0,32(a3)
+9fc00770:	5678      	slti	a2,120
+9fc00772:	1234      	b	9fc00bdc <_data_image_begin+0x48>
+9fc00774:	f618 bf80 	lwu	a0,-14848(a3)
+9fc00778:	f610 bf80 	lwu	a0,-31232(a3)
+
+9fc0077c <io_setDigital>:
+9fc0077c:	b306      	lw	v1,9fc00794 <io_setDigital+0x18>
+9fc0077e:	6a09      	li	v0,9
+9fc00780:	ab80      	lhu	a0,0(v1)
+9fc00782:	ea4b      	neg	v0
+9fc00784:	ea8c      	and	v0,a0
+9fc00786:	cb40      	sh	v0,0(v1)
+9fc00788:	6a00      	li	v0,0
+9fc0078a:	b304      	lw	v1,9fc00798 <io_setDigital+0x1c>
+9fc0078c:	db40      	sw	v0,0(v1)
+9fc0078e:	b304      	lw	v1,9fc0079c <io_setDigital+0x20>
+9fc00790:	e820      	jr	ra
+9fc00792:	db40      	sw	v0,0(v1)
+9fc00794:	f200 bf80 	lwu	a0,512(a3)
+9fc00798:	6000      	bteqz	9fc0079a <io_setDigital+0x1e>
+9fc0079a:	bf88      	lwu	a0,32(a3)
+9fc0079c:	6100      	btnez	9fc0079e <io_setDigital+0x22>
+9fc0079e:	bf88      	lwu	a0,32(a3)
+
+9fc007a0 <io_setRemap>:
+9fc007a0:	64c3      	save	24,ra
+9fc007a2:	1a1f 01c8 	jal	9fc00720 <system_unlock>
+9fc007a6:	6500      	nop
+9fc007a8:	b216      	lw	v0,9fc00800 <io_setRemap+0x60>
+9fc007aa:	f004 6b01 	li	v1,8193
+9fc007ae:	aa80      	lhu	a0,0(v0)
+9fc007b0:	eb6b      	neg	v1
+9fc007b2:	eb8c      	and	v1,a0
+9fc007b4:	b614      	lw	a2,9fc00804 <io_setRemap+0x64>
+9fc007b6:	ca60      	sh	v1,0(v0)
+9fc007b8:	aa80      	lhu	a0,0(v0)
+9fc007ba:	f002 6b01 	li	v1,4097
+9fc007be:	eb6b      	neg	v1
+9fc007c0:	eb8c      	and	v1,a0
+9fc007c2:	ca60      	sh	v1,0(v0)
+9fc007c4:	a680      	lbu	a0,0(a2)
+9fc007c6:	6b10      	li	v1,16
+9fc007c8:	eb6b      	neg	v1
+9fc007ca:	67a4      	move	a1,a0
+9fc007cc:	ed6c      	and	a1,v1
+9fc007ce:	6c02      	li	a0,2
+9fc007d0:	ecad      	or	a0,a1
+9fc007d2:	b50e      	lw	a1,9fc00808 <io_setRemap+0x68>
+9fc007d4:	c680      	sb	a0,0(a2)
+9fc007d6:	a580      	lbu	a0,0(a1)
+9fc007d8:	eb8c      	and	v1,a0
+9fc007da:	6c01      	li	a0,1
+9fc007dc:	eb8d      	or	v1,a0
+9fc007de:	c560      	sb	v1,0(a1)
+9fc007e0:	aa80      	lhu	a0,0(v0)
+9fc007e2:	f004 6b00 	li	v1,8192
+9fc007e6:	eb8d      	or	v1,a0
+9fc007e8:	ca60      	sh	v1,0(v0)
+9fc007ea:	aa80      	lhu	a0,0(v0)
+9fc007ec:	f002 6b00 	li	v1,4096
+9fc007f0:	eb8d      	or	v1,a0
+9fc007f2:	ca60      	sh	v1,0(v0)
+9fc007f4:	b306      	lw	v1,9fc0080c <io_setRemap+0x6c>
+9fc007f6:	b207      	lw	v0,9fc00810 <io_setRemap+0x70>
+9fc007f8:	da60      	sw	v1,0(v0)
+9fc007fa:	6443      	restore	24,ra
+9fc007fc:	e8a0      	jrc	ra
+9fc007fe:	6500      	nop
+9fc00800:	f200 bf80 	lwu	a0,512(a3)
+9fc00804:	fa50      	sd	ra,640(sp)
+9fc00806:	bf80      	lwu	a0,0(a3)
+9fc00808:	fb3c      	daddiu	sp,480
+9fc0080a:	bf80      	lwu	a0,0(a3)
+9fc0080c:	5678      	slti	a2,120
+9fc0080e:	1234      	b	9fc00c78 <_data_image_begin+0xe4>
+9fc00810:	f230 bf80 	lwu	a0,-32224(a3)
+
+9fc00814 <check_flash_adrs>:
+9fc00814:	b206      	lw	v0,9fc0082c <check_flash_adrs+0x18>
+9fc00816:	ea82      	slt	v0,a0
+9fc00818:	6a00      	li	v0,0
+9fc0081a:	6006      	bteqz	9fc00828 <check_flash_adrs+0x14>
+9fc0081c:	b205      	lw	v0,9fc00830 <check_flash_adrs+0x1c>
+9fc0081e:	b306      	lw	v1,9fc00834 <check_flash_adrs+0x20>
+9fc00820:	9a40      	lw	v0,0(v0)
+9fc00822:	e269      	addu	v0,v1
+9fc00824:	ec43      	sltu	a0,v0
+9fc00826:	6758      	move	v0,t8
+9fc00828:	e8a0      	jrc	ra
+9fc0082a:	6500      	nop
+9fc0082c:	ffff      	daddiu	a3,sp,124
+9fc0082e:	1cff 2060 	jalx	9f9c8180 <_bmxdudba_address+0x9f9c6184>
+9fc00832:	bf88      	lwu	a0,32(a3)
+9fc00834:	0000      	addiu	s0,sp,0
+9fc00836:	1d00 b207 	jalx	9022c81c <_bmxdudba_address+0x9022a820>
+
+9fc00838 <search_flash_end>:
+9fc00838:	b207      	lw	v0,9fc00854 <search_flash_end+0x1c>
+9fc0083a:	6b00      	li	v1,0
+9fc0083c:	e449      	addu	v0,a0,v0
+9fc0083e:	348b      	sra	a0,2
+9fc00840:	eb82      	slt	v1,a0
+9fc00842:	6006      	bteqz	9fc00850 <search_flash_end+0x18>
+9fc00844:	4afc      	addiu	v0,-4
+9fc00846:	9aa0      	lw	a1,0(v0)
+9fc00848:	4d01      	addiu	a1,1
+9fc0084a:	2d02      	bnez	a1,9fc00850 <search_flash_end+0x18>
+9fc0084c:	4b01      	addiu	v1,1
+9fc0084e:	17f8      	b	9fc00840 <search_flash_end+0x8>
+9fc00850:	e8a0      	jrc	ra
+9fc00852:	6500      	nop
+9fc00854:	0000      	addiu	s0,sp,0
+9fc00856:	9d00      	lw	s0,0(a1)
+
+9fc00858 <cmd_echo>:
+9fc00858:	6a32      	li	v0,50
+9fc0085a:	64f5      	save	40,ra,s0-s1
+9fc0085c:	b00f      	lw	s0,9fc00898 <cmd_echo+0x40>
+9fc0085e:	c041      	sb	v0,1(s0)
+9fc00860:	b20f      	lw	v0,9fc0089c <cmd_echo+0x44>
+9fc00862:	6901      	li	s1,1
+9fc00864:	a241      	lbu	v0,1(v0)
+9fc00866:	677c      	move	v1,gp
+9fc00868:	c022      	sb	s1,2(s0)
+9fc0086a:	c045      	sb	v0,5(s0)
+9fc0086c:	b20d      	lw	v0,9fc008a0 <cmd_echo+0x48>
+9fc0086e:	c023      	sb	s1,3(s0)
+9fc00870:	9a80      	lw	a0,0(v0)
+9fc00872:	c024      	sb	s1,4(s0)
+9fc00874:	d882      	sw	a0,8(s0)
+9fc00876:	9a80      	lw	a0,0(v0)
+9fc00878:	1a1f 020e 	jal	9fc00838 <search_flash_end>
+9fc0087c:	d304      	sw	v1,16(sp)
+9fc0087e:	9304      	lw	v1,16(sp)
+9fc00880:	d843      	sw	v0,12(s0)
+9fc00882:	f010 c33b 	sb	s1,-32741(v1)
+9fc00886:	f010 9b48 	lw	v0,-32760(v1)
+9fc0088a:	d844      	sw	v0,16(s0)
+9fc0088c:	6a00      	li	v0,0
+9fc0088e:	6475      	restore	40,ra,s0-s1
+9fc00890:	f010 db48 	sw	v0,-32760(v1)
+9fc00894:	e8a0      	jrc	ra
+9fc00896:	6500      	nop
+9fc00898:	0130      	addiu	s1,sp,192
+9fc0089a:	a000      	lbu	s0,0(s0)
+9fc0089c:	0170      	addiu	s1,sp,448
+9fc0089e:	a000      	lbu	s0,0(s0)
+9fc008a0:	2060      	beqz	s0,9fc00962 <cmd_page_erase+0x2>
+9fc008a2:	bf88      	lwu	a0,32(a3)
+
+9fc008a4 <cmd_peek>:
+9fc008a4:	64c3      	save	24,ra
+9fc008a6:	b218      	lw	v0,9fc00904 <cmd_peek+0x60>
+9fc008a8:	aaa1      	lhu	a1,2(v0)
+9fc008aa:	9a81      	lw	a0,4(v0)
+9fc008ac:	5541      	slti	a1,65
+9fc008ae:	a241      	lbu	v0,1(v0)
+9fc008b0:	6010      	bteqz	9fc008d2 <cmd_peek+0x2e>
+9fc008b2:	7201      	cmpi	v0,1
+9fc008b4:	6013      	bteqz	9fc008dc <cmd_peek+0x38>
+9fc008b6:	7202      	cmpi	v0,2
+9fc008b8:	601b      	bteqz	9fc008f0 <cmd_peek+0x4c>
+9fc008ba:	6a00      	li	v0,0
+9fc008bc:	eaa2      	slt	v0,a1
+9fc008be:	6007      	bteqz	9fc008ce <cmd_peek+0x2a>
+9fc008c0:	e28d      	addu	v1,v0,a0
+9fc008c2:	a3c0      	lbu	a2,0(v1)
+9fc008c4:	b311      	lw	v1,9fc00908 <cmd_peek+0x64>
+9fc008c6:	e26d      	addu	v1,v0,v1
+9fc008c8:	c3c0      	sb	a2,0(v1)
+9fc008ca:	4a01      	addiu	v0,1
+9fc008cc:	17f7      	b	9fc008bc <cmd_peek+0x18>
+9fc008ce:	b40f      	lw	a0,9fc00908 <cmd_peek+0x64>
+9fc008d0:	6d40      	li	a1,64
+9fc008d2:	1a1f 02d3 	jal	9fc00b4c <UARTwrite>
+9fc008d6:	6500      	nop
+9fc008d8:	6443      	restore	24,ra
+9fc008da:	e8a0      	jrc	ra
+9fc008dc:	6a00      	li	v0,0
+9fc008de:	eaa2      	slt	v0,a1
+9fc008e0:	60f6      	bteqz	9fc008ce <cmd_peek+0x2a>
+9fc008e2:	e28d      	addu	v1,v0,a0
+9fc008e4:	abc0      	lhu	a2,0(v1)
+9fc008e6:	b309      	lw	v1,9fc00908 <cmd_peek+0x64>
+9fc008e8:	e26d      	addu	v1,v0,v1
+9fc008ea:	cbc0      	sh	a2,0(v1)
+9fc008ec:	4a02      	addiu	v0,2
+9fc008ee:	17f7      	b	9fc008de <cmd_peek+0x3a>
+9fc008f0:	6a00      	li	v0,0
+9fc008f2:	eaa2      	slt	v0,a1
+9fc008f4:	60ec      	bteqz	9fc008ce <cmd_peek+0x2a>
+9fc008f6:	e28d      	addu	v1,v0,a0
+9fc008f8:	9bc0      	lw	a2,0(v1)
+9fc008fa:	b304      	lw	v1,9fc00908 <cmd_peek+0x64>
+9fc008fc:	e26d      	addu	v1,v0,v1
+9fc008fe:	dbc0      	sw	a2,0(v1)
+9fc00900:	4a04      	addiu	v0,4
+9fc00902:	17f7      	b	9fc008f2 <cmd_peek+0x4e>
+9fc00904:	0170      	addiu	s1,sp,448
+9fc00906:	a000      	lbu	s0,0(s0)
+9fc00908:	0130      	addiu	s1,sp,192
+9fc0090a:	a000      	lbu	s0,0(s0)
+
+9fc0090c <cmd_poke>:
+9fc0090c:	b214      	lw	v0,9fc0095c <cmd_poke+0x50>
+9fc0090e:	a281      	lbu	a0,1(v0)
+9fc00910:	aac1      	lhu	a2,2(v0)
+9fc00912:	7401      	cmpi	a0,1
+9fc00914:	9a61      	lw	v1,4(v0)
+9fc00916:	600c      	bteqz	9fc00930 <cmd_poke+0x24>
+9fc00918:	7402      	cmpi	a0,2
+9fc0091a:	6014      	bteqz	9fc00944 <cmd_poke+0x38>
+9fc0091c:	67a3      	move	a1,v1
+9fc0091e:	e573      	subu	a0,a1,v1
+9fc00920:	ecc2      	slt	a0,a2
+9fc00922:	601a      	bteqz	9fc00958 <cmd_poke+0x4c>
+9fc00924:	e291      	addu	a0,v0,a0
+9fc00926:	4d01      	addiu	a1,1
+9fc00928:	a488      	lbu	a0,8(a0)
+9fc0092a:	f7ff c59f 	sb	a0,-1(a1)
+9fc0092e:	17f7      	b	9fc0091e <cmd_poke+0x12>
+9fc00930:	67a3      	move	a1,v1
+9fc00932:	e573      	subu	a0,a1,v1
+9fc00934:	ecc2      	slt	a0,a2
+9fc00936:	6010      	bteqz	9fc00958 <cmd_poke+0x4c>
+9fc00938:	e291      	addu	a0,v0,a0
+9fc0093a:	4d02      	addiu	a1,2
+9fc0093c:	ac84      	lhu	a0,8(a0)
+9fc0093e:	f7ff cd9e 	sh	a0,-2(a1)
+9fc00942:	17f7      	b	9fc00932 <cmd_poke+0x26>
+9fc00944:	67a3      	move	a1,v1
+9fc00946:	e573      	subu	a0,a1,v1
+9fc00948:	ecc2      	slt	a0,a2
+9fc0094a:	6006      	bteqz	9fc00958 <cmd_poke+0x4c>
+9fc0094c:	e291      	addu	a0,v0,a0
+9fc0094e:	4d04      	addiu	a1,4
+9fc00950:	9c82      	lw	a0,8(a0)
+9fc00952:	f7ff dd9c 	sw	a0,-4(a1)
+9fc00956:	17f7      	b	9fc00946 <cmd_poke+0x3a>
+9fc00958:	e8a0      	jrc	ra
+9fc0095a:	6500      	nop
+9fc0095c:	0170      	addiu	s1,sp,448
+9fc0095e:	a000      	lbu	s0,0(s0)
+
+9fc00960 <cmd_page_erase>:
+9fc00960:	64e3      	save	24,ra,s0
+9fc00962:	b209      	lw	v0,9fc00984 <cmd_page_erase+0x24>
+9fc00964:	9a01      	lw	s0,4(v0)
+9fc00966:	b209      	lw	v0,9fc00988 <cmd_page_erase+0x28>
+9fc00968:	e84c      	and	s0,v0
+9fc0096a:	1a1f 0205 	jal	9fc00814 <check_flash_adrs>
+9fc0096e:	6790      	move	a0,s0
+9fc00970:	2203      	beqz	v0,9fc00978 <cmd_page_erase+0x18>
+9fc00972:	1a1f 0126 	jal	9fc00498 <NVMemErasePage>
+9fc00976:	6790      	move	a0,s0
+9fc00978:	6b01      	li	v1,1
+9fc0097a:	675c      	move	v0,gp
+9fc0097c:	6463      	restore	24,ra,s0
+9fc0097e:	f010 c27b 	sb	v1,-32741(v0)
+9fc00982:	e8a0      	jrc	ra
+9fc00984:	0170      	addiu	s1,sp,448
+9fc00986:	a000      	lbu	s0,0(s0)
+9fc00988:	ffff      	daddiu	a3,sp,124
+9fc0098a:	1fff 64f5 	jalx	9ffd93d4 <_DBG_CODE_ADDR+0x3d6f44>
+
+9fc0098c <cmd_page_write>:
+9fc0098c:	64f5      	save	40,ra,s0-s1
+9fc0098e:	b00f      	lw	s0,9fc009c4 <cmd_page_write+0x38>
+9fc00990:	b30f      	lw	v1,9fc009cc <cmd_page_write+0x40>
+9fc00992:	a841      	lhu	v0,2(s0)
+9fc00994:	9821      	lw	s1,4(s0)
+9fc00996:	4a03      	addiu	v0,3
+9fc00998:	324b      	sra	v0,2
+9fc0099a:	e96c      	and	s1,v1
+9fc0099c:	3248      	sll	v0,2
+9fc0099e:	e229      	addu	v0,s1
+9fc009a0:	d104      	sw	s1,16(sp)
+9fc009a2:	d205      	sw	v0,20(sp)
+9fc009a4:	9305      	lw	v1,20(sp)
+9fc009a6:	e96a      	cmp	s1,v1
+9fc009a8:	600d      	bteqz	9fc009c4 <cmd_page_write+0x38>
+9fc009aa:	1a1f 0205 	jal	9fc00814 <check_flash_adrs>
+9fc009ae:	6791      	move	a0,s1
+9fc009b0:	2207      	beqz	v0,9fc009c0 <cmd_page_write+0x34>
+9fc009b2:	9304      	lw	v1,16(sp)
+9fc009b4:	6791      	move	a0,s1
+9fc009b6:	e16b      	subu	v0,s1,v1
+9fc009b8:	e049      	addu	v0,s0,v0
+9fc009ba:	1a1f 012e 	jal	9fc004b8 <NVMemWriteWord>
+9fc009be:	9aa2      	lw	a1,8(v0)
+9fc009c0:	4904      	addiu	s1,4
+9fc009c2:	17f0      	b	9fc009a4 <cmd_page_write+0x18>
+9fc009c4:	6475      	restore	40,ra,s0-s1
+9fc009c6:	e8a0      	jrc	ra
+9fc009c8:	0170      	addiu	s1,sp,448
+9fc009ca:	a000      	lbu	s0,0(s0)
+9fc009cc:	ffff      	daddiu	a3,sp,124
+9fc009ce:	1fff 64f4 	jalx	9ffd93d0 <_DBG_CODE_ADDR+0x3d6f40>
+
+9fc009d0 <UARTmonit>:
+9fc009d0:	64f4      	save	32,ra,s0-s1
+9fc009d2:	1a1f 00c6 	jal	9fc00318 <Serial1GetKey>
+9fc009d6:	671c      	move	s0,gp
+9fc009d8:	7201      	cmpi	v0,1
+9fc009da:	614d      	btnez	9fc00a76 <UARTmonit+0xa6>
+9fc009dc:	b428      	lw	a0,9fc00a7c <UARTmonit+0xac>
+9fc009de:	1a1f 02db 	jal	9fc00b6c <UARTgetpacket>
+9fc009e2:	6d40      	li	a1,64
+9fc009e4:	22fb      	beqz	v0,9fc009dc <UARTmonit+0xc>
+9fc009e6:	b326      	lw	v1,9fc00a7c <UARTmonit+0xac>
+9fc009e8:	b426      	lw	a0,9fc00a80 <UARTmonit+0xb0>
+9fc009ea:	a340      	lbu	v0,0(v1)
+9fc009ec:	7206      	cmpi	v0,6
+9fc009ee:	c440      	sb	v0,0(a0)
+9fc009f0:	601e      	bteqz	9fc00a2e <UARTmonit+0x5e>
+9fc009f2:	5a07      	sltiu	v0,7
+9fc009f4:	600a      	bteqz	9fc00a0a <UARTmonit+0x3a>
+9fc009f6:	7204      	cmpi	v0,4
+9fc009f8:	6016      	bteqz	9fc00a26 <UARTmonit+0x56>
+9fc009fa:	5a05      	sltiu	v0,5
+9fc009fc:	6010      	bteqz	9fc00a1e <UARTmonit+0x4e>
+9fc009fe:	7201      	cmpi	v0,1
+9fc00a00:	612f      	btnez	9fc00a60 <UARTmonit+0x90>
+9fc00a02:	1a1f 0216 	jal	9fc00858 <cmd_echo>
+9fc00a06:	6500      	nop
+9fc00a08:	102b      	b	9fc00a60 <UARTmonit+0x90>
+9fc00a0a:	720a      	cmpi	v0,10
+9fc00a0c:	6018      	bteqz	9fc00a3e <UARTmonit+0x6e>
+9fc00a0e:	720e      	cmpi	v0,14
+9fc00a10:	601a      	bteqz	9fc00a46 <UARTmonit+0x76>
+9fc00a12:	7208      	cmpi	v0,8
+9fc00a14:	6125      	btnez	9fc00a60 <UARTmonit+0x90>
+9fc00a16:	1a1f 0258 	jal	9fc00960 <cmd_page_erase>
+9fc00a1a:	6500      	nop
+9fc00a1c:	1021      	b	9fc00a60 <UARTmonit+0x90>
+9fc00a1e:	1a1f 0229 	jal	9fc008a4 <cmd_peek>
+9fc00a22:	6500      	nop
+9fc00a24:	101d      	b	9fc00a60 <UARTmonit+0x90>
+9fc00a26:	1a1f 0243 	jal	9fc0090c <cmd_poke>
+9fc00a2a:	6500      	nop
+9fc00a2c:	1019      	b	9fc00a60 <UARTmonit+0x90>
+9fc00a2e:	ab41      	lhu	v0,2(v1)
+9fc00a30:	9b21      	lw	s1,4(v1)
+9fc00a32:	2203      	beqz	v0,9fc00a3a <UARTmonit+0x6a>
+9fc00a34:	1a1f 01cf 	jal	9fc0073c <reset_device>
+9fc00a38:	6791      	move	a0,s1
+9fc00a3a:	e9c0      	jalrc	s1
+9fc00a3c:	1011      	b	9fc00a60 <UARTmonit+0x90>
+9fc00a3e:	1a1f 0263 	jal	9fc0098c <cmd_page_write>
+9fc00a42:	6500      	nop
+9fc00a44:	100d      	b	9fc00a60 <UARTmonit+0x90>
+9fc00a46:	ab41      	lhu	v0,2(v1)
+9fc00a48:	2208      	beqz	v0,9fc00a5a <UARTmonit+0x8a>
+9fc00a4a:	b30f      	lw	v1,9fc00a84 <UARTmonit+0xb4>
+9fc00a4c:	f008 6a01 	li	v0,16385
+9fc00a50:	ab80      	lhu	a0,0(v1)
+9fc00a52:	ea4b      	neg	v0
+9fc00a54:	ea8c      	and	v0,a0
+9fc00a56:	cb40      	sh	v0,0(v1)
+9fc00a58:	1003      	b	9fc00a60 <UARTmonit+0x90>
+9fc00a5a:	1a1f 0142 	jal	9fc00508 <NVMemClearError>
+9fc00a5e:	6500      	nop
+9fc00a60:	f010 a05b 	lbu	v0,-32741(s0)
+9fc00a64:	22b6      	beqz	v0,9fc009d2 <UARTmonit+0x2>
+9fc00a66:	b407      	lw	a0,9fc00a80 <UARTmonit+0xb0>
+9fc00a68:	1a1f 02d3 	jal	9fc00b4c <UARTwrite>
+9fc00a6c:	6d40      	li	a1,64
+9fc00a6e:	6a00      	li	v0,0
+9fc00a70:	f010 c05b 	sb	v0,-32741(s0)
+9fc00a74:	17ae      	b	9fc009d2 <UARTmonit+0x2>
+9fc00a76:	6474      	restore	32,ra,s0-s1
+9fc00a78:	e8a0      	jrc	ra
+9fc00a7a:	6500      	nop
+9fc00a7c:	0170      	addiu	s1,sp,448
+9fc00a7e:	a000      	lbu	s0,0(s0)
+9fc00a80:	0130      	addiu	s1,sp,192
+9fc00a82:	a000      	lbu	s0,0(s0)
+9fc00a84:	f400 bf80 	lwu	a0,1024(a3)
+
+9fc00a88 <IntConfigureSystem>:
+9fc00a88:	308400ff 	andi	a0,a0,0xff
+9fc00a8c:	41606000 	di
+9fc00a90:	40026000 	mfc0	v0,c0_status
+9fc00a94:	3c030040 	lui	v1,0x40
+9fc00a98:	00431025 	or	v0,v0,v1
+9fc00a9c:	40826000 	mtc0	v0,c0_status
+9fc00aa0:	000000c0 	ehb
+9fc00aa4:	3c029fc0 	lui	v0,0x9fc0
+9fc00aa8:	24420000 	addiu	v0,v0,0
+9fc00aac:	40827801 	mtc0	v0,c0_ebase
+9fc00ab0:	000000c0 	ehb
+9fc00ab4:	24020020 	li	v0,32
+9fc00ab8:	40826001 	mtc0	v0,c0_intctl
+9fc00abc:	000000c0 	ehb
+9fc00ac0:	40026800 	mfc0	v0,c0_cause
+9fc00ac4:	3c030080 	lui	v1,0x80
+9fc00ac8:	00431025 	or	v0,v0,v1
+9fc00acc:	40826800 	mtc0	v0,c0_cause
+9fc00ad0:	000000c0 	ehb
+9fc00ad4:	40026000 	mfc0	v0,c0_status
+9fc00ad8:	3c03ffbf 	lui	v1,0xffbf
+9fc00adc:	3463fffd 	ori	v1,v1,0xfffd
+9fc00ae0:	00431024 	and	v0,v0,v1
+9fc00ae4:	40826000 	mtc0	v0,c0_status
+9fc00ae8:	000000c0 	ehb
+9fc00aec:	24020001 	li	v0,1
+9fc00af0:	10820006 	beq	a0,v0,9fc00b0c <IntConfigureSystem+0x84>
+9fc00af4:	24020002 	li	v0,2
+9fc00af8:	14820007 	bne	a0,v0,9fc00b18 <IntConfigureSystem+0x90>
+9fc00afc:	24031000 	li	v1,4096
+9fc00b00:	3c02bf88 	lui	v0,0xbf88
+9fc00b04:	0bf002c6 	j	9fc00b18 <IntConfigureSystem+0x90>
+9fc00b08:	ac431004 	sw	v1,4100(v0)
+9fc00b0c:	24031000 	li	v1,4096
+9fc00b10:	3c02bf88 	lui	v0,0xbf88
+9fc00b14:	ac431008 	sw	v1,4104(v0)
+9fc00b18:	03e00008 	jr	ra
+9fc00b1c:	41606020 	ei
+
+9fc00b20 <Serial1WriteChar>:
+9fc00b20:	7c042420 	seb	a0,a0
+9fc00b24:	3c03bf80 	lui	v1,0xbf80
+9fc00b28:	8c626010 	lw	v0,24592(v1)
+9fc00b2c:	7c420200 	ext	v0,v0,0x8,0x1
+9fc00b30:	1040fffd 	beqz	v0,9fc00b28 <Serial1WriteChar+0x8>
+9fc00b34:	00000000 	nop
+9fc00b38:	41606000 	di
+9fc00b3c:	3c02bf80 	lui	v0,0xbf80
+9fc00b40:	ac446020 	sw	a0,24608(v0)
+9fc00b44:	03e00008 	jr	ra
+9fc00b48:	41606020 	ei
+
+9fc00b4c <UARTwrite>:
+9fc00b4c:	64f5      	save	40,ra,s0-s1
+9fc00b4e:	6724      	move	s1,a0
+9fc00b50:	6704      	move	s0,a0
+9fc00b52:	e02b      	subu	v0,s0,s1
+9fc00b54:	eaa2      	slt	v0,a1
+9fc00b56:	6007      	bteqz	9fc00b66 <UARTwrite+0x1a>
+9fc00b58:	8080      	lb	a0,0(s0)
+9fc00b5a:	d504      	sw	a1,16(sp)
+9fc00b5c:	1e1f 02c8 	jalx	9fc00b20 <Serial1WriteChar>
+9fc00b60:	4801      	addiu	s0,1
+9fc00b62:	9504      	lw	a1,16(sp)
+9fc00b64:	17f6      	b	9fc00b52 <UARTwrite+0x6>
+9fc00b66:	6475      	restore	40,ra,s0-s1
+9fc00b68:	e8a0      	jrc	ra
+9fc00b6a:	6500      	nop
+
+9fc00b6c <UARTgetpacket>:
+9fc00b6c:	64f4      	save	32,ra,s0-s1
+9fc00b6e:	6705      	move	s0,a1
+9fc00b70:	1a1f 00b6 	jal	9fc002d8 <Serial1Available>
+9fc00b74:	6724      	move	s1,a0
+9fc00b76:	ea02      	slt	v0,s0
+9fc00b78:	6a00      	li	v0,0
+9fc00b7a:	6106      	btnez	9fc00b88 <UARTgetpacket+0x1c>
+9fc00b7c:	b404      	lw	a0,9fc00b8c <UARTgetpacket+0x20>
+9fc00b7e:	67b1      	move	a1,s1
+9fc00b80:	1a1f 0100 	jal	9fc00400 <FIFO_dequeue>
+9fc00b84:	67d0      	move	a2,s0
+9fc00b86:	6750      	move	v0,s0
+9fc00b88:	6474      	restore	32,ra,s0-s1
+9fc00b8a:	e8a0      	jrc	ra
+9fc00b8c:	0120      	addiu	s1,sp,128
+9fc00b8e:	a000      	lbu	s0,0(s0)

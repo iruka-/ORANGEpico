@@ -1,0 +1,24 @@
+Configuration:
+    DEVCFG0 = 7ffffffd
+                     1 Debugger enabled
+                    18 Use PGC1/PGD1
+    DEVCFG1 = ff6afd5b
+                     3 Primary oscillator with PLL
+                   1   Primary oscillator: XT
+                  3    Peripheral bus clock: SYSCLK / 8
+                  4    Fail-safe clock monitor disable
+                  8    Clock switching disable
+                 a     Watchdog postscale: 1/1024
+    DEVCFG2 = fff879d9
+                     1 PLL divider: 1/2
+                    5  PLL multiplier: 20x
+                   1   USB PLL divider: 1/2
+                       Enable USB PLL
+                 0     PLL postscaler: 1/1
+    DEVCFG3 = 3affffff
+                 7     Assign irq priority 7 to shadow set
+                       Ethernet RMII enabled
+               2       Default Ethernet i/o pins
+                       Alternate CAN i/o pins
+                       USBID pin: controlled by port
+                       VBuson pin: controlled by port

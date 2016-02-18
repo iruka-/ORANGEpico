@@ -1,0 +1,898 @@
+Archive member included because of file (symbol)
+
+D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+                              c:\tmp\ccvEkpAm.o (SoftReset)
+
+Allocating common symbols
+Common symbol       size              file
+
+pDst                0x4               usb_device.o
+USBDeferINDataStagePackets
+                    0x4               usb_device.o
+BDT                 0x40              usb_device.o
+ProgrammingBuffer   0x80              c:\tmp\ccvEkpAm.o
+CtrlTrfData         0x8               usb_device.o
+BootState           0x1               c:\tmp\ccvEkpAm.o
+USBDeferOUTDataStagePackets
+                    0x4               usb_device.o
+USBDeviceState      0x4               usb_device.o
+controlTransferState
+                    0x1               usb_device.o
+endpoint_number     0x1               usb_device.o
+inPipes             0x10              usb_device.o
+pBDTEntryIn         0x8               usb_device.o
+ProgramMemEnd       0x4               c:\tmp\ccvEkpAm.o
+PacketToPC          0x40              c:\tmp\ccvEkpAm.o
+ep_data_out         0x2               usb_device.o
+USBStatusStageEnabledFlag1
+                    0x4               usb_device.o
+PacketFromPC        0x40              c:\tmp\ccvEkpAm.o
+ConfigsProtected    0x1               c:\tmp\ccvEkpAm.o
+ProgrammedPointer   0x4               c:\tmp\ccvEkpAm.o
+USBStatusStageEnabledFlag2
+                    0x4               usb_device.o
+pBDTEntryOut        0x8               usb_device.o
+BothEP0OutUOWNsSet  0x4               usb_device.o
+ProgramMemStopAddress
+                    0x4               c:\tmp\ccvEkpAm.o
+pBDTEntryEP0OutNext
+                    0x4               usb_device.o
+PacketFromPCBuffer  0x40              c:\tmp\ccvEkpAm.o
+USBBusIsSuspended   0x4               usb_device.o
+MaxPageToErase      0x1               c:\tmp\ccvEkpAm.o
+BufferedDataIndex   0x1               c:\tmp\ccvEkpAm.o
+USBStatusStageTimeoutCounter
+                    0x1               usb_device.o
+blinkStatusValid    0x4               c:\tmp\ccvEkpAm.o
+SetupPkt            0x8               usb_device.o
+ep_data_in          0x2               usb_device.o
+active_protocol     0x1               usb_function_hid.o
+ErasePageTracker    0x1               c:\tmp\ccvEkpAm.o
+shortPacketStatus   0x1               usb_device.o
+pBDTEntryEP0OutCurrent
+                    0x4               usb_device.o
+USBActiveConfiguration
+                    0x1               usb_device.o
+RemoteWakeup        0x4               usb_device.o
+USTATcopy           0x1               usb_device.o
+USBAlternateInterface
+                    0x1               usb_device.o
+outPipes            0xb               usb_device.o
+USBDeferStatusStagePacket
+                    0x4               usb_device.o
+idle_rate           0x1               usb_function_hid.o
+
+Discarded input sections
+
+ .text          0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crti.o
+ .data          0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crti.o
+ .bss           0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crti.o
+ .init          0x0000000000000000        0x8 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crti.o
+ .fini          0x0000000000000000        0x8 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crti.o
+ .text          0x0000000000000000      0x12c d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+ .data          0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+ .bss           0x0000000000000000       0x20 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+ .reginfo       0x0000000000000000       0x18 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+ .ctors         0x0000000000000000        0x4 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+ .dtors         0x0000000000000000        0x4 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+ .jcr           0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+ .sdata         0x0000000000000000        0x4 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+ .fini          0x0000000000000000       0x10 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+ .init          0x0000000000000000       0x10 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+ .text          0x0000000000000000        0x0 crt.o
+ .data          0x0000000000000000        0x0 crt.o
+ .bss           0x0000000000000000        0x0 crt.o
+ .reginfo       0x0000000000000000       0x18 crt.o
+ .pdr           0x0000000000000000       0xa0 crt.o
+ .text          0x0000000000000000        0x0 util.o
+ .data          0x0000000000000000        0x0 util.o
+ .bss           0x0000000000000000        0x0 util.o
+ .reginfo       0x0000000000000000       0x18 util.o
+ .pdr           0x0000000000000000       0x80 util.o
+ .text.wait_ms  0x0000000000000000       0x1c util.o
+ .text          0x0000000000000000        0x0 NVMem.o
+ .data          0x0000000000000000        0x0 NVMem.o
+ .bss           0x0000000000000000        0x0 NVMem.o
+ .reginfo       0x0000000000000000       0x18 NVMem.o
+ .pdr           0x0000000000000000       0xa0 NVMem.o
+ .sdata.countPerMicroSec
+                0x0000000000000000        0x4 NVMem.o
+ .text          0x0000000000000000        0x0 usb_descriptors.o
+ .data          0x0000000000000000        0x0 usb_descriptors.o
+ .bss           0x0000000000000000        0x0 usb_descriptors.o
+ .reginfo       0x0000000000000000       0x18 usb_descriptors.o
+ .text          0x0000000000000000        0x0 usb_device.o
+ .data          0x0000000000000000        0x0 usb_device.o
+ .bss           0x0000000000000000        0x0 usb_device.o
+ .reginfo       0x0000000000000000       0x18 usb_device.o
+ .pdr           0x0000000000000000      0x100 usb_device.o
+ .text          0x0000000000000000        0x0 usb_function_hid.o
+ .data          0x0000000000000000        0x0 usb_function_hid.o
+ .bss           0x0000000000000000        0x0 usb_function_hid.o
+ .reginfo       0x0000000000000000       0x18 usb_function_hid.o
+ .pdr           0x0000000000000000       0x20 usb_function_hid.o
+ .text          0x0000000000000000        0x0 config.o
+ .data          0x0000000000000000        0x0 config.o
+ .bss           0x0000000000000000        0x0 config.o
+ .reginfo       0x0000000000000000       0x18 config.o
+ .text          0x0000000000000000        0x0 c:\tmp\ccvEkpAm.o
+ .data          0x0000000000000000        0x0 c:\tmp\ccvEkpAm.o
+ .bss           0x0000000000000000        0x0 c:\tmp\ccvEkpAm.o
+ .reginfo       0x0000000000000000       0x18 c:\tmp\ccvEkpAm.o
+ .pdr           0x0000000000000000       0xc0 c:\tmp\ccvEkpAm.o
+ .text          0x0000000000000000        0x0 D:\x4-easy-rev999\p32\obj\non-free\32MX220F032D.o
+ .data          0x0000000000000000        0x0 D:\x4-easy-rev999\p32\obj\non-free\32MX220F032D.o
+ .bss           0x0000000000000000        0x0 D:\x4-easy-rev999\p32\obj\non-free\32MX220F032D.o
+ .reginfo       0x0000000000000000       0x18 D:\x4-easy-rev999\p32\obj\non-free\32MX220F032D.o
+ .text          0x0000000000000000        0x0 D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+ .data          0x0000000000000000        0x0 D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+ .bss           0x0000000000000000        0x0 D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+ .reginfo       0x0000000000000000       0x18 D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+ .pdr           0x0000000000000000       0x20 D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+ .mdebug.abi32  0x0000000000000000        0x0 D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+ .text          0x0000000000000000       0x54 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtend.o
+ .data          0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtend.o
+ .bss           0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtend.o
+ .reginfo       0x0000000000000000       0x18 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtend.o
+ .ctors         0x0000000000000000        0x4 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtend.o
+ .dtors         0x0000000000000000        0x4 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtend.o
+ .jcr           0x0000000000000000        0x4 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtend.o
+ .init          0x0000000000000000       0x10 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtend.o
+ .text          0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtn.o
+ .data          0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtn.o
+ .bss           0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtn.o
+ .reginfo       0x0000000000000000       0x18 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtn.o
+ .init          0x0000000000000000       0x10 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtn.o
+ .fini          0x0000000000000000       0x10 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtn.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+exception_mem    0x00000000bfc00000 0x0000000000001000
+kseg0_program_mem 0x000000009d000000 0x0000000000003fff xr
+debug_exec_mem   0x000000009fc02000 0x0000000000000760
+kseg0_boot_mem   0x000000009fc00010 0x0000000000000004
+bootrom          0x000000009fc0000c 0x0000000000000bf0
+config3          0x00000000bfc00bf0 0x0000000000000004
+config2          0x00000000bfc00bf4 0x0000000000000004
+config1          0x00000000bfc00bf8 0x0000000000000004
+config0          0x00000000bfc00bfc 0x0000000000000004
+boot_software_key 0x00000000a0000000 0x0000000000000004
+kseg1_data_mem   0x00000000a0000004 0x0000000000001ffc w !x
+sfrs             0x00000000bf800000 0x0000000000100000
+configsfrs       0x00000000bfc00bf0 0x0000000000000010
+kseg1_boot_mem   0x0000000000000000 0xffffffffffffffff
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crti.o
+LOAD d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+LOAD crt.o
+LOAD util.o
+LOAD NVMem.o
+LOAD usb_descriptors.o
+LOAD usb_device.o
+LOAD usb_function_hid.o
+LOAD config.o
+LOAD c:\tmp\ccvEkpAm.o
+LOAD D:\x4-easy-rev999\p32\obj\non-free\32MX220F032D.o
+LOAD D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a
+                0x0000000000000200                _min_heap_size = 0x200
+LOAD d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/../../../../mips-elf/lib/soft-float/el\libm.a
+LOAD d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el\libgcc.a
+LOAD d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/../../../../mips-elf/lib/soft-float/el\libc.a
+LOAD d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el\libgcc.a
+LOAD d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el\libgcc.a
+LOAD d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtend.o
+LOAD d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtn.o
+                0x0000000000000400                PROVIDE (_min_stack_size, 0x400)
+                0x0000000000000000                PROVIDE (_min_heap_size, 0x0)
+                0x0000000000000001                PROVIDE (_vector_spacing, 0x1)
+                0x000000009fc00000                _ebase_address = 0x9fc00000
+                0x00000000bfc00000                _RESET_ADDR = 0xbfc00000
+                0x00000000bfc00380                _BEV_EXCPT_ADDR = 0xbfc00380
+                0x00000000bfc00480                _DBG_EXCPT_ADDR = 0xbfc00480
+                0x000000009fc00490                _DBG_CODE_ADDR = 0x9fc00490
+                0x0000000000000760                _DBG_CODE_SIZE = 0x760
+                0x00000000bfc00180                _GEN_EXCPT_ADDR = (_RESET_ADDR + 0x180)
+
+.boot_software_key
+ *(.boot_software_key)
+
+.bootrom        0x000000009fc0000c      0xb38
+ *(.bootrom)
+ .bootrom       0x000000009fc0000c       0xf4 crt.o
+                0x000000009fc000f8                INTRestoreInterrupts
+                0x000000009fc000f8                INTClearFlag
+                0x000000009fc000f8                INTDisableInterrupts
+ .bootrom       0x000000009fc00100       0x2c util.o
+                0x000000009fc00101                memset
+                0x000000009fc00115                wait_nloop
+                0x000000009fc0011d                delay_us
+ .bootrom       0x000000009fc0012c       0xe0 NVMem.o
+                0x000000009fc0012d                NVMemOperation
+                0x000000009fc00189                NVMemErasePage
+                0x000000009fc001a9                NVMemWriteWord
+                0x000000009fc001d1                NVMemWriteRow
+                0x000000009fc001fd                NVMemClearError
+ .bootrom       0x000000009fc0020c      0x3bc usb_device.o
+                0x000000009fc0024d                USBDeviceInit
+                0x000000009fc003ed                USBEnableEndpoint
+                0x000000009fc00425                USBTransferOnePacket
+                0x000000009fc004e1                USBCtrlEPAllowStatusStage
+ .bootrom       0x000000009fc005c8      0x57c c:\tmp\ccvEkpAm.o
+                0x000000009fc005c9                WriteFlashSubBlock
+                0x000000009fc00615                BootApplication
+                0x000000009fc0093d                ProcessIO
+                0x000000009fc009f5                main
+                0x000000009fc00ae1                USBCBSendResume
+                0x000000009fc00b05                USER_USB_CALLBACK_EVENT_HANDLER
+
+.config_BFC00BF0
+                0x00000000bfc00bf0        0x4
+ *(.config_BFC00BF0)
+ .config_BFC00BF0
+                0x00000000bfc00bf0        0x4 config.o
+                0x00000000bfc00bf0                _config3
+
+.config_BFC00BF4
+                0x00000000bfc00bf4        0x4
+ *(.config_BFC00BF4)
+ .config_BFC00BF4
+                0x00000000bfc00bf4        0x4 config.o
+                0x00000000bfc00bf4                _config2
+
+.config_BFC00BF8
+                0x00000000bfc00bf8        0x4
+ *(.config_BFC00BF8)
+ .config_BFC00BF8
+                0x00000000bfc00bf8        0x4 config.o
+                0x00000000bfc00bf8                _config1
+
+.config_BFC00BFC
+                0x00000000bfc00bfc        0x4
+ *(.config_BFC00BFC)
+ .config_BFC00BFC
+                0x00000000bfc00bfc        0x4 config.o
+                0x00000000bfc00bfc                _config0
+                0x0000000000000400                PROVIDE (_min_stack_size, 0x400)
+                0x0000000000000000                PROVIDE (_min_heap_size, 0x0)
+
+.reset          0x00000000bfc00000        0xc
+ *(.reset)
+ .reset         0x00000000bfc00000        0xc crt.o
+                0x00000000bfc00000                _reset
+
+.bev_excpt
+ *(.bev_handler)
+
+.dbg_excpt      0x00000000bfc00480        0x0
+                0x00000000bfc00480                . = (. + DEFINED (_DEBUGGER)?0x8:0x0)
+
+.dbg_code       0x000000009fc00490        0x0
+                0x000000009fc00490                . = (. + DEFINED (_DEBUGGER)?0xff0:0x0)
+
+.app_excpt
+ *(.gen_handler)
+
+.vector_0       0x000000009fc00200        0x0
+ *(.vector_0)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_0) <= (_vector_spacing << 0x5))), function at exception vector 0 too large)
+
+.vector_1       0x000000009fc00220        0x0
+ *(.vector_1)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_1) <= (_vector_spacing << 0x5))), function at exception vector 1 too large)
+
+.vector_2       0x000000009fc00240        0x0
+ *(.vector_2)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_2) <= (_vector_spacing << 0x5))), function at exception vector 2 too large)
+
+.vector_3       0x000000009fc00260        0x0
+ *(.vector_3)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_3) <= (_vector_spacing << 0x5))), function at exception vector 3 too large)
+
+.vector_4       0x000000009fc00280        0x0
+ *(.vector_4)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_4) <= (_vector_spacing << 0x5))), function at exception vector 4 too large)
+
+.vector_5       0x000000009fc002a0        0x0
+ *(.vector_5)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_5) <= (_vector_spacing << 0x5))), function at exception vector 5 too large)
+
+.vector_6       0x000000009fc002c0        0x0
+ *(.vector_6)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_6) <= (_vector_spacing << 0x5))), function at exception vector 6 too large)
+
+.vector_7       0x000000009fc002e0        0x0
+ *(.vector_7)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_7) <= (_vector_spacing << 0x5))), function at exception vector 7 too large)
+
+.vector_8       0x000000009fc00300        0x0
+ *(.vector_8)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_8) <= (_vector_spacing << 0x5))), function at exception vector 8 too large)
+
+.vector_9       0x000000009fc00320        0x0
+ *(.vector_9)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_9) <= (_vector_spacing << 0x5))), function at exception vector 9 too large)
+
+.vector_10      0x000000009fc00340        0x0
+ *(.vector_10)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_10) <= (_vector_spacing << 0x5))), function at exception vector 10 too large)
+
+.vector_11      0x000000009fc00360        0x0
+ *(.vector_11)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_11) <= (_vector_spacing << 0x5))), function at exception vector 11 too large)
+
+.vector_12      0x000000009fc00380        0x0
+ *(.vector_12)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_12) <= (_vector_spacing << 0x5))), function at exception vector 12 too large)
+
+.vector_13      0x000000009fc003a0        0x0
+ *(.vector_13)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_13) <= (_vector_spacing << 0x5))), function at exception vector 13 too large)
+
+.vector_14      0x000000009fc003c0        0x0
+ *(.vector_14)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_14) <= (_vector_spacing << 0x5))), function at exception vector 14 too large)
+
+.vector_15      0x000000009fc003e0        0x0
+ *(.vector_15)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_15) <= (_vector_spacing << 0x5))), function at exception vector 15 too large)
+
+.vector_16      0x000000009fc00400        0x0
+ *(.vector_16)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_16) <= (_vector_spacing << 0x5))), function at exception vector 16 too large)
+
+.vector_17      0x000000009fc00420        0x0
+ *(.vector_17)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_17) <= (_vector_spacing << 0x5))), function at exception vector 17 too large)
+
+.vector_18      0x000000009fc00440        0x0
+ *(.vector_18)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_18) <= (_vector_spacing << 0x5))), function at exception vector 18 too large)
+
+.vector_19      0x000000009fc00460        0x0
+ *(.vector_19)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_19) <= (_vector_spacing << 0x5))), function at exception vector 19 too large)
+
+.vector_20      0x000000009fc00480        0x0
+ *(.vector_20)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_20) <= (_vector_spacing << 0x5))), function at exception vector 20 too large)
+
+.vector_21      0x000000009fc004a0        0x0
+ *(.vector_21)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_21) <= (_vector_spacing << 0x5))), function at exception vector 21 too large)
+
+.vector_22      0x000000009fc004c0        0x0
+ *(.vector_22)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_22) <= (_vector_spacing << 0x5))), function at exception vector 22 too large)
+
+.vector_23      0x000000009fc004e0        0x0
+ *(.vector_23)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_23) <= (_vector_spacing << 0x5))), function at exception vector 23 too large)
+
+.vector_24      0x000000009fc00500        0x0
+ *(.vector_24)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_24) <= (_vector_spacing << 0x5))), function at exception vector 24 too large)
+
+.vector_25      0x000000009fc00520        0x0
+ *(.vector_25)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_25) <= (_vector_spacing << 0x5))), function at exception vector 25 too large)
+
+.vector_26      0x000000009fc00540        0x0
+ *(.vector_26)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_26) <= (_vector_spacing << 0x5))), function at exception vector 26 too large)
+
+.vector_27      0x000000009fc00560        0x0
+ *(.vector_27)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_27) <= (_vector_spacing << 0x5))), function at exception vector 27 too large)
+
+.vector_28      0x000000009fc00580        0x0
+ *(.vector_28)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_28) <= (_vector_spacing << 0x5))), function at exception vector 28 too large)
+
+.vector_29      0x000000009fc005a0        0x0
+ *(.vector_29)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_29) <= (_vector_spacing << 0x5))), function at exception vector 29 too large)
+
+.vector_30      0x000000009fc005c0        0x0
+ *(.vector_30)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_30) <= (_vector_spacing << 0x5))), function at exception vector 30 too large)
+
+.vector_31      0x000000009fc005e0        0x0
+ *(.vector_31)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_31) <= (_vector_spacing << 0x5))), function at exception vector 31 too large)
+
+.vector_32      0x000000009fc00600        0x0
+ *(.vector_32)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_32) <= (_vector_spacing << 0x5))), function at exception vector 32 too large)
+
+.vector_33      0x000000009fc00620        0x0
+ *(.vector_33)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_33) <= (_vector_spacing << 0x5))), function at exception vector 33 too large)
+
+.vector_34      0x000000009fc00640        0x0
+ *(.vector_34)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_34) <= (_vector_spacing << 0x5))), function at exception vector 34 too large)
+
+.vector_35      0x000000009fc00660        0x0
+ *(.vector_35)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_35) <= (_vector_spacing << 0x5))), function at exception vector 35 too large)
+
+.vector_36      0x000000009fc00680        0x0
+ *(.vector_36)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_36) <= (_vector_spacing << 0x5))), function at exception vector 36 too large)
+
+.vector_37      0x000000009fc006a0        0x0
+ *(.vector_37)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_37) <= (_vector_spacing << 0x5))), function at exception vector 37 too large)
+
+.vector_38      0x000000009fc006c0        0x0
+ *(.vector_38)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_38) <= (_vector_spacing << 0x5))), function at exception vector 38 too large)
+
+.vector_39      0x000000009fc006e0        0x0
+ *(.vector_39)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_39) <= (_vector_spacing << 0x5))), function at exception vector 39 too large)
+
+.vector_40      0x000000009fc00700        0x0
+ *(.vector_40)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_40) <= (_vector_spacing << 0x5))), function at exception vector 40 too large)
+
+.vector_41      0x000000009fc00720        0x0
+ *(.vector_41)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_41) <= (_vector_spacing << 0x5))), function at exception vector 41 too large)
+
+.vector_42      0x000000009fc00740        0x0
+ *(.vector_42)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_42) <= (_vector_spacing << 0x5))), function at exception vector 42 too large)
+
+.vector_43      0x000000009fc00760        0x0
+ *(.vector_43)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_43) <= (_vector_spacing << 0x5))), function at exception vector 43 too large)
+
+.vector_44      0x000000009fc00780        0x0
+ *(.vector_44)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_44) <= (_vector_spacing << 0x5))), function at exception vector 44 too large)
+
+.vector_45      0x000000009fc007a0        0x0
+ *(.vector_45)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_45) <= (_vector_spacing << 0x5))), function at exception vector 45 too large)
+
+.vector_46      0x000000009fc007c0        0x0
+ *(.vector_46)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_46) <= (_vector_spacing << 0x5))), function at exception vector 46 too large)
+
+.vector_47      0x000000009fc007e0        0x0
+ *(.vector_47)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_47) <= (_vector_spacing << 0x5))), function at exception vector 47 too large)
+
+.vector_48      0x000000009fc00800        0x0
+ *(.vector_48)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_48) <= (_vector_spacing << 0x5))), function at exception vector 48 too large)
+
+.vector_49      0x000000009fc00820        0x0
+ *(.vector_49)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_49) <= (_vector_spacing << 0x5))), function at exception vector 49 too large)
+
+.vector_50      0x000000009fc00840        0x0
+ *(.vector_50)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_50) <= (_vector_spacing << 0x5))), function at exception vector 50 too large)
+
+.vector_51      0x000000009fc00860        0x0
+ *(.vector_51)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_51) <= (_vector_spacing << 0x5))), function at exception vector 51 too large)
+
+.vector_52      0x000000009fc00880        0x0
+ *(.vector_52)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_52) <= (_vector_spacing << 0x5))), function at exception vector 52 too large)
+
+.vector_53      0x000000009fc008a0        0x0
+ *(.vector_53)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_53) <= (_vector_spacing << 0x5))), function at exception vector 53 too large)
+
+.vector_54      0x000000009fc008c0        0x0
+ *(.vector_54)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_54) <= (_vector_spacing << 0x5))), function at exception vector 54 too large)
+
+.vector_55      0x000000009fc008e0        0x0
+ *(.vector_55)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_55) <= (_vector_spacing << 0x5))), function at exception vector 55 too large)
+
+.vector_56      0x000000009fc00900        0x0
+ *(.vector_56)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_56) <= (_vector_spacing << 0x5))), function at exception vector 56 too large)
+
+.vector_57      0x000000009fc00920        0x0
+ *(.vector_57)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_57) <= (_vector_spacing << 0x5))), function at exception vector 57 too large)
+
+.vector_58      0x000000009fc00940        0x0
+ *(.vector_58)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_58) <= (_vector_spacing << 0x5))), function at exception vector 58 too large)
+
+.vector_59      0x000000009fc00960        0x0
+ *(.vector_59)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_59) <= (_vector_spacing << 0x5))), function at exception vector 59 too large)
+
+.vector_60      0x000000009fc00980        0x0
+ *(.vector_60)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_60) <= (_vector_spacing << 0x5))), function at exception vector 60 too large)
+
+.vector_61      0x000000009fc009a0        0x0
+ *(.vector_61)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_61) <= (_vector_spacing << 0x5))), function at exception vector 61 too large)
+
+.vector_62      0x000000009fc009c0        0x0
+ *(.vector_62)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_62) <= (_vector_spacing << 0x5))), function at exception vector 62 too large)
+
+.vector_63      0x000000009fc009e0        0x0
+ *(.vector_63)
+                0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_63) <= (_vector_spacing << 0x5))), function at exception vector 63 too large)
+
+.startup
+ *(.startup)
+
+.text           0x000000009d000000      0xf7c
+                0x000000009d000000                _text_begin = .
+ *(.text .stub .text.* .gnu.linkonce.t.*)
+ .text.USBCtrlTrfTxService
+                0x000000009d000000       0x94 usb_device.o
+ .text.USBCtrlEPAllowDataStage
+                0x000000009d000094       0xd0 usb_device.o
+                0x000000009d000095                USBCtrlEPAllowDataStage
+ .text.USBDeviceTasks
+                0x000000009d000164      0xcd4 usb_device.o
+                0x000000009d000165                USBDeviceTasks
+ .text.USBCheckHIDRequest
+                0x000000009d000e38       0xcc usb_function_hid.o
+                0x000000009d000e39                USBCheckHIDRequest
+ .text.SoftReset
+                0x000000009d000f04       0x78 D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+                0x000000009d000f04                SoftReset
+ *(.text.*personality*)
+ *(.gnu.warning)
+ *(.mips16.fn.*)
+ *(.mips16.call.*)
+                0x000000009d000f7c                _text_end = .
+
+.rodata         0x000000009d000f7c       0x6c
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata.device_dsc
+                0x000000009d000f7c       0x14 usb_descriptors.o
+                0x000000009d000f7c                device_dsc
+ .rodata.configDescriptor1
+                0x000000009d000f90       0x2c usb_descriptors.o
+                0x000000009d000f90                configDescriptor1
+ .rodata.hid_rpt01
+                0x000000009d000fbc       0x20 usb_descriptors.o
+                0x000000009d000fbc                hid_rpt01
+ .rodata.USB_SD_Ptr
+                0x000000009d000fdc        0xc usb_descriptors.o
+                0x000000009d000fdc                USB_SD_Ptr
+ *(.rodata1)
+                0x000000009d000fe8                . = ALIGN (0x4)
+
+.sdata2         0x000000009d000fe8        0x0
+ *(.sdata2 .sdata2.* .gnu.linkonce.s2.*)
+                0x000000009d000fe8                . = ALIGN (0x4)
+
+.sbss2          0x000000009d000fe8        0x0
+ *(.sbss2 .sbss2.* .gnu.linkonce.sb2.*)
+                0x000000009d000fe8                . = ALIGN (0x4)
+
+.eh_frame_hdr
+ *(.eh_frame_hdr)
+
+.eh_frame       0x000000009d000fe8        0x4
+ *(.eh_frame)
+ .eh_frame      0x000000009d000fe8        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+ .eh_frame      0x000000009d000fe8        0x4 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtend.o
+
+.rel.dyn        0x000000009d000fec        0x0
+ .rel.dyn       0x0000000000000000        0x0 usb_descriptors.o
+
+.dbg_data       0x00000000a0000004        0x0
+                0x00000000a0000004                . = (. + DEFINED (_DEBUGGER)?0x200:0x0)
+
+.data           0x00000000a0000004        0x0 load address 0x000000009d000fec
+                0x00000000a0000004                _data_begin = .
+ *(.data .data.* .gnu.linkonce.d.*)
+ *(.gnu.linkonce.d.*personality*)
+ *(.data1)
+                0x000000009d000fec                _data_image_begin = LOADADDR (.data)
+
+.eh_frame
+ *(.eh_frame)
+                0x00000000a0008000                _gp = (ALIGN (0x10) + 0x7ff0)
+
+.got
+ *(.got.plt)
+ *(.got)
+
+.sdata          0x00000000a0000004       0x10 load address 0x000000009d000fec
+                0x00000000a0000004                _sdata_begin = .
+ *(.sdata .sdata.* .gnu.linkonce.s.*)
+ .sdata.sd000   0x00000000a0000004        0x4 usb_descriptors.o
+                0x00000000a0000004                sd000
+ .sdata.sd001   0x00000000a0000008        0x4 usb_descriptors.o
+                0x00000000a0000008                sd001
+ .sdata.sd002   0x00000000a000000c        0x4 usb_descriptors.o
+                0x00000000a000000c                sd002
+ .sdata.USB_CD_Ptr
+                0x00000000a0000010        0x4 usb_descriptors.o
+                0x00000000a0000010                USB_CD_Ptr
+                0x00000000a0000014                _sdata_end = .
+
+.lit8
+ *(.lit8)
+
+.lit4
+ *(.lit4)
+                0x00000000a0000014                . = ALIGN (0x4)
+                0x00000000a0000014                _data_end = .
+                0x00000000a0000014                _bss_begin = .
+
+.sbss           0x00000000a0000014       0x7d load address 0x000000009d000ffc
+                0x00000000a0000014                _sbss_begin = .
+ *(.dynsbss)
+ *(.sbss .sbss.* .gnu.linkonce.sb.*)
+ .sbss.USBOutHandle
+                0x00000000a0000014        0x4 c:\tmp\ccvEkpAm.o
+                0x00000000a0000014                USBOutHandle
+ .sbss.USBInHandle
+                0x00000000a0000018        0x4 c:\tmp\ccvEkpAm.o
+                0x00000000a0000018                USBInHandle
+ .sbss.SoftwareKey
+                0x00000000a000001c        0x4 c:\tmp\ccvEkpAm.o
+                0x00000000a000001c                SoftwareKey
+ .sbss.delay_count.9561
+                0x00000000a0000020        0x2 c:\tmp\ccvEkpAm.o
+ .sbss.led_count.9477
+                0x00000000a0000022        0x2 c:\tmp\ccvEkpAm.o
+ *(.scommon)
+ .scommon       0x00000000a0000024       0x4c usb_device.o
+                0x00000000a0000024                pDst
+                0x00000000a0000028                USBDeferINDataStagePackets
+                0x00000000a000002c                USBDeferOUTDataStagePackets
+                0x00000000a0000030                USBDeviceState
+                0x00000000a0000034                controlTransferState
+                0x00000000a0000035                endpoint_number
+                0x00000000a0000038                ep_data_out
+                0x00000000a000003c                USBStatusStageEnabledFlag1
+                0x00000000a0000040                USBStatusStageEnabledFlag2
+                0x00000000a0000044                BothEP0OutUOWNsSet
+                0x00000000a0000048                pBDTEntryEP0OutNext
+                0x00000000a000004c                USBBusIsSuspended
+                0x00000000a0000050                USBStatusStageTimeoutCounter
+                0x00000000a0000054                ep_data_in
+                0x00000000a0000056                shortPacketStatus
+                0x00000000a0000058                pBDTEntryEP0OutCurrent
+                0x00000000a000005c                USBActiveConfiguration
+                0x00000000a0000060                RemoteWakeup
+                0x00000000a0000064                USTATcopy
+                0x00000000a0000068                USBAlternateInterface
+                0x00000000a000006c                USBDeferStatusStagePacket
+ .scommon       0x00000000a0000070        0x2 usb_function_hid.o
+                0x00000000a0000070                active_protocol
+                0x00000000a0000071                idle_rate
+ *fill*         0x00000000a0000072        0x2 00
+ .scommon       0x00000000a0000074       0x1d c:\tmp\ccvEkpAm.o
+                0x00000000a0000074                BootState
+                0x00000000a0000078                ProgramMemEnd
+                0x00000000a000007c                ConfigsProtected
+                0x00000000a0000080                ProgrammedPointer
+                0x00000000a0000084                ProgramMemStopAddress
+                0x00000000a0000088                MaxPageToErase
+                0x00000000a0000089                BufferedDataIndex
+                0x00000000a000008c                blinkStatusValid
+                0x00000000a0000090                ErasePageTracker
+                0x00000000a0000091                _sbss_end = .
+
+.bss            0x00000000a0000200      0x1bc load address 0x000000009d000ffc
+ *(.dynbss)
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ *(COMMON)
+ COMMON         0x00000000a0000200       0x7b usb_device.o
+                0x00000000a0000200                BDT
+                0x00000000a0000240                CtrlTrfData
+                0x00000000a0000248                inPipes
+                0x00000000a0000258                pBDTEntryIn
+                0x00000000a0000260                pBDTEntryOut
+                0x00000000a0000268                SetupPkt
+                0x00000000a0000270                outPipes
+ *fill*         0x00000000a000027b        0x1 00
+ COMMON         0x00000000a000027c      0x140 c:\tmp\ccvEkpAm.o
+                0x00000000a000027c                ProgrammingBuffer
+                0x00000000a00002fc                PacketToPC
+                0x00000000a000033c                PacketFromPC
+                0x00000000a000037c                PacketFromPCBuffer
+                0x00000000a00003bc                . = ALIGN (0x4)
+                0x00000000a00003bc                . = ALIGN (0x4)
+                0x00000000a00003bc                _end = .
+                0x00000000a00003bc                _bss_end = .
+
+.heap           0x00000000a00003bc      0x200 load address 0x000000009d000ffc
+                0x00000000a00003bc                _heap = .
+                0x00000000a00005bc                . = (. + _min_heap_size)
+ *fill*         0x00000000a00003bc      0x200 00
+
+.stack          0x00000000a00005bc      0x400 load address 0x000000009d000ffc
+                0x00000000a00005bc                _splim = .
+                0x00000000a00005bc                _SPLIM = .
+                0x00000000a00009bc                . = (. + _min_stack_size)
+ *fill*         0x00000000a00005bc      0x400 00
+
+.ramfunc        0x00000000a0001000        0x0 load address 0x000000009d000ffc
+                0x00000000a0001000                _ramfunc_begin = .
+ *(.ramfunc .ramfunc.*)
+                0x00000000a0001000                . = ALIGN (0x4)
+                0x00000000a0001000                _ramfunc_end = .
+                0x000000009d000ffc                _ramfunc_image_begin = LOADADDR (.ramfunc)
+                0x0000000000000000                _ramfunc_length = SIZEOF (.ramfunc)
+                0x0000000000000ffc                _bmxdkpba_address = (_ramfunc_begin - ORIGIN (kseg1_data_mem))
+                0x0000000000001ffc                _bmxdudba_address = 0x1ffc
+                0x0000000000001ffc                _bmxdupba_address = 0x1ffc
+                0x00000000a0002000                _stack = (_ramfunc_length > 0x0)?(_ramfunc_begin - 0x4):(ORIGIN (kseg1_data_mem) + 0x1ffc)
+                0x0000000000000001                ASSERT (((_min_stack_size + _min_heap_size) <= (_stack - _heap)), Not enough space to allocate both stack and heap.  Reduce heap and/or stack size.)
+
+.pdr            0x0000000000000000        0x0
+ *(.pdr)
+ .pdr           0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crti.o
+ .pdr           0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+ .pdr           0x0000000000000000        0x0 usb_descriptors.o
+ .pdr           0x0000000000000000        0x0 config.o
+ .pdr           0x0000000000000000        0x0 D:\x4-easy-rev999\p32\obj\non-free\32MX220F032D.o
+ .pdr           0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtend.o
+ .pdr           0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtn.o
+
+.reginfo        0x0000000000000000       0x18
+ *(.reginfo)
+ .reginfo       0x0000000000000000       0x18 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crti.o
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.mdebug.abi32   0x0000000000000000        0x0
+ .mdebug.abi32  0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+ .mdebug.abi32  0x0000000000000000        0x0 util.o
+ .mdebug.abi32  0x0000000000000000        0x0 NVMem.o
+ .mdebug.abi32  0x0000000000000000        0x0 usb_descriptors.o
+ .mdebug.abi32  0x0000000000000000        0x0 usb_device.o
+ .mdebug.abi32  0x0000000000000000        0x0 usb_function_hid.o
+ .mdebug.abi32  0x0000000000000000        0x0 config.o
+ .mdebug.abi32  0x0000000000000000        0x0 c:\tmp\ccvEkpAm.o
+ .mdebug.abi32  0x0000000000000000        0x0 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtend.o
+
+.gnu.attributes
+                0x0000000000000000       0x10
+ .gnu.attributes
+                0x0000000000000000       0x10 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+ .gnu.attributes
+                0x0000000000000010       0x10 util.o
+ .gnu.attributes
+                0x0000000000000020       0x10 NVMem.o
+ .gnu.attributes
+                0x0000000000000030       0x10 usb_descriptors.o
+ .gnu.attributes
+                0x0000000000000040       0x10 usb_device.o
+ .gnu.attributes
+                0x0000000000000050       0x10 usb_function_hid.o
+ .gnu.attributes
+                0x0000000000000060       0x10 config.o
+ .gnu.attributes
+                0x0000000000000070       0x10 c:\tmp\ccvEkpAm.o
+ .gnu.attributes
+                0x0000000000000080       0x10 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtend.o
+
+.comment        0x0000000000000000       0xa5
+ *(.comment)
+ .comment       0x0000000000000000       0x12 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtbegin.o
+ .comment       0x0000000000000012       0x30 util.o
+                                         0x31 (size before relaxing)
+ .comment       0x0000000000000000       0x31 NVMem.o
+ .comment       0x0000000000000000       0x31 usb_descriptors.o
+ .comment       0x0000000000000000       0x31 usb_device.o
+ .comment       0x0000000000000000       0x31 usb_function_hid.o
+ .comment       0x0000000000000000       0x31 config.o
+ .comment       0x0000000000000000       0x31 c:\tmp\ccvEkpAm.o
+ .comment       0x0000000000000042       0x51 D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+                                         0x52 (size before relaxing)
+ .comment       0x0000000000000093       0x12 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtend.o
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges  0x0000000000000000       0x70
+ *(.debug_aranges)
+ .debug_aranges
+                0x0000000000000000       0x28 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crti.o
+ .debug_aranges
+                0x0000000000000028       0x20 D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+ .debug_aranges
+                0x0000000000000048       0x28 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtn.o
+
+.debug_pubnames
+                0x0000000000000000       0x20
+ *(.debug_pubnames)
+ .debug_pubnames
+                0x0000000000000000       0x20 D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+
+.debug_info     0x0000000000000000      0x1cb
+ *(.debug_info .gnu.linkonce.wi.*)
+ .debug_info    0x0000000000000000       0x82 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crti.o
+ .debug_info    0x0000000000000082       0xc7 D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+ .debug_info    0x0000000000000149       0x82 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtn.o
+
+.debug_abbrev   0x0000000000000000       0x58
+ *(.debug_abbrev)
+ .debug_abbrev  0x0000000000000000       0x12 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crti.o
+ .debug_abbrev  0x0000000000000012       0x34 D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+ .debug_abbrev  0x0000000000000046       0x12 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtn.o
+
+.debug_line     0x0000000000000000      0x191
+ *(.debug_line)
+ .debug_line    0x0000000000000000       0x6a d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crti.o
+ .debug_line    0x000000000000006a       0xbb D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+ .debug_line    0x0000000000000125       0x6c d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtn.o
+
+.debug_frame    0x0000000000000000       0x28
+ *(.debug_frame)
+ .debug_frame   0x0000000000000000       0x28 D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+
+.debug_str      0x0000000000000000        0x0
+ *(.debug_str)
+ .debug_str     0x0000000000000000        0x0 D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+/DISCARD/
+ *(.note.GNU-stack)
+OUTPUT(.\main32.elf elf32-littlemips)
+
+.debug_ranges   0x0000000000000000       0x50
+ .debug_ranges  0x0000000000000000       0x20 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crti.o
+ .debug_ranges  0x0000000000000020       0x10 D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(soft_reset_lib.o)
+ .debug_ranges  0x0000000000000030       0x20 d:/x4-easy-rev999/win32/p32/bin/../lib/gcc/mips-elf/4.5.2/soft-float/el/crtn.o

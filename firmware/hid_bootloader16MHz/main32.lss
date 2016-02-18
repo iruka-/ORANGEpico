@@ -1,0 +1,3033 @@
+
+.\main32.elf:     file format elf32-littlemips
+
+
+Disassembly of section .bootrom:
+
+9fc0000c <_startup>:
+9fc0000c:	3c1da000 	lui	sp,0xa000
+9fc00010:	27bd2000 	addiu	sp,sp,8192
+9fc00014:	41626000 	di	v0
+9fc00018:	3c1ca001 	lui	gp,0xa001
+9fc0001c:	279c8000 	addiu	gp,gp,-32768
+9fc00020:	40096002 	mfc0	t1,c0_srsctl
+9fc00024:	01205820 	add	t3,t1,zero
+9fc00028:	7d2a1e80 	ext	t2,t1,0x1a,0x4
+9fc0002c:	7d494984 	ins	t1,t2,0x6,0x4
+9fc00030:	40896002 	mtc0	t1,c0_srsctl
+9fc00034:	41dce000 	wrpgpr	gp,gp
+9fc00038:	408b6002 	mtc0	t3,c0_srsctl
+9fc0003c:	3c08a000 	lui	t0,0xa000
+9fc00040:	25080014 	addiu	t0,t0,20
+9fc00044:	3c09a000 	lui	t1,0xa000
+9fc00048:	252903bc 	addiu	t1,t1,956
+
+9fc0004c <_bss_init>:
+9fc0004c:	ad000000 	sw	zero,0(t0)
+9fc00050:	25080004 	addiu	t0,t0,4
+
+9fc00054 <_bss_check>:
+9fc00054:	0109082b 	sltu	at,t0,t1
+9fc00058:	1420fffc 	bnez	at,9fc0004c <_bss_init>
+9fc0005c:	00000000 	nop
+9fc00060:	3c089d00 	lui	t0,0x9d00
+9fc00064:	25080fec 	addiu	t0,t0,4076
+9fc00068:	3c09a000 	lui	t1,0xa000
+9fc0006c:	25290004 	addiu	t1,t1,4
+9fc00070:	3c0aa000 	lui	t2,0xa000
+9fc00074:	254a0014 	addiu	t2,t2,20
+
+9fc00078 <_init_data>:
+9fc00078:	8d0b0000 	lw	t3,0(t0)
+9fc0007c:	ad2b0000 	sw	t3,0(t1)
+9fc00080:	25080004 	addiu	t0,t0,4
+9fc00084:	25290004 	addiu	t1,t1,4
+
+9fc00088 <_init_check>:
+9fc00088:	012a082b 	sltu	at,t1,t2
+9fc0008c:	1420fffa 	bnez	at,9fc00078 <_init_data>
+9fc00090:	00000000 	nop
+9fc00094:	40804800 	mtc0	zero,c0_count
+9fc00098:	240affff 	li	t2,-1
+9fc0009c:	408a5800 	mtc0	t2,c0_compare
+9fc000a0:	3c099fc0 	lui	t1,0x9fc0
+9fc000a4:	25290000 	addiu	t1,t1,0
+9fc000a8:	40897801 	mtc0	t1,c0_ebase
+9fc000ac:	3c090000 	lui	t1,0x0
+9fc000b0:	25290001 	addiu	t1,t1,1
+9fc000b4:	240a0000 	li	t2,0
+9fc000b8:	7d2a4944 	ins	t2,t1,0x5,0x5
+9fc000bc:	408a6001 	mtc0	t2,c0_intctl
+9fc000c0:	3c090080 	lui	t1,0x80
+9fc000c4:	40896800 	mtc0	t1,c0_cause
+9fc000c8:	40088000 	mfc0	t0,c0_config
+9fc000cc:	7d090580 	ext	t1,t0,0x16,0x1
+9fc000d0:	00094c40 	sll	t1,t1,0x11
+9fc000d4:	40086000 	mfc0	t0,c0_status
+9fc000d8:	3c010058 	lui	at,0x58
+9fc000dc:	01014024 	and	t0,t0,at
+9fc000e0:	01284025 	or	t0,t1,t0
+9fc000e4:	3c01ffbf 	lui	at,0xffbf
+9fc000e8:	3421ffff 	ori	at,at,0xffff
+9fc000ec:	01014024 	and	t0,t0,at
+9fc000f0:	77f0027d 	jalx	9fc009f4 <main>
+9fc000f4:	40886000 	mtc0	t0,c0_status
+
+9fc000f8 <INTClearFlag>:
+9fc000f8:	03e00008 	jr	ra
+9fc000fc:	00000000 	nop
+
+9fc00100 <memset>:
+9fc00100:	67e6      	move	a3,a2
+9fc00102:	6764      	move	v1,a0
+9fc00104:	1003      	b	9fc0010c <memset+0xc>
+9fc00106:	c3a0      	sb	a1,0(v1)
+9fc00108:	4fff      	addiu	a3,-1
+9fc0010a:	4b01      	addiu	v1,1
+9fc0010c:	2ffc      	bnez	a3,9fc00106 <memset+0x6>
+9fc0010e:	e820      	jr	ra
+9fc00110:	e4c9      	addu	v0,a0,a2
+9fc00112:	6500      	nop
+
+9fc00114 <wait_nloop>:
+9fc00114:	6500      	nop
+9fc00116:	4cff      	addiu	a0,-1
+9fc00118:	2cfd      	bnez	a0,9fc00114 <wait_nloop>
+9fc0011a:	e8a0      	jrc	ra
+
+9fc0011c <delay_us>:
+9fc0011c:	6a0a      	li	v0,10
+9fc0011e:	ec58      	mult	a0,v0
+9fc00120:	64c3      	save	24,ra
+9fc00122:	1a1f 0045 	jal	9fc00114 <wait_nloop>
+9fc00126:	ec12      	mflo	a0
+9fc00128:	6443      	restore	24,ra
+9fc0012a:	e8a0      	jrc	ra
+
+9fc0012c <NVMemOperation>:
+9fc0012c:	b311      	lw	v1,9fc0016c <NVMemOperation+0x40>
+9fc0012e:	f008 6a00 	li	v0,16384
+9fc00132:	ea8d      	or	v0,a0
+9fc00134:	64c3      	save	24,ra
+9fc00136:	6c07      	li	a0,7
+9fc00138:	1a1f 0047 	jal	9fc0011c <delay_us>
+9fc0013c:	db40      	sw	v0,0(v1)
+9fc0013e:	b20e      	lw	v0,9fc00174 <NVMemOperation+0x48>
+9fc00140:	b30e      	lw	v1,9fc00178 <NVMemOperation+0x4c>
+9fc00142:	da60      	sw	v1,0(v0)
+9fc00144:	b30e      	lw	v1,9fc0017c <NVMemOperation+0x50>
+9fc00146:	da60      	sw	v1,0(v0)
+9fc00148:	b20e      	lw	v0,9fc00180 <NVMemOperation+0x54>
+9fc0014a:	f010 6b00 	li	v1,32768
+9fc0014e:	da60      	sw	v1,0(v0)
+9fc00150:	b308      	lw	v1,9fc00170 <NVMemOperation+0x44>
+9fc00152:	f010 6c00 	li	a0,32768
+9fc00156:	9b40      	lw	v0,0(v1)
+9fc00158:	ea8c      	and	v0,a0
+9fc0015a:	2afa      	bnez	v0,9fc00150 <NVMemOperation+0x24>
+9fc0015c:	b20a      	lw	v0,9fc00184 <NVMemOperation+0x58>
+9fc0015e:	f018 4c00 	addiu	a0,-16384
+9fc00162:	da80      	sw	a0,0(v0)
+9fc00164:	9b60      	lw	v1,0(v1)
+9fc00166:	f006 6a00 	li	v0,12288
+9fc0016a:	6443      	restore	24,ra
+9fc0016c:	e820      	jr	ra
+9fc0016e:	ea6c      	and	v0,v1
+9fc00170:	f400 bf80 	lwu	a0,1024(a3)
+9fc00174:	f410 bf80 	lwu	a0,-31744(a3)
+9fc00178:	6655      	0x6655
+9fc0017a:	aa99      	lhu	a0,50(v0)
+9fc0017c:	99aa      	lw	a1,40(s1)
+9fc0017e:	5566      	slti	a1,102
+9fc00180:	f408 bf80 	lwu	a0,17408(a3)
+9fc00184:	f404 bf80 	lwu	a0,9216(a3)
+
+9fc00188 <NVMemErasePage>:
+9fc00188:	b206      	lw	v0,9fc001a0 <NVMemErasePage+0x18>
+9fc0018a:	b307      	lw	v1,9fc001a4 <NVMemErasePage+0x1c>
+9fc0018c:	ea8c      	and	v0,a0
+9fc0018e:	64c3      	save	24,ra
+9fc00190:	f008 6c04 	li	a0,16388
+9fc00194:	1a1f 004b 	jal	9fc0012c <NVMemOperation>
+9fc00198:	db40      	sw	v0,0(v1)
+9fc0019a:	6443      	restore	24,ra
+9fc0019c:	e8a0      	jrc	ra
+9fc0019e:	6500      	nop
+9fc001a0:	ffff      	daddiu	a3,sp,124
+9fc001a2:	1fff f420 	jalx	9fffd080 <USER_USB_CALLBACK_EVENT_HANDLER+0x3fc57c>
+9fc001a6:	bf80      	lwu	a0,0(a3)
+
+9fc001a8 <NVMemWriteWord>:
+9fc001a8:	b207      	lw	v0,9fc001c4 <NVMemWriteWord+0x1c>
+9fc001aa:	b308      	lw	v1,9fc001c8 <NVMemWriteWord+0x20>
+9fc001ac:	ea8c      	and	v0,a0
+9fc001ae:	db40      	sw	v0,0(v1)
+9fc001b0:	b207      	lw	v0,9fc001cc <NVMemWriteWord+0x24>
+9fc001b2:	64c3      	save	24,ra
+9fc001b4:	f008 6c01 	li	a0,16385
+9fc001b8:	1a1f 004b 	jal	9fc0012c <NVMemOperation>
+9fc001bc:	daa0      	sw	a1,0(v0)
+9fc001be:	6443      	restore	24,ra
+9fc001c0:	e8a0      	jrc	ra
+9fc001c2:	6500      	nop
+9fc001c4:	ffff      	daddiu	a3,sp,124
+9fc001c6:	1fff f420 	jalx	9fffd080 <USER_USB_CALLBACK_EVENT_HANDLER+0x3fc57c>
+9fc001ca:	bf80      	lwu	a0,0(a3)
+9fc001cc:	f430 bf80 	lwu	a0,-31712(a3)
+
+9fc001d0 <NVMemWriteRow>:
+9fc001d0:	b208      	lw	v0,9fc001f0 <NVMemWriteRow+0x20>
+9fc001d2:	b309      	lw	v1,9fc001f4 <NVMemWriteRow+0x24>
+9fc001d4:	ec4c      	and	a0,v0
+9fc001d6:	64c3      	save	24,ra
+9fc001d8:	db80      	sw	a0,0(v1)
+9fc001da:	b308      	lw	v1,9fc001f8 <NVMemWriteRow+0x28>
+9fc001dc:	eaac      	and	v0,a1
+9fc001de:	db40      	sw	v0,0(v1)
+9fc001e0:	f008 6c03 	li	a0,16387
+9fc001e4:	1a1f 004b 	jal	9fc0012c <NVMemOperation>
+9fc001e8:	6500      	nop
+9fc001ea:	6443      	restore	24,ra
+9fc001ec:	e8a0      	jrc	ra
+9fc001ee:	6500      	nop
+9fc001f0:	ffff      	daddiu	a3,sp,124
+9fc001f2:	1fff f420 	jalx	9fffd080 <USER_USB_CALLBACK_EVENT_HANDLER+0x3fc57c>
+9fc001f6:	bf80      	lwu	a0,0(a3)
+9fc001f8:	f440 bf80 	lwu	a0,1088(a3)
+
+9fc001fc <NVMemClearError>:
+9fc001fc:	64c3      	save	24,ra
+9fc001fe:	f008 6c00 	li	a0,16384
+9fc00202:	1a1f 004b 	jal	9fc0012c <NVMemOperation>
+9fc00206:	6500      	nop
+9fc00208:	6443      	restore	24,ra
+9fc0020a:	e8a0      	jrc	ra
+
+9fc0020c <USBConfigureEndpoint>:
+9fc0020c:	3284      	sll	v0,a0,1
+9fc0020e:	e549      	addu	v0,a1,v0
+9fc00210:	b30c      	lw	v1,9fc00240 <USBConfigureEndpoint+0x34>
+9fc00212:	3250      	sll	v0,4
+9fc00214:	e269      	addu	v0,v1
+9fc00216:	6b7f      	li	v1,127
+9fc00218:	a2c0      	lbu	a2,0(v0)
+9fc0021a:	3488      	sll	a0,2
+9fc0021c:	ebcc      	and	v1,a2
+9fc0021e:	c260      	sb	v1,0(v0)
+9fc00220:	b309      	lw	v1,9fc00244 <USBConfigureEndpoint+0x38>
+9fc00222:	2501      	beqz	a1,9fc00226 <USBConfigureEndpoint+0x1a>
+9fc00224:	b309      	lw	v1,9fc00248 <USBConfigureEndpoint+0x3c>
+9fc00226:	e391      	addu	a0,v1,a0
+9fc00228:	6b41      	li	v1,65
+9fc0022a:	dc40      	sw	v0,0(a0)
+9fc0022c:	a280      	lbu	a0,0(v0)
+9fc0022e:	eb6b      	neg	v1
+9fc00230:	eb8c      	and	v1,a0
+9fc00232:	c260      	sb	v1,0(v0)
+9fc00234:	a288      	lbu	a0,8(v0)
+9fc00236:	6b40      	li	v1,64
+9fc00238:	eb8d      	or	v1,a0
+9fc0023a:	e820      	jr	ra
+9fc0023c:	c268      	sb	v1,8(v0)
+9fc0023e:	6500      	nop
+9fc00240:	0200      	addiu	v0,sp,0
+9fc00242:	a000      	lbu	s0,0(s0)
+9fc00244:	0260      	addiu	v0,sp,384
+9fc00246:	a000      	lbu	s0,0(s0)
+9fc00248:	0258      	addiu	v0,sp,352
+9fc0024a:	a000      	lbu	s0,0(s0)
+
+9fc0024c <USBDeviceInit>:
+9fc0024c:	b24d      	lw	v0,9fc00380 <USBDeviceInit+0x134>
+9fc0024e:	6b08      	li	v1,8
+9fc00250:	da60      	sw	v1,0(v0)
+9fc00252:	b34d      	lw	v1,9fc00384 <USBDeviceInit+0x138>
+9fc00254:	6aff      	li	v0,255
+9fc00256:	db40      	sw	v0,0(v1)
+9fc00258:	b34c      	lw	v1,9fc00388 <USBDeviceInit+0x13c>
+9fc0025a:	6d0f      	li	a1,15
+9fc0025c:	db40      	sw	v0,0(v1)
+9fc0025e:	b34c      	lw	v1,9fc0038c <USBDeviceInit+0x140>
+9fc00260:	6a00      	li	v0,0
+9fc00262:	db40      	sw	v0,0(v1)
+9fc00264:	b34b      	lw	v1,9fc00390 <USBDeviceInit+0x144>
+9fc00266:	679c      	move	a0,gp
+9fc00268:	db40      	sw	v0,0(v1)
+9fc0026a:	b34b      	lw	v1,9fc00394 <USBDeviceInit+0x148>
+9fc0026c:	db40      	sw	v0,0(v1)
+9fc0026e:	b34b      	lw	v1,9fc00398 <USBDeviceInit+0x14c>
+9fc00270:	6a9f      	li	v0,159
+9fc00272:	db40      	sw	v0,0(v1)
+9fc00274:	b34a      	lw	v1,9fc0039c <USBDeviceInit+0x150>
+9fc00276:	db40      	sw	v0,0(v1)
+9fc00278:	b24a      	lw	v0,9fc003a0 <USBDeviceInit+0x154>
+9fc0027a:	9a60      	lw	v1,0(v0)
+9fc0027c:	ebac      	and	v1,a1
+9fc0027e:	da60      	sw	v1,0(v0)
+9fc00280:	9a60      	lw	v1,0(v0)
+9fc00282:	6d01      	li	a1,1
+9fc00284:	da60      	sw	v1,0(v0)
+9fc00286:	b348      	lw	v1,9fc003a4 <USBDeviceInit+0x158>
+9fc00288:	9b40      	lw	v0,0(v1)
+9fc0028a:	eaad      	or	v0,a1
+9fc0028c:	db40      	sw	v0,0(v1)
+9fc0028e:	b347      	lw	v1,9fc003a8 <USBDeviceInit+0x15c>
+9fc00290:	b247      	lw	v0,9fc003ac <USBDeviceInit+0x160>
+9fc00292:	ea6c      	and	v0,v1
+9fc00294:	b347      	lw	v1,9fc003b0 <USBDeviceInit+0x164>
+9fc00296:	f600 3542 	srl	a1,v0,24
+9fc0029a:	dba0      	sw	a1,0(v1)
+9fc0029c:	3242      	srl	v0,8
+9fc0029e:	b346      	lw	v1,9fc003b4 <USBDeviceInit+0x168>
+9fc002a0:	3542      	srl	a1,v0,8
+9fc002a2:	dba0      	sw	a1,0(v1)
+9fc002a4:	b345      	lw	v1,9fc003b8 <USBDeviceInit+0x16c>
+9fc002a6:	6d00      	li	a1,0
+9fc002a8:	db40      	sw	v0,0(v1)
+9fc002aa:	32ac      	sll	v0,a1,3
+9fc002ac:	b640      	lw	a2,9fc003ac <USBDeviceInit+0x160>
+9fc002ae:	e659      	addu	a2,v0
+9fc002b0:	4d01      	addiu	a1,1
+9fc002b2:	6a00      	li	v0,0
+9fc002b4:	6b00      	li	v1,0
+9fc002b6:	7508      	cmpi	a1,8
+9fc002b8:	de40      	sw	v0,0(a2)
+9fc002ba:	de61      	sw	v1,4(a2)
+9fc002bc:	61f6      	btnez	9fc002aa <USBDeviceInit+0x5e>
+9fc002be:	b240      	lw	v0,9fc003bc <USBDeviceInit+0x170>
+9fc002c0:	6d02      	li	a1,2
+9fc002c2:	9a60      	lw	v1,0(v0)
+9fc002c4:	ebad      	or	v1,a1
+9fc002c6:	da60      	sw	v1,0(v0)
+9fc002c8:	b33e      	lw	v1,9fc003c0 <USBDeviceInit+0x174>
+9fc002ca:	67b8      	move	a1,t8
+9fc002cc:	dba0      	sw	a1,0(v1)
+9fc002ce:	9a60      	lw	v1,0(v0)
+9fc002d0:	4ddf      	addiu	a1,-33
+9fc002d2:	ebac      	and	v1,a1
+9fc002d4:	da60      	sw	v1,0(v0)
+9fc002d6:	9a60      	lw	v1,0(v0)
+9fc002d8:	4d1e      	addiu	a1,30
+9fc002da:	ebac      	and	v1,a1
+9fc002dc:	da60      	sw	v1,0(v0)
+9fc002de:	b23a      	lw	v0,9fc003c4 <USBDeviceInit+0x178>
+9fc002e0:	a2a4      	lbu	a1,4(v0)
+9fc002e2:	b23a      	lw	v0,9fc003c8 <USBDeviceInit+0x17c>
+9fc002e4:	a2c4      	lbu	a2,4(v0)
+9fc002e6:	9a41      	lw	v0,4(v0)
+9fc002e8:	3242      	srl	v0,8
+9fc002ea:	6762      	move	v1,v0
+9fc002ec:	eb31      	zeh	v1
+9fc002ee:	1005      	b	9fc002fa <USBDeviceInit+0xae>
+9fc002f0:	b226      	lw	v0,9fc00388 <USBDeviceInit+0x13c>
+9fc002f2:	6d00      	li	a1,0
+9fc002f4:	dae0      	sw	a3,0(v0)
+9fc002f6:	67c5      	move	a2,a1
+9fc002f8:	6765      	move	v1,a1
+9fc002fa:	b235      	lw	v0,9fc003cc <USBDeviceInit+0x180>
+9fc002fc:	6f08      	li	a3,8
+9fc002fe:	9a40      	lw	v0,0(v0)
+9fc00300:	eaec      	and	v0,a3
+9fc00302:	2af6      	bnez	v0,9fc002f0 <USBDeviceInit+0xa4>
+9fc00304:	b730      	lw	a3,9fc003c4 <USBDeviceInit+0x178>
+9fc00306:	c7a4      	sb	a1,4(a3)
+9fc00308:	b530      	lw	a1,9fc003c8 <USBDeviceInit+0x17c>
+9fc0030a:	b732      	lw	a3,9fc003d0 <USBDeviceInit+0x184>
+9fc0030c:	c5c4      	sb	a2,4(a1)
+9fc0030e:	3660      	sll	a2,v1,8
+9fc00310:	9d61      	lw	v1,4(a1)
+9fc00312:	ebec      	and	v1,a3
+9fc00314:	ebcd      	or	v1,a2
+9fc00316:	dd61      	sw	v1,4(a1)
+9fc00318:	b52f      	lw	a1,9fc003d4 <USBDeviceInit+0x188>
+9fc0031a:	6b01      	li	v1,1
+9fc0031c:	dd40      	sw	v0,0(a1)
+9fc0031e:	dd41      	sw	v0,4(a1)
+9fc00320:	67a4      	move	a1,a0
+9fc00322:	f050 4d14 	addiu	a1,-32684
+9fc00326:	f030 dc7c 	sw	v1,-32708(a0)
+9fc0032a:	c541      	sb	v0,1(a1)
+9fc0032c:	67a4      	move	a1,a0
+9fc0032e:	f030 4d18 	addiu	a1,-32712
+9fc00332:	f050 dc60 	sw	v1,-32704(a0)
+9fc00336:	b329      	lw	v1,9fc003d8 <USBDeviceInit+0x18c>
+9fc00338:	c541      	sb	v0,1(a1)
+9fc0033a:	b529      	lw	a1,9fc003dc <USBDeviceInit+0x190>
+9fc0033c:	dba0      	sw	a1,0(v1)
+9fc0033e:	db41      	sw	v0,4(v1)
+9fc00340:	b313      	lw	v1,9fc0038c <USBDeviceInit+0x140>
+9fc00342:	6d0d      	li	a1,13
+9fc00344:	f030 dc48 	sw	v0,-32728(a0)
+9fc00348:	f030 dc4c 	sw	v0,-32724(a0)
+9fc0034c:	dba0      	sw	a1,0(v1)
+9fc0034e:	b517      	lw	a1,9fc003a8 <USBDeviceInit+0x15c>
+9fc00350:	b324      	lw	v1,9fc003e0 <USBDeviceInit+0x194>
+9fc00352:	ebac      	and	v1,a1
+9fc00354:	b516      	lw	a1,9fc003ac <USBDeviceInit+0x160>
+9fc00356:	f050 dc4c 	sw	v0,-32692(a0)
+9fc0035a:	dd61      	sw	v1,4(a1)
+9fc0035c:	f050 c454 	sb	v0,-32684(a0)
+9fc00360:	f030 c458 	sb	v0,-32712(a0)
+9fc00364:	9d60      	lw	v1,0(a1)
+9fc00366:	b620      	lw	a2,9fc003e4 <USBDeviceInit+0x198>
+9fc00368:	ebcc      	and	v1,a2
+9fc0036a:	b620      	lw	a2,9fc003e8 <USBDeviceInit+0x19c>
+9fc0036c:	ebcd      	or	v1,a2
+9fc0036e:	dd60      	sw	v1,0(a1)
+9fc00370:	6b84      	li	v1,132
+9fc00372:	cd60      	sh	v1,0(a1)
+9fc00374:	f050 c45c 	sb	v0,-32676(a0)
+9fc00378:	f030 dc50 	sw	v0,-32720(a0)
+9fc0037c:	e8a0      	jrc	ra
+9fc0037e:	6500      	nop
+9fc00380:	1074      	b	9fc0046a <USBTransferOnePacket+0x46>
+9fc00382:	bf88      	lwu	a0,32(a3)
+9fc00384:	5220      	slti	v0,32
+9fc00386:	bf88      	lwu	a0,32(a3)
+9fc00388:	5200      	slti	v0,0
+9fc0038a:	bf88      	lwu	a0,32(a3)
+9fc0038c:	5300      	slti	v1,0
+9fc0038e:	bf88      	lwu	a0,32(a3)
+9fc00390:	5310      	slti	v1,16
+9fc00392:	bf88      	lwu	a0,32(a3)
+9fc00394:	52e0      	slti	v0,224
+9fc00396:	bf88      	lwu	a0,32(a3)
+9fc00398:	5230      	slti	v0,48
+9fc0039a:	bf88      	lwu	a0,32(a3)
+9fc0039c:	5210      	slti	v0,16
+9fc0039e:	bf88      	lwu	a0,32(a3)
+9fc003a0:	5070      	slti	s0,112
+9fc003a2:	bf88      	lwu	a0,32(a3)
+9fc003a4:	5080      	slti	s0,128
+9fc003a6:	bf88      	lwu	a0,32(a3)
+9fc003a8:	ffff      	daddiu	a3,sp,124
+9fc003aa:	1fff 0200 	jalx	9ffc0800 <USER_USB_CALLBACK_EVENT_HANDLER+0x3bfcfc>
+9fc003ae:	a000      	lbu	s0,0(s0)
+9fc003b0:	52d0      	slti	v0,208
+9fc003b2:	bf88      	lwu	a0,32(a3)
+9fc003b4:	52c0      	slti	v0,192
+9fc003b6:	bf88      	lwu	a0,32(a3)
+9fc003b8:	5270      	slti	v0,112
+9fc003ba:	bf88      	lwu	a0,32(a3)
+9fc003bc:	5250      	slti	v0,80
+9fc003be:	bf88      	lwu	a0,32(a3)
+9fc003c0:	5260      	slti	v0,96
+9fc003c2:	bf88      	lwu	a0,32(a3)
+9fc003c4:	0248      	addiu	v0,sp,288
+9fc003c6:	a000      	lbu	s0,0(s0)
+9fc003c8:	0270      	addiu	v0,sp,448
+9fc003ca:	a000      	lbu	s0,0(s0)
+9fc003cc:	5200      	slti	v0,0
+9fc003ce:	bf88      	lwu	a0,32(a3)
+9fc003d0:	00ff      	addiu	s0,sp,1020
+9fc003d2:	ff00      	daddiu	s0,sp,0
+9fc003d4:	0260      	addiu	v0,sp,384
+9fc003d6:	a000      	lbu	s0,0(s0)
+9fc003d8:	0258      	addiu	v0,sp,352
+9fc003da:	a000      	lbu	s0,0(s0)
+9fc003dc:	0210      	addiu	v0,sp,64
+9fc003de:	a000      	lbu	s0,0(s0)
+9fc003e0:	0268      	addiu	v0,sp,416
+9fc003e2:	a000      	lbu	s0,0(s0)
+9fc003e4:	ffff      	daddiu	a3,sp,124
+9fc003e6:	fc00      	ld	s0,9fc003e0 <USBDeviceInit+0x194>
+9fc003e8:	0000      	addiu	s0,sp,0
+9fc003ea:	0008      	addiu	s0,sp,32
+
+9fc003ec <USBEnableEndpoint>:
+9fc003ec:	64f4      	save	32,ra,s0-s1
+9fc003ee:	6725      	move	s1,a1
+9fc003f0:	e911      	zeb	s1
+9fc003f2:	6a08      	li	v0,8
+9fc003f4:	6704      	move	s0,a0
+9fc003f6:	ea2c      	and	v0,s1
+9fc003f8:	e811      	zeb	s0
+9fc003fa:	2204      	beqz	v0,9fc00404 <USBEnableEndpoint+0x18>
+9fc003fc:	6790      	move	a0,s0
+9fc003fe:	1a1f 0083 	jal	9fc0020c <USBConfigureEndpoint>
+9fc00402:	6d00      	li	a1,0
+9fc00404:	6a04      	li	v0,4
+9fc00406:	ea2c      	and	v0,s1
+9fc00408:	2204      	beqz	v0,9fc00412 <USBEnableEndpoint+0x26>
+9fc0040a:	6790      	move	a0,s0
+9fc0040c:	1a1f 0083 	jal	9fc0020c <USBConfigureEndpoint>
+9fc00410:	6d01      	li	a1,1
+9fc00412:	3010      	sll	s0,4
+9fc00414:	b203      	lw	v0,9fc00420 <USBEnableEndpoint+0x34>
+9fc00416:	e041      	addu	s0,v0
+9fc00418:	c020      	sb	s1,0(s0)
+9fc0041a:	6474      	restore	32,ra,s0-s1
+9fc0041c:	e8a0      	jrc	ra
+9fc0041e:	6500      	nop
+9fc00420:	5300      	slti	v1,0
+9fc00422:	bf88      	lwu	a0,32(a3)
+
+9fc00424 <USBTransferOnePacket>:
+9fc00424:	ec11      	zeb	a0
+9fc00426:	ed11      	zeb	a1
+9fc00428:	64b1      	save	8,s0-s1
+9fc0042a:	ef11      	zeb	a3
+9fc0042c:	3288      	sll	v0,a0,2
+9fc0042e:	b32a      	lw	v1,9fc004d4 <_DBG_CODE_ADDR+0x44>
+9fc00430:	2d01      	bnez	a1,9fc00434 <USBTransferOnePacket+0x10>
+9fc00432:	b32a      	lw	v1,9fc004d8 <_DBG_CODE_ADDR+0x48>
+9fc00434:	e349      	addu	v0,v1,v0
+9fc00436:	9a60      	lw	v1,0(v0)
+9fc00438:	6a00      	li	v0,0
+9fc0043a:	2349      	beqz	v1,9fc004ce <_DBG_CODE_ADDR+0x3e>
+9fc0043c:	b228      	lw	v0,9fc004dc <_DBG_CODE_ADDR+0x4c>
+9fc0043e:	68ff      	li	s0,255
+9fc00440:	ee4c      	and	a2,v0
+9fc00442:	6746      	move	v0,a2
+9fc00444:	ea0c      	and	v0,s0
+9fc00446:	a324      	lbu	s1,4(v1)
+9fc00448:	c344      	sb	v0,4(v1)
+9fc0044a:	32c2      	srl	v0,a2,8
+9fc0044c:	6722      	move	s1,v0
+9fc0044e:	e90c      	and	s1,s0
+9fc00450:	6529      	move	t1,s1
+9fc00452:	3242      	srl	v0,8
+9fc00454:	a325      	lbu	s1,5(v1)
+9fc00456:	6729      	move	s1,t1
+9fc00458:	c325      	sb	s1,5(v1)
+9fc0045a:	ea0c      	and	v0,s0
+9fc0045c:	a326      	lbu	s1,6(v1)
+9fc0045e:	f600 36c2 	srl	a2,24
+9fc00462:	c346      	sb	v0,6(v1)
+9fc00464:	a347      	lbu	v0,7(v1)
+9fc00466:	ef0c      	and	a3,s0
+9fc00468:	c3c7      	sb	a2,7(v1)
+9fc0046a:	a342      	lbu	v0,2(v1)
+9fc0046c:	c3e2      	sb	a3,2(v1)
+9fc0046e:	a3c3      	lbu	a2,3(v1)
+9fc00470:	6a04      	li	v0,4
+9fc00472:	ea4b      	neg	v0
+9fc00474:	eacc      	and	v0,a2
+9fc00476:	c343      	sb	v0,3(v1)
+9fc00478:	a3c0      	lbu	a2,0(v1)
+9fc0047a:	a341      	lbu	v0,1(v1)
+9fc0047c:	ee11      	zeb	a2
+9fc0047e:	ea11      	zeb	v0
+9fc00480:	3240      	sll	v0,8
+9fc00482:	eacd      	or	v0,a2
+9fc00484:	6e40      	li	a2,64
+9fc00486:	eacc      	and	v0,a2
+9fc00488:	ea0c      	and	v0,s0
+9fc0048a:	a3c0      	lbu	a2,0(v1)
+9fc0048c:	c340      	sb	v0,0(v1)
+9fc0048e:	a341      	lbu	v0,1(v1)
+9fc00490:	6a00      	li	v0,0
+9fc00492:	c341      	sb	v0,1(v1)
+9fc00494:	a3c0      	lbu	a2,0(v1)
+9fc00496:	a341      	lbu	v0,1(v1)
+9fc00498:	ee11      	zeb	a2
+9fc0049a:	ea11      	zeb	v0
+9fc0049c:	3240      	sll	v0,8
+9fc0049e:	eacd      	or	v0,a2
+9fc004a0:	6e88      	li	a2,136
+9fc004a2:	eacd      	or	v0,a2
+9fc004a4:	e84c      	and	s0,v0
+9fc004a6:	a3c0      	lbu	a2,0(v1)
+9fc004a8:	3242      	srl	v0,8
+9fc004aa:	c300      	sb	s0,0(v1)
+9fc004ac:	a3c1      	lbu	a2,1(v1)
+9fc004ae:	c341      	sb	v0,1(v1)
+9fc004b0:	3288      	sll	v0,a0,2
+9fc004b2:	2506      	beqz	a1,9fc004c0 <_DBG_CODE_ADDR+0x30>
+9fc004b4:	b408      	lw	a0,9fc004d4 <_DBG_CODE_ADDR+0x44>
+9fc004b6:	e449      	addu	v0,a0,v0
+9fc004b8:	6d08      	li	a1,8
+9fc004ba:	a280      	lbu	a0,0(v0)
+9fc004bc:	ecae      	xor	a0,a1
+9fc004be:	1005      	b	9fc004ca <_DBG_CODE_ADDR+0x3a>
+9fc004c0:	b406      	lw	a0,9fc004d8 <_DBG_CODE_ADDR+0x48>
+9fc004c2:	e449      	addu	v0,a0,v0
+9fc004c4:	6908      	li	s1,8
+9fc004c6:	a280      	lbu	a0,0(v0)
+9fc004c8:	ec2e      	xor	a0,s1
+9fc004ca:	c280      	sb	a0,0(v0)
+9fc004cc:	6743      	move	v0,v1
+9fc004ce:	6431      	restore	8,s0-s1
+9fc004d0:	e8a0      	jrc	ra
+9fc004d2:	6500      	nop
+9fc004d4:	0258      	addiu	v0,sp,352
+9fc004d6:	a000      	lbu	s0,0(s0)
+9fc004d8:	0260      	addiu	v0,sp,384
+9fc004da:	a000      	lbu	s0,0(s0)
+9fc004dc:	ffff      	daddiu	a3,sp,124
+9fc004de:	1fff 677c 	jalx	9ffd9df0 <USER_USB_CALLBACK_EVENT_HANDLER+0x3d92ec>
+
+9fc004e0 <USBCtrlEPAllowStatusStage>:
+9fc004e0:	677c      	move	v1,gp
+9fc004e2:	64b1      	save	8,s0-s1
+9fc004e4:	f030 9b5c 	lw	v0,-32708(v1)
+9fc004e8:	2a66      	bnez	v0,9fc005b6 <USBCtrlEPAllowStatusStage+0xd6>
+9fc004ea:	6f01      	li	a3,1
+9fc004ec:	f030 dbfc 	sw	a3,-32708(v1)
+9fc004f0:	f050 9b40 	lw	v0,-32704(v1)
+9fc004f4:	2a60      	bnez	v0,9fc005b6 <USBCtrlEPAllowStatusStage+0xd6>
+9fc004f6:	f030 a3d4 	lbu	a2,-32716(v1)
+9fc004fa:	6c02      	li	a0,2
+9fc004fc:	ecce      	xor	a0,a2
+9fc004fe:	f050 dbe0 	sw	a3,-32704(v1)
+9fc00502:	2c10      	bnez	a0,9fc00524 <USBCtrlEPAllowStatusStage+0x44>
+9fc00504:	b22e      	lw	v0,9fc005bc <USBCtrlEPAllowStatusStage+0xdc>
+9fc00506:	9a40      	lw	v0,0(v0)
+9fc00508:	a262      	lbu	v1,2(v0)
+9fc0050a:	c282      	sb	a0,2(v0)
+9fc0050c:	a2a3      	lbu	a1,3(v0)
+9fc0050e:	6b04      	li	v1,4
+9fc00510:	eb6b      	neg	v1
+9fc00512:	ebac      	and	v1,a1
+9fc00514:	c263      	sb	v1,3(v0)
+9fc00516:	a260      	lbu	v1,0(v0)
+9fc00518:	6b38      	li	v1,56
+9fc0051a:	eb6b      	neg	v1
+9fc0051c:	c260      	sb	v1,0(v0)
+9fc0051e:	a261      	lbu	v1,1(v0)
+9fc00520:	c281      	sb	a0,1(v0)
+9fc00522:	1049      	b	9fc005b6 <USBCtrlEPAllowStatusStage+0xd6>
+9fc00524:	6a01      	li	v0,1
+9fc00526:	ee4e      	xor	a2,v0
+9fc00528:	2e46      	bnez	a2,9fc005b6 <USBCtrlEPAllowStatusStage+0xd6>
+9fc0052a:	f050 9b58 	lw	v0,-32680(v1)
+9fc0052e:	6904      	li	s1,4
+9fc00530:	e92b      	neg	s1
+9fc00532:	a282      	lbu	a0,2(v0)
+9fc00534:	6c08      	li	a0,8
+9fc00536:	c282      	sb	a0,2(v0)
+9fc00538:	654c      	move	t2,a0
+9fc0053a:	a283      	lbu	a0,3(v0)
+9fc0053c:	b521      	lw	a1,9fc005c0 <USBCtrlEPAllowStatusStage+0xe0>
+9fc0053e:	ec2c      	and	a0,s1
+9fc00540:	c283      	sb	a0,3(v0)
+9fc00542:	b421      	lw	a0,9fc005c4 <USBCtrlEPAllowStatusStage+0xe4>
+9fc00544:	ecac      	and	a0,a1
+9fc00546:	68ff      	li	s0,255
+9fc00548:	67a4      	move	a1,a0
+9fc0054a:	ed0c      	and	a1,s0
+9fc0054c:	650d      	move	t0,a1
+9fc0054e:	6529      	move	t1,s1
+9fc00550:	a2a4      	lbu	a1,4(v0)
+9fc00552:	6728      	move	s1,t0
+9fc00554:	3582      	srl	a1,a0,8
+9fc00556:	c224      	sb	s1,4(v0)
+9fc00558:	658d      	move	t4,a1
+9fc0055a:	a225      	lbu	s1,5(v0)
+9fc0055c:	ed0c      	and	a1,s0
+9fc0055e:	672c      	move	s1,t4
+9fc00560:	c2a5      	sb	a1,5(v0)
+9fc00562:	65ad      	move	t5,a1
+9fc00564:	3522      	srl	a1,s1,8
+9fc00566:	ed0c      	and	a1,s0
+9fc00568:	f600 3482 	srl	a0,24
+9fc0056c:	a206      	lbu	s0,6(v0)
+9fc0056e:	c2a6      	sb	a1,6(v0)
+9fc00570:	a207      	lbu	s0,7(v0)
+9fc00572:	c287      	sb	a0,7(v0)
+9fc00574:	a200      	lbu	s0,0(v0)
+9fc00576:	687c      	li	s0,124
+9fc00578:	e80b      	neg	s0
+9fc0057a:	c200      	sb	s0,0(v0)
+9fc0057c:	a201      	lbu	s0,1(v0)
+9fc0057e:	c2c1      	sb	a2,1(v0)
+9fc00580:	f050 9b48 	lw	v0,-32696(v1)
+9fc00584:	f050 dbe4 	sw	a3,-32700(v1)
+9fc00588:	67e9      	move	a3,t1
+9fc0058a:	a262      	lbu	v1,2(v0)
+9fc0058c:	676a      	move	v1,t2
+9fc0058e:	c262      	sb	v1,2(v0)
+9fc00590:	a263      	lbu	v1,3(v0)
+9fc00592:	6728      	move	s1,t0
+9fc00594:	ebec      	and	v1,a3
+9fc00596:	c263      	sb	v1,3(v0)
+9fc00598:	a264      	lbu	v1,4(v0)
+9fc0059a:	c224      	sb	s1,4(v0)
+9fc0059c:	a265      	lbu	v1,5(v0)
+9fc0059e:	676d      	move	v1,t5
+9fc005a0:	c265      	sb	v1,5(v0)
+9fc005a2:	a266      	lbu	v1,6(v0)
+9fc005a4:	c2a6      	sb	a1,6(v0)
+9fc005a6:	a267      	lbu	v1,7(v0)
+9fc005a8:	c287      	sb	a0,7(v0)
+9fc005aa:	a260      	lbu	v1,0(v0)
+9fc005ac:	6b80      	li	v1,128
+9fc005ae:	eb6b      	neg	v1
+9fc005b0:	c260      	sb	v1,0(v0)
+9fc005b2:	a261      	lbu	v1,1(v0)
+9fc005b4:	c2c1      	sb	a2,1(v0)
+9fc005b6:	6431      	restore	8,s0-s1
+9fc005b8:	e8a0      	jrc	ra
+9fc005ba:	6500      	nop
+9fc005bc:	0258      	addiu	v0,sp,352
+9fc005be:	a000      	lbu	s0,0(s0)
+9fc005c0:	ffff      	daddiu	a3,sp,124
+9fc005c2:	1fff 0268 	jalx	9ffc09a0 <USER_USB_CALLBACK_EVENT_HANDLER+0x3bfe9c>
+9fc005c6:	a000      	lbu	s0,0(s0)
+
+9fc005c8 <WriteFlashSubBlock>:
+9fc005c8:	64f4      	save	32,ra,s0-s1
+9fc005ca:	671c      	move	s0,gp
+9fc005cc:	b10f      	lw	s1,9fc00608 <WriteFlashSubBlock+0x40>
+9fc005ce:	1016      	b	9fc005fc <WriteFlashSubBlock+0x34>
+9fc005d0:	f090 9840 	lw	v0,-32640(s0)
+9fc005d4:	3488      	sll	a0,2
+9fc005d6:	e293      	subu	a0,v0,a0
+9fc005d8:	b20d      	lw	v0,9fc0060c <WriteFlashSubBlock+0x44>
+9fc005da:	b30e      	lw	v1,9fc00610 <WriteFlashSubBlock+0x48>
+9fc005dc:	ea8c      	and	v0,a0
+9fc005de:	eb43      	sltu	v1,v0
+9fc005e0:	6007      	bteqz	9fc005f0 <WriteFlashSubBlock+0x28>
+9fc005e2:	f070 9878 	lw	v1,-32648(s0)
+9fc005e6:	ea63      	sltu	v0,v1
+9fc005e8:	6003      	bteqz	9fc005f0 <WriteFlashSubBlock+0x28>
+9fc005ea:	1a1f 006a 	jal	9fc001a8 <NVMemWriteWord>
+9fc005ee:	99a0      	lw	a1,0(s1)
+9fc005f0:	f090 a049 	lbu	v0,-32631(s0)
+9fc005f4:	4904      	addiu	s1,4
+9fc005f6:	4aff      	addiu	v0,-1
+9fc005f8:	f090 c049 	sb	v0,-32631(s0)
+9fc005fc:	f090 a089 	lbu	a0,-32631(s0)
+9fc00600:	2ce7      	bnez	a0,9fc005d0 <WriteFlashSubBlock+0x8>
+9fc00602:	6500      	nop
+9fc00604:	6474      	restore	32,ra,s0-s1
+9fc00606:	e8a0      	jrc	ra
+9fc00608:	027c      	addiu	v0,sp,496
+9fc0060a:	a000      	lbu	s0,0(s0)
+9fc0060c:	ffff      	daddiu	a3,sp,124
+9fc0060e:	1fff 0fff 	jalx	9ffc3ffc <USER_USB_CALLBACK_EVENT_HANDLER+0x3c34f8>
+9fc00612:	1d00 64f5 	jalx	902193d4 <_bmxdudba_address+0x902173d8>
+
+9fc00614 <BootApplication>:
+9fc00614:	64f5      	save	40,ra,s0-s1
+9fc00616:	671c      	move	s0,gp
+9fc00618:	f070 a054 	lbu	v0,-32652(s0)
+9fc0061c:	2a2d      	bnez	v0,9fc00678 <BootApplication+0x64>
+9fc0061e:	f010 9858 	lw	v0,-32744(s0)
+9fc00622:	2205      	beqz	v0,9fc0062e <BootApplication+0x1a>
+9fc00624:	a260      	lbu	v1,0(v0)
+9fc00626:	6a80      	li	v0,128
+9fc00628:	ea6c      	and	v0,v1
+9fc0062a:	f160 2a05 	bnez	v0,9fc008f8 <BootApplication+0x2e4>
+9fc0062e:	f010 9854 	lw	v0,-32748(s0)
+9fc00632:	2205      	beqz	v0,9fc0063e <BootApplication+0x2a>
+9fc00634:	a260      	lbu	v1,0(v0)
+9fc00636:	6a80      	li	v0,128
+9fc00638:	ea6c      	and	v0,v1
+9fc0063a:	2202      	beqz	v0,9fc00640 <BootApplication+0x2c>
+9fc0063c:	115d      	b	9fc008f8 <BootApplication+0x2e4>
+9fc0063e:	6a00      	li	v0,0
+9fc00640:	b6af      	lw	a2,9fc008fc <BootApplication+0x2e8>
+9fc00642:	e651      	addu	a0,a2,v0
+9fc00644:	b3af      	lw	v1,9fc00900 <BootApplication+0x2ec>
+9fc00646:	e34d      	addu	v1,v0
+9fc00648:	4a01      	addiu	v0,1
+9fc0064a:	a480      	lbu	a0,0(a0)
+9fc0064c:	ea11      	zeb	v0
+9fc0064e:	7240      	cmpi	v0,64
+9fc00650:	c380      	sb	a0,0(v1)
+9fc00652:	61f6      	btnez	9fc00640 <BootApplication+0x2c>
+9fc00654:	6c01      	li	a0,1
+9fc00656:	6d00      	li	a1,0
+9fc00658:	1a1f 0109 	jal	9fc00424 <USBTransferOnePacket>
+9fc0065c:	6f40      	li	a3,64
+9fc0065e:	f010 d854 	sw	v0,-32748(s0)
+9fc00662:	6a01      	li	v0,1
+9fc00664:	f070 c054 	sb	v0,-32652(s0)
+9fc00668:	b3a7      	lw	v1,9fc00904 <BootApplication+0x2f0>
+9fc0066a:	b2a8      	lw	v0,9fc00908 <BootApplication+0x2f4>
+9fc0066c:	6c00      	li	a0,0
+9fc0066e:	c280      	sb	a0,0(v0)
+9fc00670:	4a01      	addiu	v0,1
+9fc00672:	ea6a      	cmp	v0,v1
+9fc00674:	61fb      	btnez	9fc0066c <BootApplication+0x58>
+9fc00676:	1140      	b	9fc008f8 <BootApplication+0x2e4>
+9fc00678:	b2a2      	lw	v0,9fc00900 <BootApplication+0x2ec>
+9fc0067a:	a240      	lbu	v0,0(v0)
+9fc0067c:	4afe      	addiu	v0,-2
+9fc0067e:	ea11      	zeb	v0
+9fc00680:	5a0a      	sltiu	v0,10
+9fc00682:	f120 6019 	bteqz	9fc008f8 <BootApplication+0x2e4>
+9fc00686:	0b04      	la	v1,9fc00694 <BootApplication+0x80>
+9fc00688:	3244      	sll	v0,1
+9fc0068a:	e349      	addu	v0,v1,v0
+9fc0068c:	8a40      	lh	v0,0(v0)
+9fc0068e:	e26d      	addu	v1,v0,v1
+9fc00690:	eb80      	jrc	v1
+9fc00692:	6500      	nop
+9fc00694:	001b      	addiu	s0,sp,108
+9fc00696:	0053      	addiu	s0,sp,332
+9fc00698:	0015      	addiu	s0,sp,84
+9fc0069a:	00c3      	addiu	s0,sp,780
+9fc0069c:	0149      	addiu	s1,sp,292
+9fc0069e:	0195      	addiu	s1,sp,596
+9fc006a0:	0247      	addiu	v0,sp,284
+9fc006a2:	01fd      	addiu	s1,sp,1012
+9fc006a4:	022f      	addiu	v0,sp,188
+9fc006a6:	0159      	addiu	s1,sp,356
+9fc006a8:	6b00      	li	v1,0
+9fc006aa:	b199      	lw	s1,9fc0090c <BootApplication+0x2f8>
+9fc006ac:	1048      	b	9fc0073e <BootApplication+0x12a>
+9fc006ae:	b297      	lw	v0,9fc00908 <BootApplication+0x2f4>
+9fc006b0:	6b02      	li	v1,2
+9fc006b2:	c260      	sb	v1,0(v0)
+9fc006b4:	6b38      	li	v1,56
+9fc006b6:	c261      	sb	v1,1(v0)
+9fc006b8:	6b03      	li	v1,3
+9fc006ba:	c262      	sb	v1,2(v0)
+9fc006bc:	6b01      	li	v1,1
+9fc006be:	c263      	sb	v1,3(v0)
+9fc006c0:	f090 9884 	lw	a0,-32636(s0)
+9fc006c4:	b392      	lw	v1,9fc0090c <BootApplication+0x2f8>
+9fc006c6:	da61      	sw	v1,4(v0)
+9fc006c8:	e46f      	subu	v1,a0,v1
+9fc006ca:	da62      	sw	v1,8(v0)
+9fc006cc:	6b01      	li	v1,1
+9fc006ce:	eb6b      	neg	v1
+9fc006d0:	c26c      	sb	v1,12(v0)
+9fc006d2:	f010 9858 	lw	v0,-32744(s0)
+9fc006d6:	f0c0 2212 	beqz	v0,9fc0087e <BootApplication+0x26a>
+9fc006da:	a260      	lbu	v1,0(v0)
+9fc006dc:	6a80      	li	v0,128
+9fc006de:	ea6c      	and	v0,v1
+9fc006e0:	f100 2a0a 	bnez	v0,9fc008f8 <BootApplication+0x2e4>
+9fc006e4:	10cc      	b	9fc0087e <BootApplication+0x26a>
+9fc006e6:	b287      	lw	v0,9fc00900 <BootApplication+0x2ec>
+9fc006e8:	b38a      	lw	v1,9fc00910 <BootApplication+0x2fc>
+9fc006ea:	a281      	lbu	a0,1(v0)
+9fc006ec:	b28a      	lw	v0,9fc00914 <BootApplication+0x300>
+9fc006ee:	2c0c      	bnez	a0,9fc00708 <BootApplication+0xf4>
+9fc006f0:	9aa0      	lw	a1,0(v0)
+9fc006f2:	9a40      	lw	v0,0(v0)
+9fc006f4:	35a2      	srl	a1,8
+9fc006f6:	35aa      	srl	a1,2
+9fc006f8:	e26d      	addu	v1,v0,v1
+9fc006fa:	f090 c0a8 	sb	a1,-32632(s0)
+9fc006fe:	f090 d864 	sw	v1,-32636(s0)
+9fc00702:	f070 c09c 	sb	a0,-32644(s0)
+9fc00706:	10e5      	b	9fc008d2 <BootApplication+0x2be>
+9fc00708:	9a80      	lw	a0,0(v0)
+9fc0070a:	9a40      	lw	v0,0(v0)
+9fc0070c:	3482      	srl	a0,8
+9fc0070e:	e26d      	addu	v1,v0,v1
+9fc00710:	348a      	srl	a0,2
+9fc00712:	6a01      	li	v0,1
+9fc00714:	f090 c088 	sb	a0,-32632(s0)
+9fc00718:	f090 d864 	sw	v1,-32636(s0)
+9fc0071c:	f070 c05c 	sb	v0,-32644(s0)
+9fc00720:	10d8      	b	9fc008d2 <BootApplication+0x2be>
+9fc00722:	6791      	move	a0,s1
+9fc00724:	1a1f 0062 	jal	9fc00188 <NVMemErasePage>
+9fc00728:	d304      	sw	v1,16(sp)
+9fc0072a:	181a 0059 	jal	9d000164 <USBDeviceTasks>
+9fc0072e:	6500      	nop
+9fc00730:	b27a      	lw	v0,9fc00918 <BootApplication+0x304>
+9fc00732:	f400 4900 	addiu	s1,1024
+9fc00736:	ea2e      	xor	v0,s1
+9fc00738:	9304      	lw	v1,16(sp)
+9fc0073a:	2205      	beqz	v0,9fc00746 <BootApplication+0x132>
+9fc0073c:	4b01      	addiu	v1,1
+9fc0073e:	f090 a048 	lbu	v0,-32632(s0)
+9fc00742:	eb42      	slt	v1,v0
+9fc00744:	61ee      	btnez	9fc00722 <BootApplication+0x10e>
+9fc00746:	b376      	lw	v1,9fc0091c <BootApplication+0x308>
+9fc00748:	f008 6c01 	li	a0,16385
+9fc0074c:	9b40      	lw	v0,0(v1)
+9fc0074e:	ec8b      	neg	a0
+9fc00750:	ea8c      	and	v0,a0
+9fc00752:	db40      	sw	v0,0(v1)
+9fc00754:	10be      	b	9fc008d2 <BootApplication+0x2be>
+9fc00756:	f090 9840 	lw	v0,-32640(s0)
+9fc0075a:	4a01      	addiu	v0,1
+9fc0075c:	2a09      	bnez	v0,9fc00770 <BootApplication+0x15c>
+9fc0075e:	b269      	lw	v0,9fc00900 <BootApplication+0x2ec>
+9fc00760:	9a60      	lw	v1,0(v0)
+9fc00762:	a244      	lbu	v0,4(v0)
+9fc00764:	3362      	srl	v1,8
+9fc00766:	f600 3240 	sll	v0,24
+9fc0076a:	ea6d      	or	v0,v1
+9fc0076c:	f090 d840 	sw	v0,-32640(s0)
+9fc00770:	b264      	lw	v0,9fc00900 <BootApplication+0x2ec>
+9fc00772:	6900      	li	s1,0
+9fc00774:	9a60      	lw	v1,0(v0)
+9fc00776:	a244      	lbu	v0,4(v0)
+9fc00778:	3362      	srl	v1,8
+9fc0077a:	f600 3240 	sll	v0,24
+9fc0077e:	ea6d      	or	v0,v1
+9fc00780:	f090 9860 	lw	v1,-32640(s0)
+9fc00784:	ea6e      	xor	v0,v1
+9fc00786:	f0a0 2a04 	bnez	v0,9fc008d2 <BootApplication+0x2be>
+9fc0078a:	1022      	b	9fc007d0 <BootApplication+0x1bc>
+9fc0078c:	f090 a089 	lbu	a0,-32631(s0)
+9fc00790:	b664      	lw	a2,9fc00920 <BootApplication+0x30c>
+9fc00792:	3588      	sll	a1,a0,2
+9fc00794:	e6b9      	addu	a2,a1
+9fc00796:	6d38      	li	a1,56
+9fc00798:	e54b      	subu	v0,a1,v0
+9fc0079a:	6d04      	li	a1,4
+9fc0079c:	eaba      	div	zero,v0,a1
+9fc0079e:	2d01      	bnez	a1,9fc007a2 <BootApplication+0x18e>
+9fc007a0:	e8e5      	break	7
+9fc007a2:	ea12      	mflo	v0
+9fc007a4:	e149      	addu	v0,s1,v0
+9fc007a6:	4a02      	addiu	v0,2
+9fc007a8:	3248      	sll	v0,2
+9fc007aa:	e34d      	addu	v1,v0
+9fc007ac:	9b40      	lw	v0,0(v1)
+9fc007ae:	f090 9860 	lw	v1,-32640(s0)
+9fc007b2:	de40      	sw	v0,0(a2)
+9fc007b4:	4441      	addiu	v0,a0,1
+9fc007b6:	ea11      	zeb	v0
+9fc007b8:	4b04      	addiu	v1,4
+9fc007ba:	720e      	cmpi	v0,14
+9fc007bc:	f090 c049 	sb	v0,-32631(s0)
+9fc007c0:	f090 d860 	sw	v1,-32640(s0)
+9fc007c4:	6103      	btnez	9fc007cc <BootApplication+0x1b8>
+9fc007c6:	1a1f 0172 	jal	9fc005c8 <WriteFlashSubBlock>
+9fc007ca:	6500      	nop
+9fc007cc:	4901      	addiu	s1,1
+9fc007ce:	e911      	zeb	s1
+9fc007d0:	b34c      	lw	v1,9fc00900 <BootApplication+0x2ec>
+9fc007d2:	a345      	lbu	v0,5(v1)
+9fc007d4:	344a      	srl	a0,v0,2
+9fc007d6:	e983      	sltu	s1,a0
+9fc007d8:	61d9      	btnez	9fc0078c <BootApplication+0x178>
+9fc007da:	107b      	b	9fc008d2 <BootApplication+0x2be>
+9fc007dc:	1a1f 0172 	jal	9fc005c8 <WriteFlashSubBlock>
+9fc007e0:	6500      	nop
+9fc007e2:	6a01      	li	v0,1
+9fc007e4:	ea4b      	neg	v0
+9fc007e6:	f090 d840 	sw	v0,-32640(s0)
+9fc007ea:	1073      	b	9fc008d2 <BootApplication+0x2be>
+9fc007ec:	f010 9858 	lw	v0,-32744(s0)
+9fc007f0:	2204      	beqz	v0,9fc007fa <BootApplication+0x1e6>
+9fc007f2:	a260      	lbu	v1,0(v0)
+9fc007f4:	6a80      	li	v0,128
+9fc007f6:	ea6c      	and	v0,v1
+9fc007f8:	2a7f      	bnez	v0,9fc008f8 <BootApplication+0x2e4>
+9fc007fa:	b444      	lw	a0,9fc00908 <BootApplication+0x2f4>
+9fc007fc:	b34a      	lw	v1,9fc00924 <BootApplication+0x310>
+9fc007fe:	6d0b      	li	a1,11
+9fc00800:	c4a0      	sb	a1,0(a0)
+9fc00802:	9b84      	lw	a0,16(v1)
+9fc00804:	b249      	lw	v0,9fc00928 <BootApplication+0x314>
+9fc00806:	da80      	sw	a0,0(v0)
+9fc00808:	9b88      	lw	a0,32(v1)
+9fc0080a:	da81      	sw	a0,4(v0)
+9fc0080c:	9b8c      	lw	a0,48(v1)
+9fc0080e:	9b60      	lw	v1,0(v1)
+9fc00810:	da82      	sw	a0,8(v0)
+9fc00812:	da63      	sw	v1,12(v0)
+9fc00814:	b346      	lw	v1,9fc0092c <BootApplication+0x318>
+9fc00816:	9b84      	lw	a0,16(v1)
+9fc00818:	da84      	sw	a0,16(v0)
+9fc0081a:	9b88      	lw	a0,32(v1)
+9fc0081c:	da85      	sw	a0,20(v0)
+9fc0081e:	9b8c      	lw	a0,48(v1)
+9fc00820:	9b60      	lw	v1,0(v1)
+9fc00822:	da86      	sw	a0,24(v0)
+9fc00824:	da67      	sw	v1,28(v0)
+9fc00826:	102b      	b	9fc0087e <BootApplication+0x26a>
+9fc00828:	f010 9858 	lw	v0,-32744(s0)
+9fc0082c:	2204      	beqz	v0,9fc00836 <BootApplication+0x222>
+9fc0082e:	a260      	lbu	v1,0(v0)
+9fc00830:	6a80      	li	v0,128
+9fc00832:	ea6c      	and	v0,v1
+9fc00834:	2a61      	bnez	v0,9fc008f8 <BootApplication+0x2e4>
+9fc00836:	b235      	lw	v0,9fc00908 <BootApplication+0x2f4>
+9fc00838:	b332      	lw	v1,9fc00900 <BootApplication+0x2ec>
+9fc0083a:	6d07      	li	a1,7
+9fc0083c:	c2a0      	sb	a1,0(v0)
+9fc0083e:	a3e5      	lbu	a3,5(v1)
+9fc00840:	9ba0      	lw	a1,0(v1)
+9fc00842:	a364      	lbu	v1,4(v1)
+9fc00844:	a2c0      	lbu	a2,0(v0)
+9fc00846:	35a2      	srl	a1,8
+9fc00848:	f600 3360 	sll	v1,24
+9fc0084c:	ebad      	or	v1,a1
+9fc0084e:	35a0      	sll	a1,8
+9fc00850:	eead      	or	a2,a1
+9fc00852:	f600 3562 	srl	a1,v1,24
+9fc00856:	dac0      	sw	a2,0(v0)
+9fc00858:	c2a4      	sb	a1,4(v0)
+9fc0085a:	c2e5      	sb	a3,5(v0)
+9fc0085c:	b235      	lw	v0,9fc00930 <BootApplication+0x31c>
+9fc0085e:	4783      	addiu	a0,a3,3
+9fc00860:	ea6d      	or	v0,v1
+9fc00862:	348b      	sra	a0,2
+9fc00864:	6b00      	li	v1,0
+9fc00866:	1009      	b	9fc0087a <BootApplication+0x266>
+9fc00868:	43a2      	addiu	a1,v1,2
+9fc0086a:	b628      	lw	a2,9fc00908 <BootApplication+0x2f4>
+9fc0086c:	35a8      	sll	a1,2
+9fc0086e:	e6b5      	addu	a1,a2,a1
+9fc00870:	9ac0      	lw	a2,0(v0)
+9fc00872:	4b01      	addiu	v1,1
+9fc00874:	ddc0      	sw	a2,0(a1)
+9fc00876:	4a04      	addiu	v0,4
+9fc00878:	eb11      	zeb	v1
+9fc0087a:	eb82      	slt	v1,a0
+9fc0087c:	61f5      	btnez	9fc00868 <BootApplication+0x254>
+9fc0087e:	6c01      	li	a0,1
+9fc00880:	67a4      	move	a1,a0
+9fc00882:	b622      	lw	a2,9fc00908 <BootApplication+0x2f4>
+9fc00884:	1a1f 0109 	jal	9fc00424 <USBTransferOnePacket>
+9fc00888:	6f40      	li	a3,64
+9fc0088a:	f010 d858 	sw	v0,-32744(s0)
+9fc0088e:	1021      	b	9fc008d2 <BootApplication+0x2be>
+9fc00890:	b21c      	lw	v0,9fc00900 <BootApplication+0x2ec>
+9fc00892:	9a60      	lw	v1,0(v0)
+9fc00894:	a244      	lbu	v0,4(v0)
+9fc00896:	3362      	srl	v1,8
+9fc00898:	f600 3240 	sll	v0,24
+9fc0089c:	ea6d      	or	v0,v1
+9fc0089e:	b325      	lw	v1,9fc00930 <BootApplication+0x31c>
+9fc008a0:	ea6d      	or	v0,v1
+9fc008a2:	6b00      	li	v1,0
+9fc008a4:	1008      	b	9fc008b6 <BootApplication+0x2a2>
+9fc008a6:	43a2      	addiu	a1,v1,2
+9fc008a8:	35a8      	sll	a1,2
+9fc008aa:	e4b1      	addu	a0,a1
+9fc008ac:	4b01      	addiu	v1,1
+9fc008ae:	9c80      	lw	a0,0(a0)
+9fc008b0:	eb11      	zeb	v1
+9fc008b2:	da80      	sw	a0,0(v0)
+9fc008b4:	4a04      	addiu	v0,4
+9fc008b6:	b413      	lw	a0,9fc00900 <BootApplication+0x2ec>
+9fc008b8:	a4a5      	lbu	a1,5(a0)
+9fc008ba:	35aa      	srl	a1,2
+9fc008bc:	eba3      	sltu	v1,a1
+9fc008be:	61f3      	btnez	9fc008a6 <BootApplication+0x292>
+9fc008c0:	1008      	b	9fc008d2 <BootApplication+0x2be>
+9fc008c2:	b210      	lw	v0,9fc00900 <BootApplication+0x2ec>
+9fc008c4:	9a60      	lw	v1,0(v0)
+9fc008c6:	a244      	lbu	v0,4(v0)
+9fc008c8:	3362      	srl	v1,8
+9fc008ca:	f600 3240 	sll	v0,24
+9fc008ce:	ea6d      	or	v0,v1
+9fc008d0:	eac0      	jalrc	v0
+9fc008d2:	6a00      	li	v0,0
+9fc008d4:	f070 c054 	sb	v0,-32652(s0)
+9fc008d8:	100f      	b	9fc008f8 <BootApplication+0x2e4>
+9fc008da:	f010 985c 	lw	v0,-32740(s0)
+9fc008de:	b316      	lw	v1,9fc00934 <BootApplication+0x320>
+9fc008e0:	da60      	sw	v1,0(v0)
+9fc008e2:	b216      	lw	v0,9fc00938 <BootApplication+0x324>
+9fc008e4:	6b00      	li	v1,0
+9fc008e6:	da60      	sw	v1,0(v0)
+9fc008e8:	f7ff 6a1f 	li	v0,65535
+9fc008ec:	6500      	nop
+9fc008ee:	4aff      	addiu	v0,-1
+9fc008f0:	2afd      	bnez	v0,9fc008ec <BootApplication+0x2d8>
+9fc008f2:	1c1a 03c1 	jalx	9d000f04 <SoftReset>
+9fc008f6:	6500      	nop
+9fc008f8:	6475      	restore	40,ra,s0-s1
+9fc008fa:	e8a0      	jrc	ra
+9fc008fc:	037c      	addiu	v1,sp,496
+9fc008fe:	a000      	lbu	s0,0(s0)
+9fc00900:	033c      	addiu	v1,sp,240
+9fc00902:	a000      	lbu	s0,0(s0)
+9fc00904:	033c      	addiu	v1,sp,240
+9fc00906:	a000      	lbu	s0,0(s0)
+9fc00908:	02fc      	addiu	v0,sp,1008
+9fc0090a:	a000      	lbu	s0,0(s0)
+9fc0090c:	1000      	b	9fc0090e <BootApplication+0x2fa>
+9fc0090e:	1d00 0000 	jalx	90200000 <_bmxdudba_address+0x901fe004>
+9fc00912:	1d00 2060 	jalx	90208180 <_bmxdudba_address+0x90206184>
+9fc00916:	bf88      	lwu	a0,32(a3)
+9fc00918:	8000      	lb	s0,0(s0)
+9fc0091a:	1d00 f400 	jalx	9023d000 <_bmxdudba_address+0x9023b004>
+9fc0091e:	bf80      	lwu	a0,0(a3)
+9fc00920:	027c      	addiu	v0,sp,496
+9fc00922:	a000      	lbu	s0,0(s0)
+9fc00924:	6000      	bteqz	9fc00926 <BootApplication+0x312>
+9fc00926:	bf88      	lwu	a0,32(a3)
+9fc00928:	0304      	addiu	v1,sp,16
+9fc0092a:	a000      	lbu	s0,0(s0)
+9fc0092c:	6100      	btnez	9fc0092e <BootApplication+0x31a>
+9fc0092e:	bf88      	lwu	a0,32(a3)
+9fc00930:	0000      	addiu	s0,sp,0
+9fc00932:	8000      	lb	s0,0(s0)
+9fc00934:	5678      	slti	a2,120
+9fc00936:	1234      	b	9fc00da0 <USER_USB_CALLBACK_EVENT_HANDLER+0x29c>
+9fc00938:	5250      	slti	v0,80
+9fc0093a:	bf88      	lwu	a0,32(a3)
+
+9fc0093c <ProcessIO>:
+9fc0093c:	675c      	move	v0,gp
+9fc0093e:	64c3      	save	24,ra
+9fc00940:	f090 9a6c 	lw	v1,-32628(v0)
+9fc00944:	2344      	beqz	v1,9fc009ce <ProcessIO+0x92>
+9fc00946:	f030 aa62 	lhu	v1,-32734(v0)
+9fc0094a:	2b04      	bnez	v1,9fc00954 <ProcessIO+0x18>
+9fc0094c:	f704 6b10 	li	v1,10000
+9fc00950:	f030 ca62 	sh	v1,-32734(v0)
+9fc00954:	f030 aa82 	lhu	a0,-32734(v0)
+9fc00958:	b325      	lw	v1,9fc009ec <ProcessIO+0xb0>
+9fc0095a:	4cff      	addiu	a0,-1
+9fc0095c:	ec31      	zeh	a0
+9fc0095e:	f030 ca82 	sh	a0,-32734(v0)
+9fc00962:	9b60      	lw	v1,0(v1)
+9fc00964:	6d02      	li	a1,2
+9fc00966:	ebac      	and	v1,a1
+9fc00968:	2306      	beqz	v1,9fc00976 <ProcessIO+0x3a>
+9fc0096a:	2c31      	bnez	a0,9fc009ce <ProcessIO+0x92>
+9fc0096c:	b321      	lw	v1,9fc009f0 <ProcessIO+0xb4>
+9fc0096e:	f7ef 4d1e 	addiu	a1,32766
+9fc00972:	9b80      	lw	a0,0(v1)
+9fc00974:	1020      	b	9fc009b6 <ProcessIO+0x7a>
+9fc00976:	f030 9a70 	lw	v1,-32720(v0)
+9fc0097a:	2b07      	bnez	v1,9fc0098a <ProcessIO+0x4e>
+9fc0097c:	b41d      	lw	a0,9fc009f0 <ProcessIO+0xb4>
+9fc0097e:	f010 6d01 	li	a1,32769
+9fc00982:	9c60      	lw	v1,0(a0)
+9fc00984:	edab      	neg	a1
+9fc00986:	ebac      	and	v1,a1
+9fc00988:	1007      	b	9fc00998 <ProcessIO+0x5c>
+9fc0098a:	7301      	cmpi	v1,1
+9fc0098c:	6107      	btnez	9fc0099c <ProcessIO+0x60>
+9fc0098e:	b419      	lw	a0,9fc009f0 <ProcessIO+0xb4>
+9fc00990:	f010 6d00 	li	a1,32768
+9fc00994:	9c60      	lw	v1,0(a0)
+9fc00996:	ebad      	or	v1,a1
+9fc00998:	dc60      	sw	v1,0(a0)
+9fc0099a:	1019      	b	9fc009ce <ProcessIO+0x92>
+9fc0099c:	7302      	cmpi	v1,2
+9fc0099e:	60f7      	bteqz	9fc0098e <ProcessIO+0x52>
+9fc009a0:	7304      	cmpi	v1,4
+9fc009a2:	6015      	bteqz	9fc009ce <ProcessIO+0x92>
+9fc009a4:	7310      	cmpi	v1,16
+9fc009a6:	6002      	bteqz	9fc009ac <ProcessIO+0x70>
+9fc009a8:	7320      	cmpi	v1,32
+9fc009aa:	6111      	btnez	9fc009ce <ProcessIO+0x92>
+9fc009ac:	2c10      	bnez	a0,9fc009ce <ProcessIO+0x92>
+9fc009ae:	b311      	lw	v1,9fc009f0 <ProcessIO+0xb4>
+9fc009b0:	f010 6d00 	li	a1,32768
+9fc009b4:	9b80      	lw	a0,0(v1)
+9fc009b6:	ecac      	and	a0,a1
+9fc009b8:	5c01      	sltiu	a0,1
+9fc009ba:	67b8      	move	a1,t8
+9fc009bc:	9b80      	lw	a0,0(v1)
+9fc009be:	f010 6e01 	li	a2,32769
+9fc009c2:	35a0      	sll	a1,8
+9fc009c4:	eecb      	neg	a2
+9fc009c6:	35bc      	sll	a1,7
+9fc009c8:	eccc      	and	a0,a2
+9fc009ca:	ecad      	or	a0,a1
+9fc009cc:	db80      	sw	a0,0(v1)
+9fc009ce:	f030 9a50 	lw	v0,-32720(v0)
+9fc009d2:	5a20      	sltiu	v0,32
+9fc009d4:	6108      	btnez	9fc009e6 <ProcessIO+0xaa>
+9fc009d6:	b206      	lw	v0,9fc009ec <ProcessIO+0xb0>
+9fc009d8:	6b02      	li	v1,2
+9fc009da:	9a40      	lw	v0,0(v0)
+9fc009dc:	ea6c      	and	v0,v1
+9fc009de:	2a03      	bnez	v0,9fc009e6 <ProcessIO+0xaa>
+9fc009e0:	1a1f 0185 	jal	9fc00614 <BootApplication>
+9fc009e4:	6500      	nop
+9fc009e6:	6443      	restore	24,ra
+9fc009e8:	e8a0      	jrc	ra
+9fc009ea:	6500      	nop
+9fc009ec:	5080      	slti	s0,128
+9fc009ee:	bf88      	lwu	a0,32(a3)
+9fc009f0:	6130      	btnez	9fc00a52 <main+0x5e>
+9fc009f2:	bf88      	lwu	a0,32(a3)
+
+9fc009f4 <main>:
+9fc009f4:	64e3      	save	24,ra,s0
+9fc009f6:	b330      	lw	v1,9fc00ab4 <main+0xc0>
+9fc009f8:	6c80      	li	a0,128
+9fc009fa:	9b40      	lw	v0,0(v1)
+9fc009fc:	671c      	move	s0,gp
+9fc009fe:	ea8d      	or	v0,a0
+9fc00a00:	db40      	sw	v0,0(v1)
+9fc00a02:	b32e      	lw	v1,9fc00ab8 <main+0xc4>
+9fc00a04:	b22e      	lw	v0,9fc00abc <main+0xc8>
+9fc00a06:	f010 d87c 	sw	v1,-32740(s0)
+9fc00a0a:	9a40      	lw	v0,0(v0)
+9fc00a0c:	ea8c      	and	v0,a0
+9fc00a0e:	2209      	beqz	v0,9fc00a22 <main+0x2e>
+9fc00a10:	b22c      	lw	v0,9fc00ac0 <main+0xcc>
+9fc00a12:	6c40      	li	a0,64
+9fc00a14:	9a40      	lw	v0,0(v0)
+9fc00a16:	ea8c      	and	v0,a0
+9fc00a18:	2212      	beqz	v0,9fc00a3e <main+0x4a>
+9fc00a1a:	9b60      	lw	v1,0(v1)
+9fc00a1c:	b22a      	lw	v0,9fc00ac4 <main+0xd0>
+9fc00a1e:	ea6e      	xor	v0,v1
+9fc00a20:	2a0e      	bnez	v0,9fc00a3e <main+0x4a>
+9fc00a22:	b226      	lw	v0,9fc00ab8 <main+0xc4>
+9fc00a24:	6b00      	li	v1,0
+9fc00a26:	da60      	sw	v1,0(v0)
+9fc00a28:	b228      	lw	v0,9fc00ac8 <main+0xd4>
+9fc00a2a:	9a60      	lw	v1,0(v0)
+9fc00a2c:	4b01      	addiu	v1,1
+9fc00a2e:	2302      	beqz	v1,9fc00a34 <main+0x40>
+9fc00a30:	eac0      	jalrc	v0
+9fc00a32:	17ff      	b	9fc00a32 <main+0x3e>
+9fc00a34:	b326      	lw	v1,9fc00acc <main+0xd8>
+9fc00a36:	f002 4a00 	addiu	v0,4096
+9fc00a3a:	eb4e      	xor	v1,v0
+9fc00a3c:	2bf6      	bnez	v1,9fc00a2a <main+0x36>
+9fc00a3e:	1a1f 0093 	jal	9fc0024c <USBDeviceInit>
+9fc00a42:	6500      	nop
+9fc00a44:	b31c      	lw	v1,9fc00ab4 <main+0xc0>
+9fc00a46:	f010 6c01 	li	a0,32769
+9fc00a4a:	9b40      	lw	v0,0(v1)
+9fc00a4c:	ec8b      	neg	a0
+9fc00a4e:	ea8c      	and	v0,a0
+9fc00a50:	db40      	sw	v0,0(v1)
+9fc00a52:	b320      	lw	v1,9fc00ad0 <main+0xdc>
+9fc00a54:	6d01      	li	a1,1
+9fc00a56:	9b40      	lw	v0,0(v1)
+9fc00a58:	ea8c      	and	v0,a0
+9fc00a5a:	db40      	sw	v0,0(v1)
+9fc00a5c:	b31e      	lw	v1,9fc00ad4 <main+0xe0>
+9fc00a5e:	6a00      	li	v0,0
+9fc00a60:	9b80      	lw	a0,0(v1)
+9fc00a62:	9bc0      	lw	a2,0(v1)
+9fc00a64:	3482      	srl	a0,8
+9fc00a66:	348a      	srl	a0,2
+9fc00a68:	9b60      	lw	v1,0(v1)
+9fc00a6a:	f090 c088 	sb	a0,-32632(s0)
+9fc00a6e:	b41b      	lw	a0,9fc00ad8 <main+0xe4>
+9fc00a70:	f090 d8ac 	sw	a1,-32628(s0)
+9fc00a74:	e699      	addu	a2,a0
+9fc00a76:	e391      	addu	a0,v1,a0
+9fc00a78:	b319      	lw	v1,9fc00adc <main+0xe8>
+9fc00a7a:	f070 d898 	sw	a0,-32648(s0)
+9fc00a7e:	6c40      	li	a0,64
+9fc00a80:	db80      	sw	a0,0(v1)
+9fc00a82:	f010 987c 	lw	v1,-32740(s0)
+9fc00a86:	f070 c0bc 	sb	a1,-32644(s0)
+9fc00a8a:	4dfe      	addiu	a1,-2
+9fc00a8c:	f010 d854 	sw	v0,-32748(s0)
+9fc00a90:	f010 d858 	sw	v0,-32744(s0)
+9fc00a94:	f090 d8c4 	sw	a2,-32636(s0)
+9fc00a98:	f070 c054 	sb	v0,-32652(s0)
+9fc00a9c:	f090 d8a0 	sw	a1,-32640(s0)
+9fc00aa0:	f090 c049 	sb	v0,-32631(s0)
+9fc00aa4:	db40      	sw	v0,0(v1)
+9fc00aa6:	181a 0059 	jal	9d000164 <USBDeviceTasks>
+9fc00aaa:	6500      	nop
+9fc00aac:	1a1f 024f 	jal	9fc0093c <ProcessIO>
+9fc00ab0:	6500      	nop
+9fc00ab2:	17f9      	b	9fc00aa6 <main+0xb2>
+9fc00ab4:	6110      	btnez	9fc00ad6 <main+0xe2>
+9fc00ab6:	bf88      	lwu	a0,32(a3)
+9fc00ab8:	0000      	addiu	s0,sp,0
+9fc00aba:	a000      	lbu	s0,0(s0)
+9fc00abc:	6120      	btnez	9fc00afe <USBCBSendResume+0x1e>
+9fc00abe:	bf88      	lwu	a0,32(a3)
+9fc00ac0:	f600 bf80 	lwu	a0,1536(a3)
+9fc00ac4:	5678      	slti	a2,120
+9fc00ac6:	1234      	b	9fc00f30 <USER_USB_CALLBACK_EVENT_HANDLER+0x42c>
+9fc00ac8:	1000      	b	9fc00aca <main+0xd6>
+9fc00aca:	9d00      	lw	s0,0(a1)
+9fc00acc:	6000      	bteqz	9fc00ace <main+0xda>
+9fc00ace:	9d00      	lw	s0,0(a1)
+9fc00ad0:	6130      	btnez	9fc00b32 <USER_USB_CALLBACK_EVENT_HANDLER+0x2e>
+9fc00ad2:	bf88      	lwu	a0,32(a3)
+9fc00ad4:	2060      	beqz	s0,9fc00b96 <USER_USB_CALLBACK_EVENT_HANDLER+0x92>
+9fc00ad6:	bf88      	lwu	a0,32(a3)
+9fc00ad8:	0000      	addiu	s0,sp,0
+9fc00ada:	1d00 f604 	jalx	9023d810 <_bmxdudba_address+0x9023b814>
+9fc00ade:	bf80      	lwu	a0,0(a3)
+
+9fc00ae0 <USBCBSendResume>:
+9fc00ae0:	b208      	lw	v0,9fc00b00 <USBCBSendResume+0x20>
+9fc00ae2:	6c04      	li	a0,4
+9fc00ae4:	9a60      	lw	v1,0(v0)
+9fc00ae6:	eb8d      	or	v1,a0
+9fc00ae8:	da60      	sw	v1,0(v0)
+9fc00aea:	677c      	move	v1,gp
+9fc00aec:	6c00      	li	a0,0
+9fc00aee:	f030 cb80 	sh	a0,-32736(v1)
+9fc00af2:	9a60      	lw	v1,0(v0)
+9fc00af4:	6c05      	li	a0,5
+9fc00af6:	ec8b      	neg	a0
+9fc00af8:	eb8c      	and	v1,a0
+9fc00afa:	e820      	jr	ra
+9fc00afc:	da60      	sw	v1,0(v0)
+9fc00afe:	6500      	nop
+9fc00b00:	5250      	slti	v0,80
+9fc00b02:	bf88      	lwu	a0,32(a3)
+
+9fc00b04 <USER_USB_CALLBACK_EVENT_HANDLER>:
+9fc00b04:	7403      	cmpi	a0,3
+9fc00b06:	64c3      	save	24,ra
+9fc00b08:	6012      	bteqz	9fc00b2e <USER_USB_CALLBACK_EVENT_HANDLER+0x2a>
+9fc00b0a:	7472      	cmpi	a0,114
+9fc00b0c:	6014      	bteqz	9fc00b36 <USER_USB_CALLBACK_EVENT_HANDLER+0x32>
+9fc00b0e:	7401      	cmpi	a0,1
+9fc00b10:	6113      	btnez	9fc00b38 <USER_USB_CALLBACK_EVENT_HANDLER+0x34>
+9fc00b12:	6c01      	li	a0,1
+9fc00b14:	1a1f 00fb 	jal	9fc003ec <USBEnableEndpoint>
+9fc00b18:	6d1d      	li	a1,29
+9fc00b1a:	6c01      	li	a0,1
+9fc00b1c:	6d00      	li	a1,0
+9fc00b1e:	b609      	lw	a2,9fc00b40 <USER_USB_CALLBACK_EVENT_HANDLER+0x3c>
+9fc00b20:	1a1f 0109 	jal	9fc00424 <USBTransferOnePacket>
+9fc00b24:	6f40      	li	a3,64
+9fc00b26:	677c      	move	v1,gp
+9fc00b28:	f010 db54 	sw	v0,-32748(v1)
+9fc00b2c:	1005      	b	9fc00b38 <USER_USB_CALLBACK_EVENT_HANDLER+0x34>
+9fc00b2e:	181a 038e 	jal	9d000e38 <USBCheckHIDRequest>
+9fc00b32:	6500      	nop
+9fc00b34:	1001      	b	9fc00b38 <USER_USB_CALLBACK_EVENT_HANDLER+0x34>
+9fc00b36:	6500      	nop
+9fc00b38:	6443      	restore	24,ra
+9fc00b3a:	e820      	jr	ra
+9fc00b3c:	6a01      	li	v0,1
+9fc00b3e:	6500      	nop
+9fc00b40:	037c      	addiu	v1,sp,496
+9fc00b42:	a000      	lbu	s0,0(s0)
+
+Disassembly of section .reset:
+
+bfc00000 <_reset>:
+bfc00000:	3c1a9fc0 	lui	k0,0x9fc0
+bfc00004:	275a000c 	addiu	k0,k0,12
+bfc00008:	03400008 	jr	k0
+
+Disassembly of section .text:
+
+9d000000 <USBCtrlTrfTxService>:
+9d000000:	b322      	lw	v1,9d000088 <USBCtrlTrfTxService+0x88>
+9d000002:	675c      	move	v0,gp
+9d000004:	ab64      	lhu	v1,8(v1)
+9d000006:	6c08      	li	a0,8
+9d000008:	5b08      	sltiu	v1,8
+9d00000a:	600c      	bteqz	9d000024 <USBCtrlTrfTxService+0x24>
+9d00000c:	f050 a2b6 	lbu	a1,-32682(v0)
+9d000010:	6783      	move	a0,v1
+9d000012:	ec11      	zeb	a0
+9d000014:	2d02      	bnez	a1,9d00001a <USBCtrlTrfTxService+0x1a>
+9d000016:	6d01      	li	a1,1
+9d000018:	1003      	b	9d000020 <USBCtrlTrfTxService+0x20>
+9d00001a:	7501      	cmpi	a1,1
+9d00001c:	6103      	btnez	9d000024 <USBCtrlTrfTxService+0x24>
+9d00001e:	6d02      	li	a1,2
+9d000020:	f050 c2b6 	sb	a1,-32682(v0)
+9d000024:	b619      	lw	a2,9d000088 <USBCtrlTrfTxService+0x88>
+9d000026:	e38f      	subu	v1,a0
+9d000028:	ce64      	sh	v1,8(a2)
+9d00002a:	b319      	lw	v1,9d00008c <USBCtrlTrfTxService+0x8c>
+9d00002c:	6d04      	li	a1,4
+9d00002e:	9b60      	lw	v1,0(v1)
+9d000030:	edab      	neg	a1
+9d000032:	a3e2      	lbu	a3,2(v1)
+9d000034:	c382      	sb	a0,2(v1)
+9d000036:	a3e3      	lbu	a3,3(v1)
+9d000038:	edec      	and	a1,a3
+9d00003a:	c3a3      	sb	a1,3(v1)
+9d00003c:	b315      	lw	v1,9d000090 <USBCtrlTrfTxService+0x90>
+9d00003e:	f030 da64 	sw	v1,-32732(v0)
+9d000042:	a664      	lbu	v1,4(a2)
+9d000044:	6d01      	li	a1,1
+9d000046:	ebac      	and	v1,a1
+9d000048:	230e      	beqz	v1,9d000066 <USBCtrlTrfTxService+0x66>
+9d00004a:	101c      	b	9d000084 <USBCtrlTrfTxService+0x84>
+9d00004c:	b30f      	lw	v1,9d000088 <USBCtrlTrfTxService+0x88>
+9d00004e:	f030 9ac4 	lw	a2,-32732(v0)
+9d000052:	9ba0      	lw	a1,0(v1)
+9d000054:	4cff      	addiu	a0,-1
+9d000056:	ec11      	zeb	a0
+9d000058:	a5e0      	lbu	a3,0(a1)
+9d00005a:	4d01      	addiu	a1,1
+9d00005c:	c6e0      	sb	a3,0(a2)
+9d00005e:	4e01      	addiu	a2,1
+9d000060:	f030 dac4 	sw	a2,-32732(v0)
+9d000064:	dba0      	sw	a1,0(v1)
+9d000066:	2cf2      	bnez	a0,9d00004c <USBCtrlTrfTxService+0x4c>
+9d000068:	e8a0      	jrc	ra
+9d00006a:	b308      	lw	v1,9d000088 <USBCtrlTrfTxService+0x88>
+9d00006c:	f030 9ac4 	lw	a2,-32732(v0)
+9d000070:	9ba0      	lw	a1,0(v1)
+9d000072:	4cff      	addiu	a0,-1
+9d000074:	ec11      	zeb	a0
+9d000076:	a5e0      	lbu	a3,0(a1)
+9d000078:	4d01      	addiu	a1,1
+9d00007a:	c6e0      	sb	a3,0(a2)
+9d00007c:	4e01      	addiu	a2,1
+9d00007e:	f030 dac4 	sw	a2,-32732(v0)
+9d000082:	dba0      	sw	a1,0(v1)
+9d000084:	2cf2      	bnez	a0,9d00006a <USBCtrlTrfTxService+0x6a>
+9d000086:	e8a0      	jrc	ra
+9d000088:	0248      	addiu	v0,sp,288
+9d00008a:	a000      	lbu	s0,0(s0)
+9d00008c:	0258      	addiu	v0,sp,352
+9d00008e:	a000      	lbu	s0,0(s0)
+9d000090:	0240      	addiu	v0,sp,256
+9d000092:	a000      	lbu	s0,0(s0)
+
+9d000094 <USBCtrlEPAllowDataStage>:
+9d000094:	675c      	move	v0,gp
+9d000096:	6b00      	li	v1,0
+9d000098:	f030 a2d4 	lbu	a2,-32716(v0)
+9d00009c:	f030 da68 	sw	v1,-32728(v0)
+9d0000a0:	f030 da6c 	sw	v1,-32724(v0)
+9d0000a4:	6b02      	li	v1,2
+9d0000a6:	ee6e      	xor	a2,v1
+9d0000a8:	64e3      	save	24,ra,s0
+9d0000aa:	2e25      	bnez	a2,9d0000f6 <USBCtrlEPAllowDataStage+0x62>
+9d0000ac:	f050 9a48 	lw	v0,-32696(v0)
+9d0000b0:	6dff      	li	a1,255
+9d0000b2:	a262      	lbu	v1,2(v0)
+9d0000b4:	6b08      	li	v1,8
+9d0000b6:	c262      	sb	v1,2(v0)
+9d0000b8:	a283      	lbu	a0,3(v0)
+9d0000ba:	4bf4      	addiu	v1,-12
+9d0000bc:	eb8c      	and	v1,a0
+9d0000be:	b425      	lw	a0,9d000150 <USBCtrlEPAllowDataStage+0xbc>
+9d0000c0:	c263      	sb	v1,3(v0)
+9d0000c2:	b325      	lw	v1,9d000154 <USBCtrlEPAllowDataStage+0xc0>
+9d0000c4:	eb8c      	and	v1,a0
+9d0000c6:	6783      	move	a0,v1
+9d0000c8:	ecac      	and	a0,a1
+9d0000ca:	a2e4      	lbu	a3,4(v0)
+9d0000cc:	c284      	sb	a0,4(v0)
+9d0000ce:	3462      	srl	a0,v1,8
+9d0000d0:	67e4      	move	a3,a0
+9d0000d2:	efac      	and	a3,a1
+9d0000d4:	3482      	srl	a0,8
+9d0000d6:	a205      	lbu	s0,5(v0)
+9d0000d8:	ecac      	and	a0,a1
+9d0000da:	c2e5      	sb	a3,5(v0)
+9d0000dc:	a2a6      	lbu	a1,6(v0)
+9d0000de:	f600 3362 	srl	v1,24
+9d0000e2:	c286      	sb	a0,6(v0)
+9d0000e4:	a287      	lbu	a0,7(v0)
+9d0000e6:	c267      	sb	v1,7(v0)
+9d0000e8:	a260      	lbu	v1,0(v0)
+9d0000ea:	6b38      	li	v1,56
+9d0000ec:	eb6b      	neg	v1
+9d0000ee:	c260      	sb	v1,0(v0)
+9d0000f0:	a261      	lbu	v1,1(v0)
+9d0000f2:	c2c1      	sb	a2,1(v0)
+9d0000f4:	102a      	b	9d00014a <USBCtrlEPAllowDataStage+0xb6>
+9d0000f6:	b319      	lw	v1,9d000158 <USBCtrlEPAllowDataStage+0xc4>
+9d0000f8:	b219      	lw	v0,9d00015c <USBCtrlEPAllowDataStage+0xc8>
+9d0000fa:	ab83      	lhu	a0,6(v1)
+9d0000fc:	aaa4      	lhu	a1,8(v0)
+9d0000fe:	ec31      	zeh	a0
+9d000100:	eca3      	sltu	a0,a1
+9d000102:	6002      	bteqz	9d000108 <USBCtrlEPAllowDataStage+0x74>
+9d000104:	ab63      	lhu	v1,6(v1)
+9d000106:	ca64      	sh	v1,8(v0)
+9d000108:	181a 0000 	jal	9d000000 <USBCtrlTrfTxService>
+9d00010c:	6500      	nop
+9d00010e:	b411      	lw	a0,9d000150 <USBCtrlEPAllowDataStage+0xbc>
+9d000110:	b214      	lw	v0,9d000160 <USBCtrlEPAllowDataStage+0xcc>
+9d000112:	b311      	lw	v1,9d000154 <USBCtrlEPAllowDataStage+0xc0>
+9d000114:	9a40      	lw	v0,0(v0)
+9d000116:	eb8c      	and	v1,a0
+9d000118:	6dff      	li	a1,255
+9d00011a:	6783      	move	a0,v1
+9d00011c:	ecac      	and	a0,a1
+9d00011e:	a2c4      	lbu	a2,4(v0)
+9d000120:	c284      	sb	a0,4(v0)
+9d000122:	3462      	srl	a0,v1,8
+9d000124:	67c4      	move	a2,a0
+9d000126:	eeac      	and	a2,a1
+9d000128:	3482      	srl	a0,8
+9d00012a:	a2e5      	lbu	a3,5(v0)
+9d00012c:	ecac      	and	a0,a1
+9d00012e:	c2c5      	sb	a2,5(v0)
+9d000130:	a2a6      	lbu	a1,6(v0)
+9d000132:	f600 3362 	srl	v1,24
+9d000136:	c286      	sb	a0,6(v0)
+9d000138:	a287      	lbu	a0,7(v0)
+9d00013a:	c267      	sb	v1,7(v0)
+9d00013c:	a260      	lbu	v1,0(v0)
+9d00013e:	6b38      	li	v1,56
+9d000140:	eb6b      	neg	v1
+9d000142:	c260      	sb	v1,0(v0)
+9d000144:	a261      	lbu	v1,1(v0)
+9d000146:	6b00      	li	v1,0
+9d000148:	c261      	sb	v1,1(v0)
+9d00014a:	6463      	restore	24,ra,s0
+9d00014c:	e8a0      	jrc	ra
+9d00014e:	6500      	nop
+9d000150:	ffff      	daddiu	a3,sp,124
+9d000152:	1fff 0240 	jalx	9ffc0900 <USER_USB_CALLBACK_EVENT_HANDLER+0x3bfdfc>
+9d000156:	a000      	lbu	s0,0(s0)
+9d000158:	0268      	addiu	v0,sp,416
+9d00015a:	a000      	lbu	s0,0(s0)
+9d00015c:	0248      	addiu	v0,sp,288
+9d00015e:	a000      	lbu	s0,0(s0)
+9d000160:	0258      	addiu	v0,sp,352
+9d000162:	a000      	lbu	s0,0(s0)
+
+9d000164 <USBDeviceTasks>:
+9d000164:	64f8      	save	64,ra,s0-s1
+9d000166:	671c      	move	s0,gp
+9d000168:	f030 9850 	lw	v0,-32720(s0)
+9d00016c:	2a22      	bnez	v0,9d0001b2 <USBDeviceTasks+0x4e>
+9d00016e:	f441 b304 	lw	v1,9d000db0 <USBDeviceTasks+0xc4c>
+9d000172:	f441 b404 	lw	a0,9d000db4 <USBDeviceTasks+0xc50>
+9d000176:	db40      	sw	v0,0(v1)
+9d000178:	f441 b300 	lw	v1,9d000db8 <USBDeviceTasks+0xc54>
+9d00017c:	db40      	sw	v0,0(v1)
+9d00017e:	dc40      	sw	v0,0(a0)
+9d000180:	f421 b41c 	lw	a0,9d000dbc <USBDeviceTasks+0xc58>
+9d000184:	6a9f      	li	v0,159
+9d000186:	dc40      	sw	v0,0(a0)
+9d000188:	db40      	sw	v0,0(v1)
+9d00018a:	f421 b218 	lw	v0,9d000dc0 <USBDeviceTasks+0xc5c>
+9d00018e:	6c0f      	li	a0,15
+9d000190:	9a60      	lw	v1,0(v0)
+9d000192:	eb8c      	and	v1,a0
+9d000194:	da60      	sw	v1,0(v0)
+9d000196:	9a60      	lw	v1,0(v0)
+9d000198:	da60      	sw	v1,0(v0)
+9d00019a:	1003      	b	9d0001a2 <USBDeviceTasks+0x3e>
+9d00019c:	9c60      	lw	v1,0(a0)
+9d00019e:	eb4d      	or	v1,v0
+9d0001a0:	dc60      	sw	v1,0(a0)
+9d0001a2:	f421 b404 	lw	a0,9d000dc4 <USBDeviceTasks+0xc60>
+9d0001a6:	6a01      	li	v0,1
+9d0001a8:	9c60      	lw	v1,0(a0)
+9d0001aa:	eb4c      	and	v1,v0
+9d0001ac:	23f7      	beqz	v1,9d00019c <USBDeviceTasks+0x38>
+9d0001ae:	f030 d850 	sw	v0,-32720(s0)
+9d0001b2:	f030 9850 	lw	v0,-32720(s0)
+9d0001b6:	6b01      	li	v1,1
+9d0001b8:	ea6e      	xor	v0,v1
+9d0001ba:	2a14      	bnez	v0,9d0001e4 <USBDeviceTasks+0x80>
+9d0001bc:	f401 b30c 	lw	v1,9d000dc8 <USBDeviceTasks+0xc64>
+9d0001c0:	6cff      	li	a0,255
+9d0001c2:	db80      	sw	a0,0(v1)
+9d0001c4:	f3e1 b314 	lw	v1,9d000db8 <USBDeviceTasks+0xc54>
+9d0001c8:	6c01      	li	a0,1
+9d0001ca:	db40      	sw	v0,0(v1)
+9d0001cc:	f401 b200 	lw	v0,9d000dcc <USBDeviceTasks+0xc68>
+9d0001d0:	9a60      	lw	v1,0(v0)
+9d0001d2:	eb8d      	or	v1,a0
+9d0001d4:	da60      	sw	v1,0(v0)
+9d0001d6:	9a60      	lw	v1,0(v0)
+9d0001d8:	6c10      	li	a0,16
+9d0001da:	eb8d      	or	v1,a0
+9d0001dc:	da60      	sw	v1,0(v0)
+9d0001de:	6a02      	li	v0,2
+9d0001e0:	f030 d850 	sw	v0,-32720(s0)
+9d0001e4:	f3e1 b20c 	lw	v0,9d000dd0 <USBDeviceTasks+0xc6c>
+9d0001e8:	6910      	li	s1,16
+9d0001ea:	9a40      	lw	v0,0(v0)
+9d0001ec:	ea2c      	and	v0,s1
+9d0001ee:	221a      	beqz	v0,9d000224 <USBDeviceTasks+0xc0>
+9d0001f0:	f3e1 b304 	lw	v1,9d000dd4 <USBDeviceTasks+0xc70>
+9d0001f4:	9b40      	lw	v0,0(v1)
+9d0001f6:	ea2c      	and	v0,s1
+9d0001f8:	2215      	beqz	v0,9d000224 <USBDeviceTasks+0xc0>
+9d0001fa:	f3e1 b700 	lw	a3,9d000dd8 <USBDeviceTasks+0xc74>
+9d0001fe:	6a00      	li	v0,0
+9d000200:	df20      	sw	s1,0(a3)
+9d000202:	6c74      	li	a0,116
+9d000204:	67a2      	move	a1,v0
+9d000206:	d308      	sw	v1,32(sp)
+9d000208:	d707      	sw	a3,28(sp)
+9d00020a:	f050 d84c 	sw	v0,-32692(s0)
+9d00020e:	1a1f 02c1 	jal	9fc00b04 <USER_USB_CALLBACK_EVENT_HANDLER>
+9d000212:	67c2      	move	a2,v0
+9d000214:	9308      	lw	v1,32(sp)
+9d000216:	6c11      	li	a0,17
+9d000218:	ec8b      	neg	a0
+9d00021a:	9b40      	lw	v0,0(v1)
+9d00021c:	ea8c      	and	v0,a0
+9d00021e:	db40      	sw	v0,0(v1)
+9d000220:	9707      	lw	a3,28(sp)
+9d000222:	df20      	sw	s1,0(a3)
+9d000224:	f3a1 b218 	lw	v0,9d000ddc <USBDeviceTasks+0xc78>
+9d000228:	6b02      	li	v1,2
+9d00022a:	9a40      	lw	v0,0(v0)
+9d00022c:	ea6c      	and	v0,v1
+9d00022e:	f5a0 2a1a 	bnez	v0,9d000da6 <USBDeviceTasks+0xc42>
+9d000232:	f3a1 b210 	lw	v0,9d000de0 <USBDeviceTasks+0xc7c>
+9d000236:	6901      	li	s1,1
+9d000238:	9a40      	lw	v0,0(v0)
+9d00023a:	ea2c      	and	v0,s1
+9d00023c:	220e      	beqz	v0,9d00025a <USBDeviceTasks+0xf6>
+9d00023e:	f381 b210 	lw	v0,9d000dcc <USBDeviceTasks+0xc68>
+9d000242:	9a40      	lw	v0,0(v0)
+9d000244:	ea2c      	and	v0,s1
+9d000246:	2209      	beqz	v0,9d00025a <USBDeviceTasks+0xf6>
+9d000248:	1a1f 0093 	jal	9fc0024c <USBDeviceInit>
+9d00024c:	6500      	nop
+9d00024e:	6a04      	li	v0,4
+9d000250:	f030 d850 	sw	v0,-32720(s0)
+9d000254:	f361 b214 	lw	v0,9d000dc8 <USBDeviceTasks+0xc64>
+9d000258:	da20      	sw	s1,0(v0)
+9d00025a:	f381 b208 	lw	v0,9d000de0 <USBDeviceTasks+0xc7c>
+9d00025e:	6910      	li	s1,16
+9d000260:	9a40      	lw	v0,0(v0)
+9d000262:	ea2c      	and	v0,s1
+9d000264:	2218      	beqz	v0,9d000296 <USBDeviceTasks+0x132>
+9d000266:	f361 b208 	lw	v0,9d000dcc <USBDeviceTasks+0xc68>
+9d00026a:	9a40      	lw	v0,0(v0)
+9d00026c:	ea2c      	and	v0,s1
+9d00026e:	2213      	beqz	v0,9d000296 <USBDeviceTasks+0x132>
+9d000270:	f361 b304 	lw	v1,9d000dd4 <USBDeviceTasks+0xc70>
+9d000274:	6d00      	li	a1,0
+9d000276:	9b40      	lw	v0,0(v1)
+9d000278:	6c75      	li	a0,117
+9d00027a:	ea2d      	or	v0,s1
+9d00027c:	db40      	sw	v0,0(v1)
+9d00027e:	f341 b30c 	lw	v1,9d000dc8 <USBDeviceTasks+0xc64>
+9d000282:	6a01      	li	v0,1
+9d000284:	db20      	sw	s1,0(v1)
+9d000286:	d308      	sw	v1,32(sp)
+9d000288:	f050 d84c 	sw	v0,-32692(s0)
+9d00028c:	1a1f 02c1 	jal	9fc00b04 <USER_USB_CALLBACK_EVENT_HANDLER>
+9d000290:	67c5      	move	a2,a1
+9d000292:	9308      	lw	v1,32(sp)
+9d000294:	db20      	sw	s1,0(v1)
+9d000296:	f341 b20c 	lw	v0,9d000de0 <USBDeviceTasks+0xc7c>
+9d00029a:	6b04      	li	v1,4
+9d00029c:	9a40      	lw	v0,0(v0)
+9d00029e:	ea6c      	and	v0,v1
+9d0002a0:	220e      	beqz	v0,9d0002be <USBDeviceTasks+0x15a>
+9d0002a2:	f321 b20c 	lw	v0,9d000dcc <USBDeviceTasks+0xc68>
+9d0002a6:	9a40      	lw	v0,0(v0)
+9d0002a8:	ea6c      	and	v0,v1
+9d0002aa:	2205      	beqz	v0,9d0002b6 <USBDeviceTasks+0x152>
+9d0002ac:	6c73      	li	a0,115
+9d0002ae:	6d00      	li	a1,0
+9d0002b0:	1a1f 02c1 	jal	9fc00b04 <USER_USB_CALLBACK_EVENT_HANDLER>
+9d0002b4:	6e01      	li	a2,1
+9d0002b6:	f301 b214 	lw	v0,9d000dc8 <USBDeviceTasks+0xc64>
+9d0002ba:	6b04      	li	v1,4
+9d0002bc:	da60      	sw	v1,0(v0)
+9d0002be:	f321 b204 	lw	v0,9d000de0 <USBDeviceTasks+0xc7c>
+9d0002c2:	6b80      	li	v1,128
+9d0002c4:	9a40      	lw	v0,0(v0)
+9d0002c6:	ea6c      	and	v0,v1
+9d0002c8:	2232      	beqz	v0,9d00032e <USBDeviceTasks+0x1ca>
+9d0002ca:	f301 b204 	lw	v0,9d000dcc <USBDeviceTasks+0xc68>
+9d0002ce:	9a40      	lw	v0,0(v0)
+9d0002d0:	ea6c      	and	v0,v1
+9d0002d2:	222d      	beqz	v0,9d00032e <USBDeviceTasks+0x1ca>
+9d0002d4:	f301 b210 	lw	v0,9d000de4 <USBDeviceTasks+0xc80>
+9d0002d8:	6b02      	li	v1,2
+9d0002da:	9a40      	lw	v0,0(v0)
+9d0002dc:	ea6c      	and	v0,v1
+9d0002de:	2223      	beqz	v0,9d000326 <USBDeviceTasks+0x1c2>
+9d0002e0:	f050 9858 	lw	v0,-32680(s0)
+9d0002e4:	a280      	lbu	a0,0(v0)
+9d0002e6:	a261      	lbu	v1,1(v0)
+9d0002e8:	ec11      	zeb	a0
+9d0002ea:	eb11      	zeb	v1
+9d0002ec:	3360      	sll	v1,8
+9d0002ee:	eb8d      	or	v1,a0
+9d0002f0:	7380      	cmpi	v1,128
+9d0002f2:	6112      	btnez	9d000318 <USBDeviceTasks+0x1b4>
+9d0002f4:	f2e1 b314 	lw	v1,9d000de8 <USBDeviceTasks+0xc84>
+9d0002f8:	9b60      	lw	v1,0(v1)
+9d0002fa:	a380      	lbu	a0,0(v1)
+9d0002fc:	a361      	lbu	v1,1(v1)
+9d0002fe:	ec11      	zeb	a0
+9d000300:	eb11      	zeb	v1
+9d000302:	3360      	sll	v1,8
+9d000304:	eb8d      	or	v1,a0
+9d000306:	6c84      	li	a0,132
+9d000308:	eb8e      	xor	v1,a0
+9d00030a:	2b06      	bnez	v1,9d000318 <USBDeviceTasks+0x1b4>
+9d00030c:	a280      	lbu	a0,0(v0)
+9d00030e:	6c74      	li	a0,116
+9d000310:	ec8b      	neg	a0
+9d000312:	c280      	sb	a0,0(v0)
+9d000314:	a281      	lbu	a0,1(v0)
+9d000316:	c261      	sb	v1,1(v0)
+9d000318:	f2c1 b30c 	lw	v1,9d000de4 <USBDeviceTasks+0xc80>
+9d00031c:	6c03      	li	a0,3
+9d00031e:	9b40      	lw	v0,0(v1)
+9d000320:	ec8b      	neg	a0
+9d000322:	ea8c      	and	v0,a0
+9d000324:	db40      	sw	v0,0(v1)
+9d000326:	f2a1 b204 	lw	v0,9d000dc8 <USBDeviceTasks+0xc64>
+9d00032a:	6b80      	li	v1,128
+9d00032c:	da60      	sw	v1,0(v0)
+9d00032e:	f2a1 b214 	lw	v0,9d000de0 <USBDeviceTasks+0xc7c>
+9d000332:	6902      	li	s1,2
+9d000334:	9a40      	lw	v0,0(v0)
+9d000336:	ea2c      	and	v0,s1
+9d000338:	2212      	beqz	v0,9d00035e <USBDeviceTasks+0x1fa>
+9d00033a:	f281 b214 	lw	v0,9d000dcc <USBDeviceTasks+0xc68>
+9d00033e:	9a40      	lw	v0,0(v0)
+9d000340:	ea2c      	and	v0,s1
+9d000342:	220d      	beqz	v0,9d00035e <USBDeviceTasks+0x1fa>
+9d000344:	f2a1 b408 	lw	a0,9d000dec <USBDeviceTasks+0xc88>
+9d000348:	6d00      	li	a1,0
+9d00034a:	1a1f 02c1 	jal	9fc00b04 <USER_USB_CALLBACK_EVENT_HANDLER>
+9d00034e:	6e01      	li	a2,1
+9d000350:	f2a1 b200 	lw	v0,9d000df0 <USBDeviceTasks+0xc8c>
+9d000354:	6bff      	li	v1,255
+9d000356:	da60      	sw	v1,0(v0)
+9d000358:	f261 b210 	lw	v0,9d000dc8 <USBDeviceTasks+0xc64>
+9d00035c:	da20      	sw	s1,0(v0)
+9d00035e:	f030 9850 	lw	v0,-32720(s0)
+9d000362:	5a04      	sltiu	v0,4
+9d000364:	f500 611f 	btnez	9d000da6 <USBDeviceTasks+0xc42>
+9d000368:	f261 b204 	lw	v0,9d000dcc <USBDeviceTasks+0xc68>
+9d00036c:	6b08      	li	v1,8
+9d00036e:	9a40      	lw	v0,0(v0)
+9d000370:	ea6c      	and	v0,v1
+9d000372:	f500 2218 	beqz	v0,9d000da6 <USBDeviceTasks+0xc42>
+9d000376:	6d00      	li	a1,0
+9d000378:	d506      	sw	a1,24(sp)
+9d00037a:	f261 b208 	lw	v0,9d000de0 <USBDeviceTasks+0xc7c>
+9d00037e:	6d08      	li	a1,8
+9d000380:	9a40      	lw	v0,0(v0)
+9d000382:	eaac      	and	v0,a1
+9d000384:	f500 220f 	beqz	v0,9d000da6 <USBDeviceTasks+0xc42>
+9d000388:	f261 b20c 	lw	v0,9d000df4 <USBDeviceTasks+0xc90>
+9d00038c:	f221 b61c 	lw	a2,9d000dc8 <USBDeviceTasks+0xc64>
+9d000390:	9a40      	lw	v0,0(v0)
+9d000392:	dea0      	sw	a1,0(a2)
+9d000394:	ea11      	zeb	v0
+9d000396:	6782      	move	a0,v0
+9d000398:	3352      	srl	v1,v0,4
+9d00039a:	ecac      	and	a0,a1
+9d00039c:	f070 c044 	sb	v0,-32668(s0)
+9d0003a0:	f030 c075 	sb	v1,-32715(s0)
+9d0003a4:	2c04      	bnez	a0,9d0003ae <USBDeviceTasks+0x24a>
+9d0003a6:	67d0      	move	a2,s0
+9d0003a8:	f030 4e18 	addiu	a2,-32712
+9d0003ac:	1003      	b	9d0003b4 <USBDeviceTasks+0x250>
+9d0003ae:	67d0      	move	a2,s0
+9d0003b0:	f050 4e14 	addiu	a2,-32684
+9d0003b4:	e3d9      	addu	a2,v1,a2
+9d0003b6:	6f01      	li	a3,1
+9d0003b8:	a680      	lbu	a0,0(a2)
+9d0003ba:	6901      	li	s1,1
+9d0003bc:	67a4      	move	a1,a0
+9d0003be:	edec      	and	a1,a3
+9d0003c0:	ed2e      	xor	a1,s1
+9d0003c2:	edec      	and	a1,a3
+9d0003c4:	6f02      	li	a3,2
+9d0003c6:	efeb      	neg	a3
+9d0003c8:	ecec      	and	a0,a3
+9d0003ca:	ecad      	or	a0,a1
+9d0003cc:	c680      	sb	a0,0(a2)
+9d0003ce:	f4c0 2b1c 	bnez	v1,9d000d8a <USBDeviceTasks+0xc26>
+9d0003d2:	6c05      	li	a0,5
+9d0003d4:	ec8b      	neg	a0
+9d0003d6:	ec4c      	and	a0,v0
+9d0003d8:	f460 2c02 	bnez	a0,9d000ca0 <USBDeviceTasks+0xb3c>
+9d0003dc:	324a      	srl	v0,2
+9d0003de:	344c      	sll	a0,v0,3
+9d0003e0:	654a      	move	t2,v0
+9d0003e2:	f201 b218 	lw	v0,9d000df8 <USBDeviceTasks+0xc94>
+9d0003e6:	e449      	addu	v0,a0,v0
+9d0003e8:	6790      	move	a0,s0
+9d0003ea:	f050 4c08 	addiu	a0,-32696
+9d0003ee:	6e08      	li	a2,8
+9d0003f0:	a4a0      	lbu	a1,0(a0)
+9d0003f2:	f050 d848 	sw	v0,-32696(s0)
+9d0003f6:	edce      	xor	a1,a2
+9d0003f8:	c4a0      	sb	a1,0(a0)
+9d0003fa:	f050 d858 	sw	v0,-32680(s0)
+9d0003fe:	a280      	lbu	a0,0(v0)
+9d000400:	6d3c      	li	a1,60
+9d000402:	ec11      	zeb	a0
+9d000404:	ecac      	and	a0,a1
+9d000406:	7434      	cmpi	a0,52
+9d000408:	f380 6109 	btnez	9d000b1e <USBDeviceTasks+0x9ba>
+9d00040c:	6c00      	li	a0,0
+9d00040e:	a2a4      	lbu	a1,4(v0)
+9d000410:	a265      	lbu	v1,5(v0)
+9d000412:	ed11      	zeb	a1
+9d000414:	eb11      	zeb	v1
+9d000416:	3360      	sll	v1,8
+9d000418:	ebad      	or	v1,a1
+9d00041a:	a2a6      	lbu	a1,6(v0)
+9d00041c:	f1e1 b600 	lw	a2,9d000dfc <USBDeviceTasks+0xc98>
+9d000420:	ed11      	zeb	a1
+9d000422:	35a0      	sll	a1,8
+9d000424:	35a0      	sll	a1,8
+9d000426:	ed6d      	or	a1,v1
+9d000428:	a267      	lbu	v1,7(v0)
+9d00042a:	f1c1 b718 	lw	a3,9d000e00 <USBDeviceTasks+0xc9c>
+9d00042e:	f600 3360 	sll	v1,24
+9d000432:	ebad      	or	v1,a1
+9d000434:	ebcd      	or	v1,a2
+9d000436:	e4f5      	addu	a1,a0,a3
+9d000438:	a360      	lbu	v1,0(v1)
+9d00043a:	4c01      	addiu	a0,1
+9d00043c:	c560      	sb	v1,0(a1)
+9d00043e:	a2a4      	lbu	a1,4(v0)
+9d000440:	a265      	lbu	v1,5(v0)
+9d000442:	ed11      	zeb	a1
+9d000444:	eb11      	zeb	v1
+9d000446:	3360      	sll	v1,8
+9d000448:	ebad      	or	v1,a1
+9d00044a:	a2a6      	lbu	a1,6(v0)
+9d00044c:	ed11      	zeb	a1
+9d00044e:	35a0      	sll	a1,8
+9d000450:	35a0      	sll	a1,8
+9d000452:	ed6d      	or	a1,v1
+9d000454:	a267      	lbu	v1,7(v0)
+9d000456:	a2c4      	lbu	a2,4(v0)
+9d000458:	f600 3360 	sll	v1,24
+9d00045c:	ebad      	or	v1,a1
+9d00045e:	4b01      	addiu	v1,1
+9d000460:	6dff      	li	a1,255
+9d000462:	6723      	move	s1,v1
+9d000464:	e9ac      	and	s1,a1
+9d000466:	c224      	sb	s1,4(v0)
+9d000468:	3162      	srl	s1,v1,8
+9d00046a:	67d1      	move	a2,s1
+9d00046c:	eeac      	and	a2,a1
+9d00046e:	650e      	move	t0,a2
+9d000470:	a2c5      	lbu	a2,5(v0)
+9d000472:	67c8      	move	a2,t0
+9d000474:	c2c5      	sb	a2,5(v0)
+9d000476:	3622      	srl	a2,s1,8
+9d000478:	eeac      	and	a2,a1
+9d00047a:	a226      	lbu	s1,6(v0)
+9d00047c:	f600 3362 	srl	v1,24
+9d000480:	c2c6      	sb	a2,6(v0)
+9d000482:	a2c7      	lbu	a2,7(v0)
+9d000484:	c267      	sb	v1,7(v0)
+9d000486:	6b08      	li	v1,8
+9d000488:	eb8e      	xor	v1,a0
+9d00048a:	2bc1      	bnez	v1,9d00040e <USBDeviceTasks+0x2aa>
+9d00048c:	674a      	move	v0,t2
+9d00048e:	f161 b418 	lw	a0,9d000e04 <USBDeviceTasks+0xca0>
+9d000492:	314c      	sll	s1,v0,3
+9d000494:	f161 b204 	lw	v0,9d000df8 <USBDeviceTasks+0xc94>
+9d000498:	e225      	addu	s1,v0,s1
+9d00049a:	f141 b210 	lw	v0,9d000de8 <USBDeviceTasks+0xc84>
+9d00049e:	ecec      	and	a0,a3
+9d0004a0:	d981      	sw	a0,4(s1)
+9d0004a2:	9a80      	lw	a0,0(v0)
+9d0004a4:	f050 c076 	sb	v1,-32682(s0)
+9d0004a8:	f070 d86c 	sw	v1,-32660(s0)
+9d0004ac:	f030 c074 	sb	v1,-32716(s0)
+9d0004b0:	f030 d868 	sw	v1,-32728(s0)
+9d0004b4:	f050 d864 	sw	v1,-32700(s0)
+9d0004b8:	f030 d86c 	sw	v1,-32724(s0)
+9d0004bc:	a420      	lbu	s1,0(a0)
+9d0004be:	a4c1      	lbu	a2,1(a0)
+9d0004c0:	e911      	zeb	s1
+9d0004c2:	ee11      	zeb	a2
+9d0004c4:	36c0      	sll	a2,8
+9d0004c6:	ee2d      	or	a2,s1
+9d0004c8:	6981      	li	s1,129
+9d0004ca:	e92b      	neg	s1
+9d0004cc:	ee2c      	and	a2,s1
+9d0004ce:	6549      	move	t2,s1
+9d0004d0:	6726      	move	s1,a2
+9d0004d2:	e9ac      	and	s1,a1
+9d0004d4:	6509      	move	t0,s1
+9d0004d6:	a420      	lbu	s1,0(a0)
+9d0004d8:	6728      	move	s1,t0
+9d0004da:	c420      	sb	s1,0(a0)
+9d0004dc:	36c2      	srl	a2,8
+9d0004de:	a421      	lbu	s1,1(a0)
+9d0004e0:	c4c1      	sb	a2,1(a0)
+9d0004e2:	a280      	lbu	a0,0(v0)
+9d0004e4:	6e08      	li	a2,8
+9d0004e6:	ecce      	xor	a0,a2
+9d0004e8:	c280      	sb	a0,0(v0)
+9d0004ea:	9a80      	lw	a0,0(v0)
+9d0004ec:	a4c0      	lbu	a2,0(a0)
+9d0004ee:	ee11      	zeb	a2
+9d0004f0:	650e      	move	t0,a2
+9d0004f2:	a4c1      	lbu	a2,1(a0)
+9d0004f4:	6728      	move	s1,t0
+9d0004f6:	ee11      	zeb	a2
+9d0004f8:	36c0      	sll	a2,8
+9d0004fa:	ee2d      	or	a2,s1
+9d0004fc:	672a      	move	s1,t2
+9d0004fe:	ee2c      	and	a2,s1
+9d000500:	6726      	move	s1,a2
+9d000502:	e9ac      	and	s1,a1
+9d000504:	6509      	move	t0,s1
+9d000506:	a420      	lbu	s1,0(a0)
+9d000508:	6728      	move	s1,t0
+9d00050a:	c420      	sb	s1,0(a0)
+9d00050c:	36c2      	srl	a2,8
+9d00050e:	a421      	lbu	s1,1(a0)
+9d000510:	c4c1      	sb	a2,1(a0)
+9d000512:	a280      	lbu	a0,0(v0)
+9d000514:	6e08      	li	a2,8
+9d000516:	ecce      	xor	a0,a2
+9d000518:	c280      	sb	a0,0(v0)
+9d00051a:	f050 9848 	lw	v0,-32696(s0)
+9d00051e:	672a      	move	s1,t2
+9d000520:	a2c0      	lbu	a2,0(v0)
+9d000522:	a281      	lbu	a0,1(v0)
+9d000524:	ee11      	zeb	a2
+9d000526:	ec11      	zeb	a0
+9d000528:	3480      	sll	a0,8
+9d00052a:	eccd      	or	a0,a2
+9d00052c:	ec2c      	and	a0,s1
+9d00052e:	ed8c      	and	a1,a0
+9d000530:	a2c0      	lbu	a2,0(v0)
+9d000532:	3482      	srl	a0,8
+9d000534:	c2a0      	sb	a1,0(v0)
+9d000536:	a2a1      	lbu	a1,1(v0)
+9d000538:	c281      	sb	a0,1(v0)
+9d00053a:	f0c1 b210 	lw	v0,9d000e08 <USBDeviceTasks+0xca4>
+9d00053e:	6c00      	li	a0,0
+9d000540:	c264      	sb	v1,4(v0)
+9d000542:	ca64      	sh	v1,8(v0)
+9d000544:	f0c1 b308 	lw	v1,9d000e0c <USBDeviceTasks+0xca8>
+9d000548:	f0c1 b508 	lw	a1,9d000e10 <USBDeviceTasks+0xcac>
+9d00054c:	c384      	sb	a0,4(v1)
+9d00054e:	9b81      	lw	a0,4(v1)
+9d000550:	ecac      	and	a0,a1
+9d000552:	db81      	sw	a0,4(v1)
+9d000554:	a760      	lbu	v1,0(a3)
+9d000556:	6c60      	li	a0,96
+9d000558:	eb11      	zeb	v1
+9d00055a:	eb8c      	and	v1,a0
+9d00055c:	f240 2b12 	bnez	v1,9d000a04 <USBDeviceTasks+0x8a0>
+9d000560:	a761      	lbu	v1,1(a3)
+9d000562:	eb11      	zeb	v1
+9d000564:	5b0c      	sltiu	v1,12
+9d000566:	f240 600d 	bteqz	9d000a04 <USBDeviceTasks+0x8a0>
+9d00056a:	0c04      	la	a0,9d000578 <USBDeviceTasks+0x414>
+9d00056c:	3364      	sll	v1,1
+9d00056e:	e46d      	addu	v1,a0,v1
+9d000570:	8b60      	lh	v1,0(v1)
+9d000572:	e391      	addu	a0,v1,a0
+9d000574:	ec80      	jrc	a0
+9d000576:	6500      	nop
+9d000578:	0135      	addiu	s1,sp,212
+9d00057a:	01f7      	addiu	s1,sp,988
+9d00057c:	048d      	addiu	a0,sp,564
+9d00057e:	01f7      	addiu	s1,sp,988
+9d000580:	048d      	addiu	a0,sp,564
+9d000582:	0019      	addiu	s0,sp,100
+9d000584:	0027      	addiu	s0,sp,156
+9d000586:	0483      	addiu	a0,sp,524
+9d000588:	012d      	addiu	s1,sp,180
+9d00058a:	009d      	addiu	s0,sp,628
+9d00058c:	043f      	addiu	a0,sp,252
+9d00058e:	0463      	addiu	a0,sp,396
+9d000590:	a284      	lbu	a0,4(v0)
+9d000592:	6b80      	li	v1,128
+9d000594:	eb6b      	neg	v1
+9d000596:	eb8d      	or	v1,a0
+9d000598:	c264      	sb	v1,4(v0)
+9d00059a:	6a08      	li	v0,8
+9d00059c:	1080      	b	9d00069e <USBDeviceTasks+0x53a>
+9d00059e:	f061 b304 	lw	v1,9d000e00 <USBDeviceTasks+0xc9c>
+9d0005a2:	6a80      	li	v0,128
+9d0005a4:	a3c0      	lbu	a2,0(v1)
+9d0005a6:	ee11      	zeb	a2
+9d0005a8:	ee4e      	xor	a2,v0
+9d0005aa:	f220 2e0b 	bnez	a2,9d000a04 <USBDeviceTasks+0x8a0>
+9d0005ae:	f041 b21c 	lw	v0,9d000e08 <USBDeviceTasks+0xca4>
+9d0005b2:	6c40      	li	a0,64
+9d0005b4:	ec8b      	neg	a0
+9d0005b6:	c284      	sb	a0,4(v0)
+9d0005b8:	a3a3      	lbu	a1,3(v1)
+9d0005ba:	ed11      	zeb	a1
+9d0005bc:	7502      	cmpi	a1,2
+9d0005be:	600a      	bteqz	9d0005d4 <USBDeviceTasks+0x470>
+9d0005c0:	6c03      	li	a0,3
+9d0005c2:	ecae      	xor	a0,a1
+9d0005c4:	2414      	beqz	a0,9d0005ee <USBDeviceTasks+0x48a>
+9d0005c6:	7501      	cmpi	a1,1
+9d0005c8:	6123      	btnez	9d000610 <USBDeviceTasks+0x4ac>
+9d0005ca:	f041 b30c 	lw	v1,9d000e14 <USBDeviceTasks+0xcb0>
+9d0005ce:	da60      	sw	v1,0(v0)
+9d0005d0:	6b12      	li	v1,18
+9d0005d2:	101a      	b	9d000608 <USBDeviceTasks+0x4a4>
+9d0005d4:	a362      	lbu	v1,2(v1)
+9d0005d6:	f041 b404 	lw	a0,9d000e18 <USBDeviceTasks+0xcb4>
+9d0005da:	eb11      	zeb	v1
+9d0005dc:	3368      	sll	v1,2
+9d0005de:	e46d      	addu	v1,a0,v1
+9d0005e0:	9b60      	lw	v1,0(v1)
+9d0005e2:	da60      	sw	v1,0(v0)
+9d0005e4:	a382      	lbu	a0,2(v1)
+9d0005e6:	c288      	sb	a0,8(v0)
+9d0005e8:	a363      	lbu	v1,3(v1)
+9d0005ea:	c269      	sb	v1,9(v0)
+9d0005ec:	120b      	b	9d000a04 <USBDeviceTasks+0x8a0>
+9d0005ee:	a3a2      	lbu	a1,2(v1)
+9d0005f0:	ed11      	zeb	a1
+9d0005f2:	5d03      	sltiu	a1,3
+9d0005f4:	600b      	bteqz	9d00060c <USBDeviceTasks+0x4a8>
+9d0005f6:	a362      	lbu	v1,2(v1)
+9d0005f8:	f021 b404 	lw	a0,9d000e1c <USBDeviceTasks+0xcb8>
+9d0005fc:	eb11      	zeb	v1
+9d0005fe:	3368      	sll	v1,2
+9d000600:	e46d      	addu	v1,a0,v1
+9d000602:	9b60      	lw	v1,0(v1)
+9d000604:	da60      	sw	v1,0(v0)
+9d000606:	a360      	lbu	v1,0(v1)
+9d000608:	ca64      	sh	v1,8(v0)
+9d00060a:	11fc      	b	9d000a04 <USBDeviceTasks+0x8a0>
+9d00060c:	c284      	sb	a0,4(v0)
+9d00060e:	11fa      	b	9d000a04 <USBDeviceTasks+0x8a0>
+9d000610:	c2c4      	sb	a2,4(v0)
+9d000612:	11f8      	b	9d000a04 <USBDeviceTasks+0x8a0>
+9d000614:	a284      	lbu	a0,4(v0)
+9d000616:	6b80      	li	v1,128
+9d000618:	eb6b      	neg	v1
+9d00061a:	eb8d      	or	v1,a0
+9d00061c:	c264      	sb	v1,4(v0)
+9d00061e:	f001 b204 	lw	v0,9d000e20 <USBDeviceTasks+0xcbc>
+9d000622:	6900      	li	s1,0
+9d000624:	f7c0 b314 	lw	v1,9d000df8 <USBDeviceTasks+0xc94>
+9d000628:	6783      	move	a0,v1
+9d00062a:	da20      	sw	s1,0(v0)
+9d00062c:	67b1      	move	a1,s1
+9d00062e:	6e40      	li	a2,64
+9d000630:	1a1f 0040 	jal	9fc00100 <memset>
+9d000634:	d308      	sw	v1,32(sp)
+9d000636:	f780 b210 	lw	v0,9d000dc4 <USBDeviceTasks+0xc60>
+9d00063a:	6d02      	li	a1,2
+9d00063c:	9a80      	lw	a0,0(v0)
+9d00063e:	ecad      	or	a0,a1
+9d000640:	da80      	sw	a0,0(v0)
+9d000642:	6790      	move	a0,s0
+9d000644:	f050 4c14 	addiu	a0,-32684
+9d000648:	f050 c034 	sb	s1,-32684(s0)
+9d00064c:	c421      	sb	s1,1(a0)
+9d00064e:	6790      	move	a0,s0
+9d000650:	f030 4c18 	addiu	a0,-32712
+9d000654:	f030 c038 	sb	s1,-32712(s0)
+9d000658:	c421      	sb	s1,1(a0)
+9d00065a:	f070 c028 	sb	s1,-32664(s0)
+9d00065e:	9a80      	lw	a0,0(v0)
+9d000660:	6d03      	li	a1,3
+9d000662:	edab      	neg	a1
+9d000664:	ecac      	and	a0,a1
+9d000666:	da80      	sw	a0,0(v0)
+9d000668:	f780 b200 	lw	v0,9d000de8 <USBDeviceTasks+0xc84>
+9d00066c:	f7a0 b418 	lw	a0,9d000e24 <USBDeviceTasks+0xcc0>
+9d000670:	da80      	sw	a0,0(v0)
+9d000672:	f780 b210 	lw	v0,9d000e00 <USBDeviceTasks+0xc9c>
+9d000676:	9308      	lw	v1,32(sp)
+9d000678:	a242      	lbu	v0,2(v0)
+9d00067a:	f050 d878 	sw	v1,-32680(s0)
+9d00067e:	ea11      	zeb	v0
+9d000680:	f050 d868 	sw	v1,-32696(s0)
+9d000684:	f050 c05c 	sb	v0,-32676(s0)
+9d000688:	2a02      	bnez	v0,9d00068e <USBDeviceTasks+0x52a>
+9d00068a:	6a10      	li	v0,16
+9d00068c:	1008      	b	9d00069e <USBDeviceTasks+0x53a>
+9d00068e:	6c01      	li	a0,1
+9d000690:	67b0      	move	a1,s0
+9d000692:	f050 4d1c 	addiu	a1,-32676
+9d000696:	1a1f 02c1 	jal	9fc00b04 <USER_USB_CALLBACK_EVENT_HANDLER>
+9d00069a:	67c4      	move	a2,a0
+9d00069c:	6a20      	li	v0,32
+9d00069e:	f030 d850 	sw	v0,-32720(s0)
+9d0006a2:	11b0      	b	9d000a04 <USBDeviceTasks+0x8a0>
+9d0006a4:	6770      	move	v1,s0
+9d0006a6:	f050 4b1c 	addiu	v1,-32676
+9d0006aa:	118d      	b	9d0009c6 <USBDeviceTasks+0x862>
+9d0006ac:	f760 b21c 	lw	v0,9d000e28 <USBDeviceTasks+0xcc4>
+9d0006b0:	6b00      	li	v1,0
+9d0006b2:	f740 b410 	lw	a0,9d000e00 <USBDeviceTasks+0xc9c>
+9d0006b6:	c260      	sb	v1,0(v0)
+9d0006b8:	c261      	sb	v1,1(v0)
+9d0006ba:	9c60      	lw	v1,0(a0)
+9d0006bc:	6d1f      	li	a1,31
+9d0006be:	ebac      	and	v1,a1
+9d0006c0:	7301      	cmpi	v1,1
+9d0006c2:	6017      	bteqz	9d0006f2 <USBDeviceTasks+0x58e>
+9d0006c4:	7302      	cmpi	v1,2
+9d0006c6:	601d      	bteqz	9d000702 <USBDeviceTasks+0x59e>
+9d0006c8:	2b40      	bnez	v1,9d00074a <USBDeviceTasks+0x5e6>
+9d0006ca:	f740 b400 	lw	a0,9d000e08 <USBDeviceTasks+0xca4>
+9d0006ce:	4b80      	addiu	v1,-128
+9d0006d0:	a4a4      	lbu	a1,4(a0)
+9d0006d2:	ebad      	or	v1,a1
+9d0006d4:	c464      	sb	v1,4(a0)
+9d0006d6:	a260      	lbu	v1,0(v0)
+9d0006d8:	6c01      	li	a0,1
+9d0006da:	eb11      	zeb	v1
+9d0006dc:	eb8d      	or	v1,a0
+9d0006de:	c260      	sb	v1,0(v0)
+9d0006e0:	f070 9860 	lw	v1,-32672(s0)
+9d0006e4:	7301      	cmpi	v1,1
+9d0006e6:	6131      	btnez	9d00074a <USBDeviceTasks+0x5e6>
+9d0006e8:	a260      	lbu	v1,0(v0)
+9d0006ea:	6c02      	li	a0,2
+9d0006ec:	eb11      	zeb	v1
+9d0006ee:	eb8d      	or	v1,a0
+9d0006f0:	102b      	b	9d000748 <USBDeviceTasks+0x5e4>
+9d0006f2:	f700 b318 	lw	v1,9d000e08 <USBDeviceTasks+0xca4>
+9d0006f6:	6a80      	li	v0,128
+9d0006f8:	a384      	lbu	a0,4(v1)
+9d0006fa:	ea4b      	neg	v0
+9d0006fc:	ea8d      	or	v0,a0
+9d0006fe:	c344      	sb	v0,4(v1)
+9d000700:	1024      	b	9d00074a <USBDeviceTasks+0x5e6>
+9d000702:	f700 b208 	lw	v0,9d000e08 <USBDeviceTasks+0xca4>
+9d000706:	6b80      	li	v1,128
+9d000708:	a2a4      	lbu	a1,4(v0)
+9d00070a:	eb6b      	neg	v1
+9d00070c:	ed6d      	or	a1,v1
+9d00070e:	c2a4      	sb	a1,4(v0)
+9d000710:	a444      	lbu	v0,4(a0)
+9d000712:	ea11      	zeb	v0
+9d000714:	ea6c      	and	v0,v1
+9d000716:	2a07      	bnez	v0,9d000726 <USBDeviceTasks+0x5c2>
+9d000718:	9c41      	lw	v0,4(a0)
+9d00071a:	6b0f      	li	v1,15
+9d00071c:	ea6c      	and	v0,v1
+9d00071e:	3248      	sll	v0,2
+9d000720:	f700 b30c 	lw	v1,9d000e2c <USBDeviceTasks+0xcc8>
+9d000724:	1006      	b	9d000732 <USBDeviceTasks+0x5ce>
+9d000726:	9c41      	lw	v0,4(a0)
+9d000728:	6b0f      	li	v1,15
+9d00072a:	ea6c      	and	v0,v1
+9d00072c:	3248      	sll	v0,2
+9d00072e:	f6a0 b31c 	lw	v1,9d000de8 <USBDeviceTasks+0xc84>
+9d000732:	e349      	addu	v0,v1,v0
+9d000734:	9a60      	lw	v1,0(v0)
+9d000736:	6a7c      	li	v0,124
+9d000738:	ea4b      	neg	v0
+9d00073a:	a360      	lbu	v1,0(v1)
+9d00073c:	ea6c      	and	v0,v1
+9d00073e:	7284      	cmpi	v0,132
+9d000740:	6104      	btnez	9d00074a <USBDeviceTasks+0x5e6>
+9d000742:	6b01      	li	v1,1
+9d000744:	f6e0 b204 	lw	v0,9d000e28 <USBDeviceTasks+0xcc4>
+9d000748:	c260      	sb	v1,0(v0)
+9d00074a:	f6c0 b200 	lw	v0,9d000e08 <USBDeviceTasks+0xca4>
+9d00074e:	6b80      	li	v1,128
+9d000750:	a284      	lbu	a0,4(v0)
+9d000752:	eb6b      	neg	v1
+9d000754:	eb8c      	and	v1,a0
+9d000756:	eb11      	zeb	v1
+9d000758:	f140 2314 	beqz	v1,9d000a04 <USBDeviceTasks+0x8a0>
+9d00075c:	f6c0 b30c 	lw	v1,9d000e28 <USBDeviceTasks+0xcc4>
+9d000760:	da60      	sw	v1,0(v0)
+9d000762:	6b01      	li	v1,1
+9d000764:	eb8d      	or	v1,a0
+9d000766:	c264      	sb	v1,4(v0)
+9d000768:	6b02      	li	v1,2
+9d00076a:	c268      	sb	v1,8(v0)
+9d00076c:	114b      	b	9d000a04 <USBDeviceTasks+0x8a0>
+9d00076e:	f680 b314 	lw	v1,9d000e00 <USBDeviceTasks+0xc9c>
+9d000772:	a342      	lbu	v0,2(v1)
+9d000774:	ea11      	zeb	v0
+9d000776:	7201      	cmpi	v0,1
+9d000778:	6113      	btnez	9d0007a0 <USBDeviceTasks+0x63c>
+9d00077a:	a340      	lbu	v0,0(v1)
+9d00077c:	6c1f      	li	a0,31
+9d00077e:	ea11      	zeb	v0
+9d000780:	ea8c      	and	v0,a0
+9d000782:	2a0e      	bnez	v0,9d0007a0 <USBDeviceTasks+0x63c>
+9d000784:	f680 b504 	lw	a1,9d000e08 <USBDeviceTasks+0xca4>
+9d000788:	6c80      	li	a0,128
+9d00078a:	a5c4      	lbu	a2,4(a1)
+9d00078c:	ec8b      	neg	a0
+9d00078e:	eccd      	or	a0,a2
+9d000790:	c584      	sb	a0,4(a1)
+9d000792:	a361      	lbu	v1,1(v1)
+9d000794:	eb11      	zeb	v1
+9d000796:	7303      	cmpi	v1,3
+9d000798:	6101      	btnez	9d00079c <USBDeviceTasks+0x638>
+9d00079a:	6a01      	li	v0,1
+9d00079c:	f070 d840 	sw	v0,-32672(s0)
+9d0007a0:	f660 b200 	lw	v0,9d000e00 <USBDeviceTasks+0xc9c>
+9d0007a4:	a262      	lbu	v1,2(v0)
+9d0007a6:	eb11      	zeb	v1
+9d0007a8:	f120 2b0c 	bnez	v1,9d000a04 <USBDeviceTasks+0x8a0>
+9d0007ac:	a260      	lbu	v1,0(v0)
+9d0007ae:	6c1f      	li	a0,31
+9d0007b0:	eb11      	zeb	v1
+9d0007b2:	eb8c      	and	v1,a0
+9d0007b4:	7302      	cmpi	v1,2
+9d0007b6:	f120 6105 	btnez	9d000a04 <USBDeviceTasks+0x8a0>
+9d0007ba:	a284      	lbu	a0,4(v0)
+9d0007bc:	6b0f      	li	v1,15
+9d0007be:	ec11      	zeb	a0
+9d0007c0:	ec6c      	and	a0,v1
+9d0007c2:	f100 241f 	beqz	a0,9d000a04 <USBDeviceTasks+0x8a0>
+9d0007c6:	9a81      	lw	a0,4(v0)
+9d0007c8:	ec6c      	and	a0,v1
+9d0007ca:	ec11      	zeb	a0
+9d0007cc:	5402      	slti	a0,2
+9d0007ce:	f100 6019 	bteqz	9d000a04 <USBDeviceTasks+0x8a0>
+9d0007d2:	f030 9890 	lw	a0,-32720(s0)
+9d0007d6:	7420      	cmpi	a0,32
+9d0007d8:	f100 6114 	btnez	9d000a04 <USBDeviceTasks+0x8a0>
+9d0007dc:	f620 b40c 	lw	a0,9d000e08 <USBDeviceTasks+0xca4>
+9d0007e0:	6d80      	li	a1,128
+9d0007e2:	a4c4      	lbu	a2,4(a0)
+9d0007e4:	edab      	neg	a1
+9d0007e6:	eead      	or	a2,a1
+9d0007e8:	c4c4      	sb	a2,4(a0)
+9d0007ea:	a284      	lbu	a0,4(v0)
+9d0007ec:	ec11      	zeb	a0
+9d0007ee:	ecac      	and	a0,a1
+9d0007f0:	2c10      	bnez	a0,9d000812 <USBDeviceTasks+0x6ae>
+9d0007f2:	9a81      	lw	a0,4(v0)
+9d0007f4:	f620 b518 	lw	a1,9d000e2c <USBDeviceTasks+0xcc8>
+9d0007f8:	ec6c      	and	a0,v1
+9d0007fa:	ec11      	zeb	a0
+9d0007fc:	3488      	sll	a0,2
+9d0007fe:	e591      	addu	a0,a1,a0
+9d000800:	9c80      	lw	a0,0(a0)
+9d000802:	d404      	sw	a0,16(sp)
+9d000804:	9a41      	lw	v0,4(v0)
+9d000806:	ea6c      	and	v0,v1
+9d000808:	6770      	move	v1,s0
+9d00080a:	ea11      	zeb	v0
+9d00080c:	f030 4b18 	addiu	v1,-32712
+9d000810:	100f      	b	9d000830 <USBDeviceTasks+0x6cc>
+9d000812:	9a81      	lw	a0,4(v0)
+9d000814:	f5c0 b514 	lw	a1,9d000de8 <USBDeviceTasks+0xc84>
+9d000818:	ec6c      	and	a0,v1
+9d00081a:	ec11      	zeb	a0
+9d00081c:	3488      	sll	a0,2
+9d00081e:	e591      	addu	a0,a1,a0
+9d000820:	9c80      	lw	a0,0(a0)
+9d000822:	d404      	sw	a0,16(sp)
+9d000824:	9a41      	lw	v0,4(v0)
+9d000826:	ea6c      	and	v0,v1
+9d000828:	6770      	move	v1,s0
+9d00082a:	ea11      	zeb	v0
+9d00082c:	f050 4b14 	addiu	v1,-32684
+9d000830:	e269      	addu	v0,v1
+9d000832:	a220      	lbu	s1,0(v0)
+9d000834:	6a01      	li	v0,1
+9d000836:	ea2c      	and	v0,s1
+9d000838:	2a06      	bnez	v0,9d000846 <USBDeviceTasks+0x6e2>
+9d00083a:	67dd      	move	a2,sp
+9d00083c:	4af7      	addiu	v0,-9
+9d00083e:	a670      	lbu	v1,16(a2)
+9d000840:	ea6c      	and	v0,v1
+9d000842:	c650      	sb	v0,16(a2)
+9d000844:	1005      	b	9d000850 <USBDeviceTasks+0x6ec>
+9d000846:	679d      	move	a0,sp
+9d000848:	6a08      	li	v0,8
+9d00084a:	a470      	lbu	v1,16(a0)
+9d00084c:	ea6d      	or	v0,v1
+9d00084e:	c450      	sb	v0,16(a0)
+9d000850:	f5a0 b210 	lw	v0,9d000e00 <USBDeviceTasks+0xc9c>
+9d000854:	6b80      	li	v1,128
+9d000856:	a284      	lbu	a0,4(v0)
+9d000858:	eb8c      	and	v1,a0
+9d00085a:	9404      	lw	a0,16(sp)
+9d00085c:	2b07      	bnez	v1,9d00086c <USBDeviceTasks+0x708>
+9d00085e:	9a41      	lw	v0,4(v0)
+9d000860:	6b0f      	li	v1,15
+9d000862:	ea6c      	and	v0,v1
+9d000864:	3248      	sll	v0,2
+9d000866:	f5c0 b308 	lw	v1,9d000e2c <USBDeviceTasks+0xcc8>
+9d00086a:	1006      	b	9d000878 <USBDeviceTasks+0x714>
+9d00086c:	9a41      	lw	v0,4(v0)
+9d00086e:	6b0f      	li	v1,15
+9d000870:	ea6c      	and	v0,v1
+9d000872:	3248      	sll	v0,2
+9d000874:	f560 b314 	lw	v1,9d000de8 <USBDeviceTasks+0xc84>
+9d000878:	e349      	addu	v0,v1,v0
+9d00087a:	da80      	sw	a0,0(v0)
+9d00087c:	f580 b204 	lw	v0,9d000e00 <USBDeviceTasks+0xc9c>
+9d000880:	a261      	lbu	v1,1(v0)
+9d000882:	eb11      	zeb	v1
+9d000884:	7303      	cmpi	v1,3
+9d000886:	6126      	btnez	9d0008d4 <USBDeviceTasks+0x770>
+9d000888:	9304      	lw	v1,16(sp)
+9d00088a:	6d80      	li	a1,128
+9d00088c:	edab      	neg	a1
+9d00088e:	a380      	lbu	a0,0(v1)
+9d000890:	ecac      	and	a0,a1
+9d000892:	2416      	beqz	a0,9d0008c0 <USBDeviceTasks+0x75c>
+9d000894:	a284      	lbu	a0,4(v0)
+9d000896:	ec11      	zeb	a0
+9d000898:	ecac      	and	a0,a1
+9d00089a:	2c07      	bnez	a0,9d0008aa <USBDeviceTasks+0x746>
+9d00089c:	9a41      	lw	v0,4(v0)
+9d00089e:	6c0f      	li	a0,15
+9d0008a0:	ea8c      	and	v0,a0
+9d0008a2:	6790      	move	a0,s0
+9d0008a4:	f030 4c18 	addiu	a0,-32712
+9d0008a8:	1006      	b	9d0008b6 <USBDeviceTasks+0x752>
+9d0008aa:	9a41      	lw	v0,4(v0)
+9d0008ac:	6c0f      	li	a0,15
+9d0008ae:	ea8c      	and	v0,a0
+9d0008b0:	6790      	move	a0,s0
+9d0008b2:	f050 4c14 	addiu	a0,-32684
+9d0008b6:	e291      	addu	a0,v0,a0
+9d0008b8:	6a02      	li	v0,2
+9d0008ba:	a4a0      	lbu	a1,0(a0)
+9d0008bc:	eaad      	or	v0,a1
+9d0008be:	c440      	sb	v0,0(a0)
+9d0008c0:	a341      	lbu	v0,1(v1)
+9d0008c2:	a380      	lbu	a0,0(v1)
+9d0008c4:	3240      	sll	v0,8
+9d0008c6:	ea8d      	or	v0,a0
+9d0008c8:	6c84      	li	a0,132
+9d0008ca:	ea8d      	or	v0,a0
+9d0008cc:	c340      	sb	v0,0(v1)
+9d0008ce:	3242      	srl	v0,8
+9d0008d0:	c341      	sb	v0,1(v1)
+9d0008d2:	1098      	b	9d000a04 <USBDeviceTasks+0x8a0>
+9d0008d4:	67bd      	move	a1,sp
+9d0008d6:	6e08      	li	a2,8
+9d0008d8:	a550      	lbu	v0,16(a1)
+9d0008da:	0304      	addiu	v1,sp,16
+9d0008dc:	eace      	xor	v0,a2
+9d0008de:	c550      	sb	v0,16(a1)
+9d0008e0:	9504      	lw	a1,16(sp)
+9d0008e2:	a5c0      	lbu	a2,0(a1)
+9d0008e4:	a580      	lbu	a0,0(a1)
+9d0008e6:	36de      	srl	a2,7
+9d0008e8:	a541      	lbu	v0,1(a1)
+9d0008ea:	2611      	beqz	a2,9d00090e <USBDeviceTasks+0x7aa>
+9d0008ec:	3240      	sll	v0,8
+9d0008ee:	ea8d      	or	v0,a0
+9d0008f0:	6c81      	li	a0,129
+9d0008f2:	ec8b      	neg	a0
+9d0008f4:	ea8c      	and	v0,a0
+9d0008f6:	6c40      	li	a0,64
+9d0008f8:	ea8d      	or	v0,a0
+9d0008fa:	c540      	sb	v0,0(a1)
+9d0008fc:	3242      	srl	v0,8
+9d0008fe:	c541      	sb	v0,1(a1)
+9d000900:	6c05      	li	a0,5
+9d000902:	6e04      	li	a2,4
+9d000904:	1a1f 02c1 	jal	9fc00b04 <USER_USB_CALLBACK_EVENT_HANDLER>
+9d000908:	d308      	sw	v1,32(sp)
+9d00090a:	9308      	lw	v1,32(sp)
+9d00090c:	1007      	b	9d00091c <USBDeviceTasks+0x7b8>
+9d00090e:	3240      	sll	v0,8
+9d000910:	ea8d      	or	v0,a0
+9d000912:	6c40      	li	a0,64
+9d000914:	ea8d      	or	v0,a0
+9d000916:	c540      	sb	v0,0(a1)
+9d000918:	3242      	srl	v0,8
+9d00091a:	c541      	sb	v0,1(a1)
+9d00091c:	a340      	lbu	v0,0(v1)
+9d00091e:	6c08      	li	a0,8
+9d000920:	ea8e      	xor	v0,a0
+9d000922:	c340      	sb	v0,0(v1)
+9d000924:	6a02      	li	v0,2
+9d000926:	e94c      	and	s1,v0
+9d000928:	2904      	bnez	s1,9d000932 <USBDeviceTasks+0x7ce>
+9d00092a:	9304      	lw	v1,16(sp)
+9d00092c:	a340      	lbu	v0,0(v1)
+9d00092e:	325e      	srl	v0,7
+9d000930:	2229      	beqz	v0,9d000984 <USBDeviceTasks+0x820>
+9d000932:	f4c0 b210 	lw	v0,9d000e00 <USBDeviceTasks+0xc9c>
+9d000936:	6b80      	li	v1,128
+9d000938:	a284      	lbu	a0,4(v0)
+9d00093a:	eb8c      	and	v1,a0
+9d00093c:	2b07      	bnez	v1,9d00094c <USBDeviceTasks+0x7e8>
+9d00093e:	9a41      	lw	v0,4(v0)
+9d000940:	6b0f      	li	v1,15
+9d000942:	ea6c      	and	v0,v1
+9d000944:	6770      	move	v1,s0
+9d000946:	f030 4b18 	addiu	v1,-32712
+9d00094a:	1006      	b	9d000958 <USBDeviceTasks+0x7f4>
+9d00094c:	9a41      	lw	v0,4(v0)
+9d00094e:	6b0f      	li	v1,15
+9d000950:	ea6c      	and	v0,v1
+9d000952:	6770      	move	v1,s0
+9d000954:	f050 4b14 	addiu	v1,-32684
+9d000958:	e269      	addu	v0,v1
+9d00095a:	6b03      	li	v1,3
+9d00095c:	a280      	lbu	a0,0(v0)
+9d00095e:	eb6b      	neg	v1
+9d000960:	eb8c      	and	v1,a0
+9d000962:	c260      	sb	v1,0(v0)
+9d000964:	9504      	lw	a1,16(sp)
+9d000966:	6c05      	li	a0,5
+9d000968:	6e04      	li	a2,4
+9d00096a:	a541      	lbu	v0,1(a1)
+9d00096c:	a560      	lbu	v1,0(a1)
+9d00096e:	3240      	sll	v0,8
+9d000970:	ea6d      	or	v0,v1
+9d000972:	6bc5      	li	v1,197
+9d000974:	eb6b      	neg	v1
+9d000976:	ea6c      	and	v0,v1
+9d000978:	c540      	sb	v0,0(a1)
+9d00097a:	3242      	srl	v0,8
+9d00097c:	1a1f 02c1 	jal	9fc00b04 <USER_USB_CALLBACK_EVENT_HANDLER>
+9d000980:	c541      	sb	v0,1(a1)
+9d000982:	100a      	b	9d000998 <USBDeviceTasks+0x834>
+9d000984:	a341      	lbu	v0,1(v1)
+9d000986:	a380      	lbu	a0,0(v1)
+9d000988:	3240      	sll	v0,8
+9d00098a:	ea8d      	or	v0,a0
+9d00098c:	6cc5      	li	a0,197
+9d00098e:	ec8b      	neg	a0
+9d000990:	ea8c      	and	v0,a0
+9d000992:	c340      	sb	v0,0(v1)
+9d000994:	3242      	srl	v0,8
+9d000996:	c341      	sb	v0,1(v1)
+9d000998:	f460 b208 	lw	v0,9d000e00 <USBDeviceTasks+0xc9c>
+9d00099c:	6b0f      	li	v1,15
+9d00099e:	9a41      	lw	v0,4(v0)
+9d0009a0:	6c03      	li	a0,3
+9d0009a2:	ea6c      	and	v0,v1
+9d0009a4:	3250      	sll	v0,4
+9d0009a6:	f480 b30c 	lw	v1,9d000e30 <USBDeviceTasks+0xccc>
+9d0009aa:	e34d      	addu	v1,v0
+9d0009ac:	ec8b      	neg	a0
+9d0009ae:	9b40      	lw	v0,0(v1)
+9d0009b0:	ea8c      	and	v0,a0
+9d0009b2:	db40      	sw	v0,0(v1)
+9d0009b4:	1027      	b	9d000a04 <USBDeviceTasks+0x8a0>
+9d0009b6:	f440 b30c 	lw	v1,9d000e00 <USBDeviceTasks+0xc9c>
+9d0009ba:	6790      	move	a0,s0
+9d0009bc:	a364      	lbu	v1,4(v1)
+9d0009be:	f070 4c08 	addiu	a0,-32664
+9d0009c2:	eb11      	zeb	v1
+9d0009c4:	e38d      	addu	v1,a0
+9d0009c6:	da60      	sw	v1,0(v0)
+9d0009c8:	a264      	lbu	v1,4(v0)
+9d0009ca:	6c01      	li	a0,1
+9d0009cc:	eb8d      	or	v1,a0
+9d0009ce:	c288      	sb	a0,8(v0)
+9d0009d0:	4c80      	addiu	a0,-128
+9d0009d2:	4cff      	addiu	a0,-1
+9d0009d4:	eb8d      	or	v1,a0
+9d0009d6:	c264      	sb	v1,4(v0)
+9d0009d8:	1015      	b	9d000a04 <USBDeviceTasks+0x8a0>
+9d0009da:	a284      	lbu	a0,4(v0)
+9d0009dc:	6b80      	li	v1,128
+9d0009de:	eb6b      	neg	v1
+9d0009e0:	eb8d      	or	v1,a0
+9d0009e2:	c264      	sb	v1,4(v0)
+9d0009e4:	f400 b21c 	lw	v0,9d000e00 <USBDeviceTasks+0xc9c>
+9d0009e8:	6790      	move	a0,s0
+9d0009ea:	a2a4      	lbu	a1,4(v0)
+9d0009ec:	f070 4c08 	addiu	a0,-32664
+9d0009f0:	ed11      	zeb	a1
+9d0009f2:	a262      	lbu	v1,2(v0)
+9d0009f4:	e589      	addu	v0,a1,a0
+9d0009f6:	c260      	sb	v1,0(v0)
+9d0009f8:	1005      	b	9d000a04 <USBDeviceTasks+0x8a0>
+9d0009fa:	6d00      	li	a1,0
+9d0009fc:	6c02      	li	a0,2
+9d0009fe:	1a1f 02c1 	jal	9fc00b04 <USER_USB_CALLBACK_EVENT_HANDLER>
+9d000a02:	67c5      	move	a2,a1
+9d000a04:	6d00      	li	a1,0
+9d000a06:	6c03      	li	a0,3
+9d000a08:	1a1f 02c1 	jal	9fc00b04 <USER_USB_CALLBACK_EVENT_HANDLER>
+9d000a0c:	67c5      	move	a2,a1
+9d000a0e:	b3ee      	lw	v1,9d000dc4 <USBDeviceTasks+0xc60>
+9d000a10:	6c21      	li	a0,33
+9d000a12:	9b40      	lw	v0,0(v1)
+9d000a14:	ec8b      	neg	a0
+9d000a16:	ea8c      	and	v0,a0
+9d000a18:	db40      	sw	v0,0(v1)
+9d000a1a:	b3fc      	lw	v1,9d000e08 <USBDeviceTasks+0xca4>
+9d000a1c:	6a80      	li	v0,128
+9d000a1e:	a364      	lbu	v1,4(v1)
+9d000a20:	ea4b      	neg	v0
+9d000a22:	eb4c      	and	v1,v0
+9d000a24:	2b3b      	bnez	v1,9d000a9c <USBDeviceTasks+0x938>
+9d000a26:	b3fa      	lw	v1,9d000e0c <USBDeviceTasks+0xca8>
+9d000a28:	a384      	lbu	a0,4(v1)
+9d000a2a:	ec4c      	and	a0,v0
+9d000a2c:	6744      	move	v0,a0
+9d000a2e:	ea11      	zeb	v0
+9d000a30:	220f      	beqz	v0,9d000a50 <USBDeviceTasks+0x8ec>
+9d000a32:	6a02      	li	v0,2
+9d000a34:	f030 c054 	sb	v0,-32716(s0)
+9d000a38:	f030 984c 	lw	v0,-32724(s0)
+9d000a3c:	2a03      	bnez	v0,9d000a44 <USBDeviceTasks+0x8e0>
+9d000a3e:	181a 0025 	jal	9d000094 <USBCtrlEPAllowDataStage>
+9d000a42:	6500      	nop
+9d000a44:	6a00      	li	v0,0
+9d000a46:	f050 d840 	sw	v0,-32704(s0)
+9d000a4a:	f030 d85c 	sw	v0,-32708(s0)
+9d000a4e:	11a4      	b	9d000d98 <USBDeviceTasks+0xc34>
+9d000a50:	f050 9848 	lw	v0,-32696(s0)
+9d000a54:	6eff      	li	a2,255
+9d000a56:	a262      	lbu	v1,2(v0)
+9d000a58:	6b08      	li	v1,8
+9d000a5a:	c262      	sb	v1,2(v0)
+9d000a5c:	a2a3      	lbu	a1,3(v0)
+9d000a5e:	4bf4      	addiu	v1,-12
+9d000a60:	ebac      	and	v1,a1
+9d000a62:	b5e9      	lw	a1,9d000e04 <USBDeviceTasks+0xca0>
+9d000a64:	c263      	sb	v1,3(v0)
+9d000a66:	b3e7      	lw	v1,9d000e00 <USBDeviceTasks+0xc9c>
+9d000a68:	ebac      	and	v1,a1
+9d000a6a:	67a3      	move	a1,v1
+9d000a6c:	edcc      	and	a1,a2
+9d000a6e:	a2e4      	lbu	a3,4(v0)
+9d000a70:	c2a4      	sb	a1,4(v0)
+9d000a72:	3562      	srl	a1,v1,8
+9d000a74:	67e5      	move	a3,a1
+9d000a76:	efcc      	and	a3,a2
+9d000a78:	35a2      	srl	a1,8
+9d000a7a:	a225      	lbu	s1,5(v0)
+9d000a7c:	edcc      	and	a1,a2
+9d000a7e:	c2e5      	sb	a3,5(v0)
+9d000a80:	a2c6      	lbu	a2,6(v0)
+9d000a82:	f600 3362 	srl	v1,24
+9d000a86:	c2a6      	sb	a1,6(v0)
+9d000a88:	a2a7      	lbu	a1,7(v0)
+9d000a8a:	c267      	sb	v1,7(v0)
+9d000a8c:	a260      	lbu	v1,0(v0)
+9d000a8e:	6b74      	li	v1,116
+9d000a90:	eb6b      	neg	v1
+9d000a92:	c260      	sb	v1,0(v0)
+9d000a94:	a261      	lbu	v1,1(v0)
+9d000a96:	c281      	sb	a0,1(v0)
+9d000a98:	b2d4      	lw	v0,9d000de8 <USBDeviceTasks+0xc84>
+9d000a9a:	1147      	b	9d000d2a <USBDeviceTasks+0xbc6>
+9d000a9c:	b5d9      	lw	a1,9d000e00 <USBDeviceTasks+0xc9c>
+9d000a9e:	a560      	lbu	v1,0(a1)
+9d000aa0:	eb11      	zeb	v1
+9d000aa2:	eb4c      	and	v1,v0
+9d000aa4:	230f      	beqz	v1,9d000ac4 <USBDeviceTasks+0x960>
+9d000aa6:	6a01      	li	v0,1
+9d000aa8:	f030 c054 	sb	v0,-32716(s0)
+9d000aac:	f030 9848 	lw	v0,-32728(s0)
+9d000ab0:	2a03      	bnez	v0,9d000ab8 <USBDeviceTasks+0x954>
+9d000ab2:	181a 0025 	jal	9d000094 <USBCtrlEPAllowDataStage>
+9d000ab6:	6500      	nop
+9d000ab8:	6a00      	li	v0,0
+9d000aba:	f050 d840 	sw	v0,-32704(s0)
+9d000abe:	f030 d85c 	sw	v0,-32708(s0)
+9d000ac2:	10b9      	b	9d000c36 <USBDeviceTasks+0xad2>
+9d000ac4:	6a02      	li	v0,2
+9d000ac6:	f030 c054 	sb	v0,-32716(s0)
+9d000aca:	f050 9848 	lw	v0,-32696(s0)
+9d000ace:	a2c2      	lbu	a2,2(v0)
+9d000ad0:	6e08      	li	a2,8
+9d000ad2:	c2c2      	sb	a2,2(v0)
+9d000ad4:	a2e3      	lbu	a3,3(v0)
+9d000ad6:	4ef4      	addiu	a2,-12
+9d000ad8:	eeec      	and	a2,a3
+9d000ada:	c2c3      	sb	a2,3(v0)
+9d000adc:	b6ca      	lw	a2,9d000e04 <USBDeviceTasks+0xca0>
+9d000ade:	6fff      	li	a3,255
+9d000ae0:	edcc      	and	a1,a2
+9d000ae2:	67c5      	move	a2,a1
+9d000ae4:	eeec      	and	a2,a3
+9d000ae6:	a224      	lbu	s1,4(v0)
+9d000ae8:	c2c4      	sb	a2,4(v0)
+9d000aea:	36a2      	srl	a2,a1,8
+9d000aec:	6726      	move	s1,a2
+9d000aee:	e9ec      	and	s1,a3
+9d000af0:	6529      	move	t1,s1
+9d000af2:	36c2      	srl	a2,8
+9d000af4:	a225      	lbu	s1,5(v0)
+9d000af6:	6729      	move	s1,t1
+9d000af8:	c225      	sb	s1,5(v0)
+9d000afa:	eeec      	and	a2,a3
+9d000afc:	f600 35a2 	srl	a1,24
+9d000b00:	a2e6      	lbu	a3,6(v0)
+9d000b02:	c2c6      	sb	a2,6(v0)
+9d000b04:	a2c7      	lbu	a2,7(v0)
+9d000b06:	c2a7      	sb	a1,7(v0)
+9d000b08:	a2a0      	lbu	a1,0(v0)
+9d000b0a:	6d7c      	li	a1,124
+9d000b0c:	edab      	neg	a1
+9d000b0e:	c2a0      	sb	a1,0(v0)
+9d000b10:	a2a1      	lbu	a1,1(v0)
+9d000b12:	c261      	sb	v1,1(v0)
+9d000b14:	f050 d860 	sw	v1,-32704(s0)
+9d000b18:	f030 d87c 	sw	v1,-32708(s0)
+9d000b1c:	108c      	b	9d000c36 <USBDeviceTasks+0xad2>
+9d000b1e:	f030 a094 	lbu	a0,-32716(s0)
+9d000b22:	7402      	cmpi	a0,2
+9d000b24:	f080 610f 	btnez	9d000c46 <USBDeviceTasks+0xae2>
+9d000b28:	9a60      	lw	v1,0(v0)
+9d000b2a:	b2b9      	lw	v0,9d000e0c <USBDeviceTasks+0xca8>
+9d000b2c:	3378      	sll	v1,6
+9d000b2e:	9a41      	lw	v0,4(v0)
+9d000b30:	f580 3362 	srl	v1,22
+9d000b34:	3242      	srl	v0,8
+9d000b36:	eb11      	zeb	v1
+9d000b38:	ea31      	zeh	v0
+9d000b3a:	ea63      	sltu	v0,v1
+9d000b3c:	6002      	bteqz	9d000b42 <USBDeviceTasks+0x9de>
+9d000b3e:	6762      	move	v1,v0
+9d000b40:	eb11      	zeb	v1
+9d000b42:	b5b3      	lw	a1,9d000e0c <USBDeviceTasks+0xca8>
+9d000b44:	e26b      	subu	v0,v1
+9d000b46:	9d81      	lw	a0,4(a1)
+9d000b48:	b6b2      	lw	a2,9d000e10 <USBDeviceTasks+0xcac>
+9d000b4a:	ea31      	zeh	v0
+9d000b4c:	3240      	sll	v0,8
+9d000b4e:	eccc      	and	a0,a2
+9d000b50:	ec4d      	or	a0,v0
+9d000b52:	dd81      	sw	a0,4(a1)
+9d000b54:	6a00      	li	v0,0
+9d000b56:	1008      	b	9d000b68 <USBDeviceTasks+0xa04>
+9d000b58:	b6b4      	lw	a2,9d000e28 <USBDeviceTasks+0xcc4>
+9d000b5a:	e659      	addu	a2,v0
+9d000b5c:	9ca0      	lw	a1,0(a0)
+9d000b5e:	a6c0      	lbu	a2,0(a2)
+9d000b60:	4a01      	addiu	v0,1
+9d000b62:	c5c0      	sb	a2,0(a1)
+9d000b64:	4d01      	addiu	a1,1
+9d000b66:	dca0      	sw	a1,0(a0)
+9d000b68:	6782      	move	a0,v0
+9d000b6a:	ec11      	zeb	a0
+9d000b6c:	ec63      	sltu	a0,v1
+9d000b6e:	b4a8      	lw	a0,9d000e0c <USBDeviceTasks+0xca8>
+9d000b70:	61f3      	btnez	9d000b58 <USBDeviceTasks+0x9f4>
+9d000b72:	9c41      	lw	v0,4(a0)
+9d000b74:	b5a4      	lw	a1,9d000e04 <USBDeviceTasks+0xca0>
+9d000b76:	3242      	srl	v0,8
+9d000b78:	67e2      	move	a3,v0
+9d000b7a:	ef31      	zeh	a3
+9d000b7c:	f050 9848 	lw	v0,-32696(s0)
+9d000b80:	272c      	beqz	a3,9d000bda <USBDeviceTasks+0xa76>
+9d000b82:	a262      	lbu	v1,2(v0)
+9d000b84:	6b08      	li	v1,8
+9d000b86:	c262      	sb	v1,2(v0)
+9d000b88:	a283      	lbu	a0,3(v0)
+9d000b8a:	4bf4      	addiu	v1,-12
+9d000b8c:	eb8c      	and	v1,a0
+9d000b8e:	c263      	sb	v1,3(v0)
+9d000b90:	b3a6      	lw	v1,9d000e28 <USBDeviceTasks+0xcc4>
+9d000b92:	ebac      	and	v1,a1
+9d000b94:	6783      	move	a0,v1
+9d000b96:	6dff      	li	a1,255
+9d000b98:	ecac      	and	a0,a1
+9d000b9a:	a2c4      	lbu	a2,4(v0)
+9d000b9c:	c284      	sb	a0,4(v0)
+9d000b9e:	3462      	srl	a0,v1,8
+9d000ba0:	67c4      	move	a2,a0
+9d000ba2:	eeac      	and	a2,a1
+9d000ba4:	3482      	srl	a0,8
+9d000ba6:	a2e5      	lbu	a3,5(v0)
+9d000ba8:	ecac      	and	a0,a1
+9d000baa:	c2c5      	sb	a2,5(v0)
+9d000bac:	a2a6      	lbu	a1,6(v0)
+9d000bae:	f600 3362 	srl	v1,24
+9d000bb2:	c286      	sb	a0,6(v0)
+9d000bb4:	a287      	lbu	a0,7(v0)
+9d000bb6:	c267      	sb	v1,7(v0)
+9d000bb8:	f050 9878 	lw	v1,-32680(s0)
+9d000bbc:	6c40      	li	a0,64
+9d000bbe:	a360      	lbu	v1,0(v1)
+9d000bc0:	eb11      	zeb	v1
+9d000bc2:	eb8c      	and	v1,a0
+9d000bc4:	2b03      	bnez	v1,9d000bcc <USBDeviceTasks+0xa68>
+9d000bc6:	a280      	lbu	a0,0(v0)
+9d000bc8:	6c38      	li	a0,56
+9d000bca:	1062      	b	9d000c90 <USBDeviceTasks+0xb2c>
+9d000bcc:	a260      	lbu	v1,0(v0)
+9d000bce:	6b78      	li	v1,120
+9d000bd0:	eb6b      	neg	v1
+9d000bd2:	c260      	sb	v1,0(v0)
+9d000bd4:	a261      	lbu	v1,1(v0)
+9d000bd6:	6b00      	li	v1,0
+9d000bd8:	105e      	b	9d000c96 <USBDeviceTasks+0xb32>
+9d000bda:	a262      	lbu	v1,2(v0)
+9d000bdc:	6b08      	li	v1,8
+9d000bde:	c262      	sb	v1,2(v0)
+9d000be0:	a2c3      	lbu	a2,3(v0)
+9d000be2:	4bf4      	addiu	v1,-12
+9d000be4:	ebcc      	and	v1,a2
+9d000be6:	c263      	sb	v1,3(v0)
+9d000be8:	b386      	lw	v1,9d000e00 <USBDeviceTasks+0xc9c>
+9d000bea:	ebac      	and	v1,a1
+9d000bec:	6eff      	li	a2,255
+9d000bee:	67a3      	move	a1,v1
+9d000bf0:	edcc      	and	a1,a2
+9d000bf2:	a224      	lbu	s1,4(v0)
+9d000bf4:	c2a4      	sb	a1,4(v0)
+9d000bf6:	3562      	srl	a1,v1,8
+9d000bf8:	6725      	move	s1,a1
+9d000bfa:	e9cc      	and	s1,a2
+9d000bfc:	6529      	move	t1,s1
+9d000bfe:	35a2      	srl	a1,8
+9d000c00:	a225      	lbu	s1,5(v0)
+9d000c02:	6729      	move	s1,t1
+9d000c04:	c225      	sb	s1,5(v0)
+9d000c06:	edcc      	and	a1,a2
+9d000c08:	f600 3362 	srl	v1,24
+9d000c0c:	a2c6      	lbu	a2,6(v0)
+9d000c0e:	c2a6      	sb	a1,6(v0)
+9d000c10:	a2a7      	lbu	a1,7(v0)
+9d000c12:	c267      	sb	v1,7(v0)
+9d000c14:	a260      	lbu	v1,0(v0)
+9d000c16:	6b7c      	li	v1,124
+9d000c18:	eb6b      	neg	v1
+9d000c1a:	c260      	sb	v1,0(v0)
+9d000c1c:	a261      	lbu	v1,1(v0)
+9d000c1e:	c2e1      	sb	a3,1(v0)
+9d000c20:	9c42      	lw	v0,8(a0)
+9d000c22:	a467      	lbu	v1,7(a0)
+9d000c24:	3240      	sll	v0,8
+9d000c26:	ea6d      	or	v0,v1
+9d000c28:	2201      	beqz	v0,9d000c2c <USBDeviceTasks+0xac8>
+9d000c2a:	eac0      	jalrc	v0
+9d000c2c:	b278      	lw	v0,9d000e08 <USBDeviceTasks+0xca4>
+9d000c2e:	6b7f      	li	v1,127
+9d000c30:	a284      	lbu	a0,4(v0)
+9d000c32:	eb8c      	and	v1,a0
+9d000c34:	c264      	sb	v1,4(v0)
+9d000c36:	f070 984c 	lw	v0,-32660(s0)
+9d000c3a:	f0a0 2a0d 	bnez	v0,9d000d98 <USBDeviceTasks+0xc34>
+9d000c3e:	1a1f 0138 	jal	9fc004e0 <USBCtrlEPAllowStatusStage>
+9d000c42:	6500      	nop
+9d000c44:	10a9      	b	9d000d98 <USBDeviceTasks+0xc34>
+9d000c46:	f050 9844 	lw	v0,-32700(s0)
+9d000c4a:	f030 c074 	sb	v1,-32716(s0)
+9d000c4e:	2a25      	bnez	v0,9d000c9a <USBDeviceTasks+0xb36>
+9d000c50:	f050 9848 	lw	v0,-32696(s0)
+9d000c54:	6eff      	li	a2,255
+9d000c56:	a282      	lbu	a0,2(v0)
+9d000c58:	6c08      	li	a0,8
+9d000c5a:	c282      	sb	a0,2(v0)
+9d000c5c:	a2a3      	lbu	a1,3(v0)
+9d000c5e:	4cf4      	addiu	a0,-12
+9d000c60:	ecac      	and	a0,a1
+9d000c62:	b569      	lw	a1,9d000e04 <USBDeviceTasks+0xca0>
+9d000c64:	c283      	sb	a0,3(v0)
+9d000c66:	b467      	lw	a0,9d000e00 <USBDeviceTasks+0xc9c>
+9d000c68:	ecac      	and	a0,a1
+9d000c6a:	67a4      	move	a1,a0
+9d000c6c:	edcc      	and	a1,a2
+9d000c6e:	a2e4      	lbu	a3,4(v0)
+9d000c70:	c2a4      	sb	a1,4(v0)
+9d000c72:	3582      	srl	a1,a0,8
+9d000c74:	67e5      	move	a3,a1
+9d000c76:	efcc      	and	a3,a2
+9d000c78:	35a2      	srl	a1,8
+9d000c7a:	a225      	lbu	s1,5(v0)
+9d000c7c:	edcc      	and	a1,a2
+9d000c7e:	c2e5      	sb	a3,5(v0)
+9d000c80:	a2c6      	lbu	a2,6(v0)
+9d000c82:	f600 3482 	srl	a0,24
+9d000c86:	c2a6      	sb	a1,6(v0)
+9d000c88:	a2a7      	lbu	a1,7(v0)
+9d000c8a:	c287      	sb	a0,7(v0)
+9d000c8c:	a280      	lbu	a0,0(v0)
+9d000c8e:	6c74      	li	a0,116
+9d000c90:	ec8b      	neg	a0
+9d000c92:	c280      	sb	a0,0(v0)
+9d000c94:	a281      	lbu	a0,1(v0)
+9d000c96:	c261      	sb	v1,1(v0)
+9d000c98:	107f      	b	9d000d98 <USBDeviceTasks+0xc34>
+9d000c9a:	f050 d864 	sw	v1,-32700(s0)
+9d000c9e:	107c      	b	9d000d98 <USBDeviceTasks+0xc34>
+9d000ca0:	7408      	cmpi	a0,8
+9d000ca2:	617a      	btnez	9d000d98 <USBDeviceTasks+0xc34>
+9d000ca4:	b251      	lw	v0,9d000de8 <USBDeviceTasks+0xc84>
+9d000ca6:	6c08      	li	a0,8
+9d000ca8:	9a60      	lw	v1,0(v0)
+9d000caa:	a320      	lbu	s1,0(v1)
+9d000cac:	6b01      	li	v1,1
+9d000cae:	e911      	zeb	s1
+9d000cb0:	313a      	srl	s1,6
+9d000cb2:	e96c      	and	s1,v1
+9d000cb4:	a260      	lbu	v1,0(v0)
+9d000cb6:	eb8e      	xor	v1,a0
+9d000cb8:	c260      	sb	v1,0(v0)
+9d000cba:	f030 9850 	lw	v0,-32720(s0)
+9d000cbe:	7208      	cmpi	v0,8
+9d000cc0:	610c      	btnez	9d000cda <USBDeviceTasks+0xb76>
+9d000cc2:	b250      	lw	v0,9d000e00 <USBDeviceTasks+0xc9c>
+9d000cc4:	a262      	lbu	v1,2(v0)
+9d000cc6:	b25c      	lw	v0,9d000e34 <USBDeviceTasks+0xcd0>
+9d000cc8:	eb11      	zeb	v1
+9d000cca:	da60      	sw	v1,0(v0)
+9d000ccc:	9a40      	lw	v0,0(v0)
+9d000cce:	2202      	beqz	v0,9d000cd4 <USBDeviceTasks+0xb70>
+9d000cd0:	6a10      	li	v0,16
+9d000cd2:	1001      	b	9d000cd6 <USBDeviceTasks+0xb72>
+9d000cd4:	6a04      	li	v0,4
+9d000cd6:	f030 d850 	sw	v0,-32720(s0)
+9d000cda:	f030 a074 	lbu	v1,-32716(s0)
+9d000cde:	7301      	cmpi	v1,1
+9d000ce0:	6758      	move	v0,t8
+9d000ce2:	d20a      	sw	v0,40(sp)
+9d000ce4:	2a3f      	bnez	v0,9d000d64 <USBDeviceTasks+0xc00>
+9d000ce6:	b241      	lw	v0,9d000de8 <USBDeviceTasks+0xc84>
+9d000ce8:	b647      	lw	a2,9d000e04 <USBDeviceTasks+0xca0>
+9d000cea:	9a80      	lw	a0,0(v0)
+9d000cec:	b54f      	lw	a1,9d000e28 <USBDeviceTasks+0xcc4>
+9d000cee:	edcc      	and	a1,a2
+9d000cf0:	6fff      	li	a3,255
+9d000cf2:	6765      	move	v1,a1
+9d000cf4:	a4c4      	lbu	a2,4(a0)
+9d000cf6:	ebec      	and	v1,a3
+9d000cf8:	36a2      	srl	a2,a1,8
+9d000cfa:	c464      	sb	v1,4(a0)
+9d000cfc:	6766      	move	v1,a2
+9d000cfe:	ebec      	and	v1,a3
+9d000d00:	650b      	move	t0,v1
+9d000d02:	36c2      	srl	a2,8
+9d000d04:	a465      	lbu	v1,5(a0)
+9d000d06:	6768      	move	v1,t0
+9d000d08:	c465      	sb	v1,5(a0)
+9d000d0a:	eeec      	and	a2,a3
+9d000d0c:	f600 35a2 	srl	a1,24
+9d000d10:	a4e6      	lbu	a3,6(a0)
+9d000d12:	c4c6      	sb	a2,6(a0)
+9d000d14:	a4c7      	lbu	a2,7(a0)
+9d000d16:	c4a7      	sb	a1,7(a0)
+9d000d18:	181a 0000 	jal	9d000000 <USBCtrlTrfTxService>
+9d000d1c:	d207      	sw	v0,28(sp)
+9d000d1e:	f050 a096 	lbu	a0,-32682(s0)
+9d000d22:	6d02      	li	a1,2
+9d000d24:	ecae      	xor	a0,a1
+9d000d26:	9207      	lw	v0,28(sp)
+9d000d28:	2c08      	bnez	a0,9d000d3a <USBDeviceTasks+0xbd6>
+9d000d2a:	9a40      	lw	v0,0(v0)
+9d000d2c:	a260      	lbu	v1,0(v0)
+9d000d2e:	6b7c      	li	v1,124
+9d000d30:	eb6b      	neg	v1
+9d000d32:	c260      	sb	v1,0(v0)
+9d000d34:	a261      	lbu	v1,1(v0)
+9d000d36:	c281      	sb	a0,1(v0)
+9d000d38:	102f      	b	9d000d98 <USBDeviceTasks+0xc34>
+9d000d3a:	2908      	bnez	s1,9d000d4c <USBDeviceTasks+0xbe8>
+9d000d3c:	9a40      	lw	v0,0(v0)
+9d000d3e:	a260      	lbu	v1,0(v0)
+9d000d40:	6b38      	li	v1,56
+9d000d42:	eb6b      	neg	v1
+9d000d44:	c260      	sb	v1,0(v0)
+9d000d46:	a261      	lbu	v1,1(v0)
+9d000d48:	c221      	sb	s1,1(v0)
+9d000d4a:	1026      	b	9d000d98 <USBDeviceTasks+0xc34>
+9d000d4c:	9a40      	lw	v0,0(v0)
+9d000d4e:	67dd      	move	a2,sp
+9d000d50:	4627      	addiu	s1,a2,7
+9d000d52:	a280      	lbu	a0,0(v0)
+9d000d54:	6c78      	li	a0,120
+9d000d56:	ec8b      	neg	a0
+9d000d58:	4921      	addiu	s1,33
+9d000d5a:	c280      	sb	a0,0(v0)
+9d000d5c:	a1c0      	lbu	a2,0(s1)
+9d000d5e:	a281      	lbu	a0,1(v0)
+9d000d60:	c2c1      	sb	a2,1(v0)
+9d000d62:	101a      	b	9d000d98 <USBDeviceTasks+0xc34>
+9d000d64:	b22a      	lw	v0,9d000e0c <USBDeviceTasks+0xca8>
+9d000d66:	a264      	lbu	v1,4(v0)
+9d000d68:	337e      	srl	v1,7
+9d000d6a:	230b      	beqz	v1,9d000d82 <USBDeviceTasks+0xc1e>
+9d000d6c:	a267      	lbu	v1,7(v0)
+9d000d6e:	9a42      	lw	v0,8(v0)
+9d000d70:	3240      	sll	v0,8
+9d000d72:	ea6d      	or	v0,v1
+9d000d74:	2201      	beqz	v0,9d000d78 <USBDeviceTasks+0xc14>
+9d000d76:	eac0      	jalrc	v0
+9d000d78:	b225      	lw	v0,9d000e08 <USBDeviceTasks+0xca4>
+9d000d7a:	6b7f      	li	v1,127
+9d000d7c:	a284      	lbu	a0,4(v0)
+9d000d7e:	eb8c      	and	v1,a0
+9d000d80:	c264      	sb	v1,4(v0)
+9d000d82:	6a00      	li	v0,0
+9d000d84:	f030 c054 	sb	v0,-32716(s0)
+9d000d88:	1007      	b	9d000d98 <USBDeviceTasks+0xc34>
+9d000d8a:	67b0      	move	a1,s0
+9d000d8c:	6c72      	li	a0,114
+9d000d8e:	f070 4d04 	addiu	a1,-32668
+9d000d92:	1a1f 02c1 	jal	9fc00b04 <USER_USB_CALLBACK_EVENT_HANDLER>
+9d000d96:	6e00      	li	a2,0
+9d000d98:	9206      	lw	v0,24(sp)
+9d000d9a:	4a01      	addiu	v0,1
+9d000d9c:	ea11      	zeb	v0
+9d000d9e:	7204      	cmpi	v0,4
+9d000da0:	d206      	sw	v0,24(sp)
+9d000da2:	f2ff 610a 	btnez	9d00037a <USBDeviceTasks+0x216>
+9d000da6:	1e1f 003e 	jalx	9fc000f8 <INTClearFlag>
+9d000daa:	6c45      	li	a0,69
+9d000dac:	6478      	restore	64,ra,s0-s1
+9d000dae:	e8a0      	jrc	ra
+9d000db0:	5250      	slti	v0,80
+9d000db2:	bf88      	lwu	a0,32(a3)
+9d000db4:	52e0      	slti	v0,224
+9d000db6:	bf88      	lwu	a0,32(a3)
+9d000db8:	5210      	slti	v0,16
+9d000dba:	bf88      	lwu	a0,32(a3)
+9d000dbc:	5230      	slti	v0,48
+9d000dbe:	bf88      	lwu	a0,32(a3)
+9d000dc0:	5070      	slti	s0,112
+9d000dc2:	bf88      	lwu	a0,32(a3)
+9d000dc4:	5250      	slti	v0,80
+9d000dc6:	bf88      	lwu	a0,32(a3)
+9d000dc8:	5200      	slti	v0,0
+9d000dca:	bf88      	lwu	a0,32(a3)
+9d000dcc:	5210      	slti	v0,16
+9d000dce:	bf88      	lwu	a0,32(a3)
+9d000dd0:	5040      	slti	s0,64
+9d000dd2:	bf88      	lwu	a0,32(a3)
+9d000dd4:	5050      	slti	s0,80
+9d000dd6:	bf88      	lwu	a0,32(a3)
+9d000dd8:	5040      	slti	s0,64
+9d000dda:	bf88      	lwu	a0,32(a3)
+9d000ddc:	5080      	slti	s0,128
+9d000dde:	bf88      	lwu	a0,32(a3)
+9d000de0:	5200      	slti	v0,0
+9d000de2:	bf88      	lwu	a0,32(a3)
+9d000de4:	5300      	slti	v1,0
+9d000de6:	bf88      	lwu	a0,32(a3)
+9d000de8:	0258      	addiu	v0,sp,352
+9d000dea:	a000      	lbu	s0,0(s0)
+9d000dec:	ffff      	daddiu	a3,sp,124
+9d000dee:	7fff      	sd	a3,248(a3)
+9d000df0:	5220      	slti	v0,32
+9d000df2:	bf88      	lwu	a0,32(a3)
+9d000df4:	5240      	slti	v0,64
+9d000df6:	bf88      	lwu	a0,32(a3)
+9d000df8:	0200      	addiu	v0,sp,0
+9d000dfa:	a000      	lbu	s0,0(s0)
+9d000dfc:	0000      	addiu	s0,sp,0
+9d000dfe:	a000      	lbu	s0,0(s0)
+9d000e00:	0268      	addiu	v0,sp,416
+9d000e02:	a000      	lbu	s0,0(s0)
+9d000e04:	ffff      	daddiu	a3,sp,124
+9d000e06:	1fff 0248 	jalx	9ffc0920 <USER_USB_CALLBACK_EVENT_HANDLER+0x3bfe1c>
+9d000e0a:	a000      	lbu	s0,0(s0)
+9d000e0c:	0270      	addiu	v0,sp,448
+9d000e0e:	a000      	lbu	s0,0(s0)
+9d000e10:	00ff      	addiu	s0,sp,1020
+9d000e12:	ff00      	daddiu	s0,sp,0
+9d000e14:	0f7c      	la	a3,9d001004 <_ramfunc_image_begin+0x8>
+9d000e16:	9d00      	lw	s0,0(a1)
+9d000e18:	0010      	addiu	s0,sp,64
+9d000e1a:	a000      	lbu	s0,0(s0)
+9d000e1c:	0fdc      	la	a3,9d00118c <_ramfunc_image_begin+0x190>
+9d000e1e:	9d00      	lw	s0,0(a1)
+9d000e20:	5310      	slti	v1,16
+9d000e22:	bf88      	lwu	a0,32(a3)
+9d000e24:	0210      	addiu	v0,sp,64
+9d000e26:	a000      	lbu	s0,0(s0)
+9d000e28:	0240      	addiu	v0,sp,256
+9d000e2a:	a000      	lbu	s0,0(s0)
+9d000e2c:	0260      	addiu	v0,sp,384
+9d000e2e:	a000      	lbu	s0,0(s0)
+9d000e30:	5300      	slti	v1,0
+9d000e32:	bf88      	lwu	a0,32(a3)
+9d000e34:	5260      	slti	v0,96
+9d000e36:	bf88      	lwu	a0,32(a3)
+
+9d000e38 <USBCheckHIDRequest>:
+9d000e38:	b32f      	lw	v1,9d000ef4 <USBCheckHIDRequest+0xbc>
+9d000e3a:	6d1f      	li	a1,31
+9d000e3c:	a380      	lbu	a0,0(v1)
+9d000e3e:	675c      	move	v0,gp
+9d000e40:	ec11      	zeb	a0
+9d000e42:	ecac      	and	a0,a1
+9d000e44:	7401      	cmpi	a0,1
+9d000e46:	6155      	btnez	9d000ef2 <USBCheckHIDRequest+0xba>
+9d000e48:	a384      	lbu	a0,4(v1)
+9d000e4a:	ec11      	zeb	a0
+9d000e4c:	2c52      	bnez	a0,9d000ef2 <USBCheckHIDRequest+0xba>
+9d000e4e:	a381      	lbu	a0,1(v1)
+9d000e50:	ec11      	zeb	a0
+9d000e52:	7406      	cmpi	a0,6
+9d000e54:	6118      	btnez	9d000e86 <USBCheckHIDRequest+0x4e>
+9d000e56:	a363      	lbu	v1,3(v1)
+9d000e58:	eb11      	zeb	v1
+9d000e5a:	7321      	cmpi	v1,33
+9d000e5c:	6003      	bteqz	9d000e64 <USBCheckHIDRequest+0x2c>
+9d000e5e:	7322      	cmpi	v1,34
+9d000e60:	600a      	bteqz	9d000e76 <USBCheckHIDRequest+0x3e>
+9d000e62:	1011      	b	9d000e86 <USBCheckHIDRequest+0x4e>
+9d000e64:	f050 a27c 	lbu	v1,-32676(v0)
+9d000e68:	7301      	cmpi	v1,1
+9d000e6a:	610d      	btnez	9d000e86 <USBCheckHIDRequest+0x4e>
+9d000e6c:	b323      	lw	v1,9d000ef8 <USBCheckHIDRequest+0xc0>
+9d000e6e:	b424      	lw	a0,9d000efc <USBCheckHIDRequest+0xc4>
+9d000e70:	db80      	sw	a0,0(v1)
+9d000e72:	6c09      	li	a0,9
+9d000e74:	1004      	b	9d000e7e <USBCheckHIDRequest+0x46>
+9d000e76:	b321      	lw	v1,9d000ef8 <USBCheckHIDRequest+0xc0>
+9d000e78:	b422      	lw	a0,9d000f00 <USBCheckHIDRequest+0xc8>
+9d000e7a:	db80      	sw	a0,0(v1)
+9d000e7c:	6c1d      	li	a0,29
+9d000e7e:	cb84      	sh	a0,8(v1)
+9d000e80:	6c40      	li	a0,64
+9d000e82:	ec8b      	neg	a0
+9d000e84:	c384      	sb	a0,4(v1)
+9d000e86:	b41c      	lw	a0,9d000ef4 <USBCheckHIDRequest+0xbc>
+9d000e88:	6d60      	li	a1,96
+9d000e8a:	a460      	lbu	v1,0(a0)
+9d000e8c:	eb11      	zeb	v1
+9d000e8e:	ebac      	and	v1,a1
+9d000e90:	7320      	cmpi	v1,32
+9d000e92:	612f      	btnez	9d000ef2 <USBCheckHIDRequest+0xba>
+9d000e94:	a461      	lbu	v1,1(a0)
+9d000e96:	eb11      	zeb	v1
+9d000e98:	7303      	cmpi	v1,3
+9d000e9a:	601a      	bteqz	9d000ed0 <USBCheckHIDRequest+0x98>
+9d000e9c:	5b04      	sltiu	v1,4
+9d000e9e:	6003      	bteqz	9d000ea6 <USBCheckHIDRequest+0x6e>
+9d000ea0:	7302      	cmpi	v1,2
+9d000ea2:	6006      	bteqz	9d000eb0 <USBCheckHIDRequest+0x78>
+9d000ea4:	e8a0      	jrc	ra
+9d000ea6:	730a      	cmpi	v1,10
+9d000ea8:	600b      	bteqz	9d000ec0 <USBCheckHIDRequest+0x88>
+9d000eaa:	730b      	cmpi	v1,11
+9d000eac:	601b      	bteqz	9d000ee4 <USBCheckHIDRequest+0xac>
+9d000eae:	e8a0      	jrc	ra
+9d000eb0:	b312      	lw	v1,9d000ef4 <USBCheckHIDRequest+0xbc>
+9d000eb2:	f070 4a11 	addiu	v0,-32655
+9d000eb6:	db40      	sw	v0,0(v1)
+9d000eb8:	6a01      	li	v0,1
+9d000eba:	cb44      	sh	v0,8(v1)
+9d000ebc:	6a3f      	li	v0,63
+9d000ebe:	100f      	b	9d000ede <USBCheckHIDRequest+0xa6>
+9d000ec0:	b30e      	lw	v1,9d000ef8 <USBCheckHIDRequest+0xc0>
+9d000ec2:	6d80      	li	a1,128
+9d000ec4:	edab      	neg	a1
+9d000ec6:	c3a4      	sb	a1,4(v1)
+9d000ec8:	a463      	lbu	v1,3(a0)
+9d000eca:	f070 c271 	sb	v1,-32655(v0)
+9d000ece:	e8a0      	jrc	ra
+9d000ed0:	b30a      	lw	v1,9d000ef4 <USBCheckHIDRequest+0xbc>
+9d000ed2:	f070 4a10 	addiu	v0,-32656
+9d000ed6:	db40      	sw	v0,0(v1)
+9d000ed8:	6a01      	li	v0,1
+9d000eda:	cb44      	sh	v0,8(v1)
+9d000edc:	6a7f      	li	v0,127
+9d000ede:	ea4b      	neg	v0
+9d000ee0:	e820      	jr	ra
+9d000ee2:	c344      	sb	v0,4(v1)
+9d000ee4:	b305      	lw	v1,9d000ef8 <USBCheckHIDRequest+0xc0>
+9d000ee6:	6d80      	li	a1,128
+9d000ee8:	edab      	neg	a1
+9d000eea:	c3a4      	sb	a1,4(v1)
+9d000eec:	a462      	lbu	v1,2(a0)
+9d000eee:	f070 c270 	sb	v1,-32656(v0)
+9d000ef2:	e8a0      	jrc	ra
+9d000ef4:	0268      	addiu	v0,sp,416
+9d000ef6:	a000      	lbu	s0,0(s0)
+9d000ef8:	0248      	addiu	v0,sp,288
+9d000efa:	a000      	lbu	s0,0(s0)
+9d000efc:	0fa2      	la	a3,9d001184 <_ramfunc_image_begin+0x188>
+9d000efe:	9d00      	lw	s0,0(a1)
+9d000f00:	0fbc      	la	a3,9d0011f0 <_ramfunc_image_begin+0x1f4>
+9d000f02:	9d00      	lw	s0,0(a1)
+
+9d000f04 <SoftReset>:
+9d000f04:	27bdffe8 	addiu	sp,sp,-24
+9d000f08:	afbf0014 	sw	ra,20(sp)
+9d000f0c:	0ff0003e 	jal	9fc000f8 <INTClearFlag>
+9d000f10:	00000000 	nop
+9d000f14:	3c02bf88 	lui	v0,0xbf88
+9d000f18:	8c433000 	lw	v1,12288(v0)
+9d000f1c:	7c630300 	ext	v1,v1,0xc,0x1
+9d000f20:	14600008 	bnez	v1,9d000f44 <SoftReset+0x40>
+9d000f24:	3c03aa99 	lui	v1,0xaa99
+9d000f28:	24041000 	li	a0,4096
+9d000f2c:	3c03bf88 	lui	v1,0xbf88
+9d000f30:	ac643008 	sw	a0,12296(v1)
+9d000f34:	8c433000 	lw	v1,12288(v0)
+9d000f38:	30630800 	andi	v1,v1,0x800
+9d000f3c:	1460fffd 	bnez	v1,9d000f34 <SoftReset+0x30>
+9d000f40:	3c03aa99 	lui	v1,0xaa99
+9d000f44:	3c02bf81 	lui	v0,0xbf81
+9d000f48:	24636655 	addiu	v1,v1,26197
+9d000f4c:	ac40f230 	sw	zero,-3536(v0)
+9d000f50:	ac43f230 	sw	v1,-3536(v0)
+9d000f54:	3c035566 	lui	v1,0x5566
+9d000f58:	346399aa 	ori	v1,v1,0x99aa
+9d000f5c:	ac43f230 	sw	v1,-3536(v0)
+9d000f60:	3c02bf81 	lui	v0,0xbf81
+9d000f64:	24030001 	li	v1,1
+9d000f68:	ac43f618 	sw	v1,-2536(v0)
+9d000f6c:	3c02bf81 	lui	v0,0xbf81
+9d000f70:	8c42f610 	lw	v0,-2544(v0)
+9d000f74:	0b4003dd 	j	9d000f74 <SoftReset+0x70>
+9d000f78:	00000000 	nop
