@@ -168,9 +168,9 @@ Disassembly of section .bootrom:
 9fc001c4:	b20c      	lw	v0,9fc001f4 <SerialSetDataRate+0x30>
 9fc001c6:	eaa3      	sltu	v0,a1
 9fc001c8:	6104      	btnez	9fc001d2 <SerialSetDataRate+0xe>
-9fc001ca:	5d26      	sltiu	a1,38
+9fc001ca:	5d2d      	sltiu	a1,45
 9fc001cc:	6003      	bteqz	9fc001d4 <SerialSetDataRate+0x10>
-9fc001ce:	6d26      	li	a1,38
+9fc001ce:	6d2d      	li	a1,45
 9fc001d0:	1001      	b	9fc001d4 <SerialSetDataRate+0x10>
 9fc001d2:	67a2      	move	a1,v0
 9fc001d4:	b409      	lw	a0,9fc001f8 <SerialSetDataRate+0x34>
@@ -189,8 +189,7 @@ Disassembly of section .bootrom:
 9fc001ee:	e820      	jr	ra
 9fc001f0:	db40      	sw	v0,0(v1)
 9fc001f2:	6500      	nop
-9fc001f4:	9680      	lw	a2,512(sp)
-9fc001f6:	0098      	addiu	s0,sp,608
+9fc001f4:	1b00 00b7 	jal	906002dc <_bmxdudba_address+0x905fe2e0>
 9fc001f8:	6000      	bteqz	9fc001fa <SerialSetDataRate+0x36>
 9fc001fa:	bf80      	lwu	a0,0(a3)
 9fc001fc:	6040      	bteqz	9fc0027e <SerialConfigure+0x12>

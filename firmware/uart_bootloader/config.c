@@ -3,6 +3,8 @@
 
 #define	_BUILD_CONFIG
 
+#include "config.h"
+
 #include "p32mx_devcfg.h"
 
 
@@ -11,8 +13,15 @@
 #define	CONFIG_IOL1WAY			0		/* Multiple	Reconfiguration	is Allowed */	 
 #define	CONFIG_FUSBIDIO			1		/* USBID is	port */	   
 #define	CONFIG_FVBUSONIO		1		/* Vbuson is port */	
+
+#if CPU_CLOCK_48MHz
+#define	CONFIG_FPLLMUL			MUL_24	/* 4 MHz ->	96 MHz */	 
+#define	CONFIG_FPLLODIV			ODIV_2	/* 96 MHz -> 48	MHz	*/	  
+#else // 40MHz
 #define	CONFIG_FPLLMUL			MUL_20	/* 4 MHz ->	80 MHz */	 
 #define	CONFIG_FPLLODIV			ODIV_2	/* 80 MHz -> 40	MHz	*/	  
+#endif
+
 
 #ifdef	USE_INTERNAL_FRC_OSC	// RC OSC
 #define	CONFIG_FPLLIDIV			IDIV_1	/* 4 MHz ->	4 MHz */	

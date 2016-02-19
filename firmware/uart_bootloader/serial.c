@@ -34,6 +34,7 @@
 #include <typedef.h>
 #include <const.h>
 
+#include "config.h"
 #include "serial1.h"
 #include "fifo.h"
 
@@ -68,7 +69,8 @@ static	char	rx_buff[FIFO_SIZE];
 //
 int	get_PeripheralClock()
 {
-	return 40 * 1000 * 1000;	// 40MHz
+	return SYS_FREQ;			// config.h
+//	return 40 * 1000 * 1000;	// 40MHz
 }
 //
 //	‹ß‚¢’l‚ğ“¾‚éœZ.

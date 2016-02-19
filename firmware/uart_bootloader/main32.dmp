@@ -25,10 +25,10 @@
 9fc0018c: aa 72 f3 60 a5 72 f9 61 1f 1e c8 02 55 6c f5 17
 9fc0019c: 10 61 88 bf 00 00 00 a0 20 61 88 bf 00 f6 80 bf
 9fc001ac: 00 f2 80 bf 20 a1 07 00 14 61 88 bf 78 56 34 12
-9fc001bc: 00 00 00 9d 00 60 00 9d 0c b2 a3 ea 04 61 26 5d
-9fc001cc: 03 60 26 6d 01 10 a2 67 09 b4 08 6b c0 ac cd eb
+9fc001bc: 00 00 00 9d 00 60 00 9d 0c b2 a3 ea 04 61 2d 5d
+9fc001cc: 03 60 2d 6d 01 10 a2 67 09 b4 08 6b c0 ac cd eb
 9fc001dc: 60 cc a7 33 49 e3 ba ea 01 2d e5 e8 05 b3 12 ea
-9fc001ec: ff 4a 20 e8 40 db 00 65 80 96 98 00 00 60 80 bf
+9fc001ec: ff 4a 20 e8 40 db 00 65 00 1b b7 00 00 60 80 bf
 9fc001fc: 40 60 80 bf 06 b3 11 6a 80 ab 4b ea 8c ea 40 cb
 9fc0020c: 04 b3 10 6a 80 a3 8d ea 20 e8 40 c3 10 61 88 bf
 9fc0021c: 10 60 88 bf f4 64 25 67 11 e9 01 6c 1f 1e a2 02
@@ -183,7 +183,7 @@
 9fc00b90: 00 00 00 00
 bfc00000: c0 9f 1a 3c 0c 00 5a 27 08 00 40 03
 bfc00bf0: ff ff ff cf
-bfc00bf4: d9 79 f9 ff
+bfc00bf4: f9 79 f9 ff
 bfc00bf8: 5b ce 60 ff
 bfc00bfc: ef ff ff 7f
 :scmd=5 start=bfc00000

@@ -136,10 +136,11 @@ Discarded input sections
  .data          0x0000000000000000        0x0 config.o
  .bss           0x0000000000000000        0x0 config.o
  .reginfo       0x0000000000000000       0x18 config.o
- .text          0x0000000000000000        0x0 D:\MicroChip\xc32\v1.40\pic32mx\lib\proc\32mx120f032b\processor.o
- .data          0x0000000000000000        0x0 D:\MicroChip\xc32\v1.40\pic32mx\lib\proc\32mx120f032b\processor.o
- .bss           0x0000000000000000        0x0 D:\MicroChip\xc32\v1.40\pic32mx\lib\proc\32mx120f032b\processor.o
- .reginfo       0x0000000000000000       0x18 D:\MicroChip\xc32\v1.40\pic32mx\lib\proc\32mx120f032b\processor.o
+ .text          0x0000000000000000        0x0 C:\pinguino-11/user/source/obj/non-free/32MX220F032B.o
+ .data          0x0000000000000000        0x0 C:\pinguino-11/user/source/obj/non-free/32MX220F032B.o
+ .bss           0x0000000000000000        0x0 C:\pinguino-11/user/source/obj/non-free/32MX220F032B.o
+ .reginfo       0x0000000000000000       0x18 C:\pinguino-11/user/source/obj/non-free/32MX220F032B.o
+ .pdr           0x0000000000000000        0x0 C:\pinguino-11/user/source/obj/non-free/32MX220F032B.o
  .text          0x0000000000000000       0x60 c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/crtend.o
  .data          0x0000000000000000        0x0 c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/crtend.o
  .bss           0x0000000000000000        0x0 c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/crtend.o
@@ -196,7 +197,7 @@ LOAD fifo.o
 LOAD NVMem.o
 LOAD util.o
 LOAD config.o
-LOAD D:\MicroChip\xc32\v1.40\pic32mx\lib\proc\32mx120f032b\processor.o
+LOAD C:\pinguino-11/user/source/obj/non-free/32MX220F032B.o
 LOAD c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/../../../../mips-elf/lib/soft-float/el\libm.a
 LOAD c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el\libgcc.a
 LOAD c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/../../../../mips-elf/lib/soft-float/el\libc.a
@@ -676,7 +677,7 @@ LOAD c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/cr
  .sbss.total_errs
                 0x00000000a0000008        0x4 monit.o
                 0x00000000a0000008                total_errs
- .sbss.cnt.6551
+ .sbss.cnt.7002
                 0x00000000a000000c        0x4 util.o
  *(.scommon)
  .scommon       0x00000000a0000010       0x10 monit.o

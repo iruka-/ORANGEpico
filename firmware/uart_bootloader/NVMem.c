@@ -47,10 +47,11 @@ UINT	NVMemClearError(void);
 //#include "Include\Framework\Framework.h"
 
 #include <p32xxxx.h>			// always in first place to avoid conflict with const.h ON
+#include "config.h"
 #include "NVMem.h"
 //#include <plib.h>
 
-#define SYS_FREQ (40000000L)
+//#define SYS_FREQ (40000000L)
 
 #define KVA_TO_PA(v) 	((v) & 0x1fffffff)
 
