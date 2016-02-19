@@ -1,0 +1,78 @@
+.vector_0       0x000000009d001200        0x0
+.vector_1       0x000000009d001220        0x0
+.vector_2       0x000000009d001240        0x0
+.vector_3       0x000000009d001260        0x0
+.vector_4       0x000000009d001280        0x8
+ .vector_4      0x000000009d001280        0x8 crt.o
+.vector_5       0x000000009d0012a0        0x0
+.vector_6       0x000000009d0012c0        0x0
+.vector_7       0x000000009d0012e0        0x0
+.vector_8       0x000000009d001300        0x8
+ .vector_8      0x000000009d001300        0x8 crt.o
+.vector_9       0x000000009d001320        0x0
+.vector_10      0x000000009d001340        0x0
+.vector_11      0x000000009d001360        0x0
+.vector_12      0x000000009d001380        0x0
+.vector_13      0x000000009d0013a0        0x0
+.vector_14      0x000000009d0013c0        0x0
+.vector_15      0x000000009d0013e0        0x0
+.vector_16      0x000000009d001400        0x8
+ .vector_16     0x000000009d001400        0x8 crt.o
+.vector_17      0x000000009d001420        0x0
+.vector_18      0x000000009d001440        0x0
+.vector_19      0x000000009d001460        0x0
+.vector_20      0x000000009d001480        0x0
+.vector_21      0x000000009d0014a0        0x0
+.vector_22      0x000000009d0014c0        0x0
+.vector_23      0x000000009d0014e0        0x8
+ .vector_23     0x000000009d0014e0        0x8 crt.o
+.vector_24      0x000000009d001500        0x0
+.vector_25      0x000000009d001520        0x0
+.vector_26      0x000000009d001540        0x0
+.vector_27      0x000000009d001560        0x0
+.vector_28      0x000000009d001580        0x0
+.vector_29      0x000000009d0015a0        0x0
+.vector_30      0x000000009d0015c0        0x8
+ .vector_30     0x000000009d0015c0        0x8 crt.o
+.vector_31      0x000000009d0015e0        0x8
+ .vector_31     0x000000009d0015e0        0x8 crt.o
+.vector_32      0x000000009d001600        0x8
+ .vector_32     0x000000009d001600        0x8 crt.o
+.vector_33      0x000000009d001620        0x0
+.vector_34      0x000000009d001640        0x0
+.vector_35      0x000000009d001660        0x0
+.vector_36      0x000000009d001680        0x8
+ .vector_36     0x000000009d001680        0x8 crt.o
+.vector_37      0x000000009d0016a0        0x8
+ .vector_37     0x000000009d0016a0        0x8 crt.o
+.vector_38      0x000000009d0016c0        0x0
+.vector_39      0x000000009d0016e0        0x0
+.vector_40      0x000000009d001700        0x8
+ .vector_40     0x000000009d001700        0x8 crt.o
+.vector_41      0x000000009d001720        0x8
+ .vector_41     0x000000009d001720        0x8 crt.o
+.vector_42      0x000000009d001740        0x8
+ .vector_42     0x000000009d001740        0x8 crt.o
+.vector_43      0x000000009d001760        0x8
+ .vector_43     0x000000009d001760        0x8 crt.o
+.vector_44      0x000000009d001780        0x0
+.vector_45      0x000000009d0017a0        0x0
+.vector_46      0x000000009d0017c0        0x0
+.vector_47      0x000000009d0017e0        0x0
+.vector_48      0x000000009d001800        0x0
+.vector_49      0x000000009d001820        0x0
+.vector_50      0x000000009d001840        0x0
+.vector_51      0x000000009d001860        0x0
+.vector_52      0x000000009d001880        0x0
+.vector_53      0x000000009d0018a0        0x0
+.vector_54      0x000000009d0018c0        0x0
+.vector_55      0x000000009d0018e0        0x0
+.vector_56      0x000000009d001900        0x0
+.vector_57      0x000000009d001920        0x0
+.vector_58      0x000000009d001940        0x0
+.vector_59      0x000000009d001960        0x0
+.vector_60      0x000000009d001980        0x0
+.vector_61      0x000000009d0019a0        0x0
+.vector_62      0x000000009d0019c0        0x0
+.vector_63      0x000000009d0019e0        0x0
+
