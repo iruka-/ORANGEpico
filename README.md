@@ -26,3 +26,7 @@ PIC32MXを搭載した基板 [ORANGEpico](http://www.picosoft.co.jp/orange/) ユ
 
 * 基板背景の雑誌（広告写真）は、本記事とは無関係です。
 
+# [開発日記](https://github.com/iruka-/ATMEL_AVR/blob/master/md/README.md)
+
+* AVR , PIC18F , PIC32MX , ARM 系の基板の遊び方[日記](https://github.com/iruka-/ATMEL_AVR/blob/master/md/README.md)
+
