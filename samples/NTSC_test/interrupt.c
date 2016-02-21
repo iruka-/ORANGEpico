@@ -29,10 +29,9 @@
 #define __INTERRUPT_C
 
 	#include <p32xxxx.h>
-	#include <typedef.h>
 	#include <macro.h>
-	#include <const.h>
-	#include "serial1.h"
+
+typedef	unsigned char u8;
 
 	// INTERRUPT CONFIG MODE
 	#define INT_SYSTEM_CONFIG_MULT_VECTOR	1
@@ -281,7 +280,7 @@
 	#define AD1_INT_ENABLE				0x00000002
 	#define CN_INT_ENABLE				0x00000001
 //PIC32MX795
-//if defined(UBW32_795) || defined(EMPEROR795) || defined(PIC32_PINGUINO_T795)
+//if defined(UBW32_795) || defined(EMPEROR795)
 	#define CAN1_INT_ENABLE				0x04000000
 	#define CAN2_INT_ENABLE				0x08000000
 	#define ETH_INT_ENABLE				0x10000000
@@ -306,6 +305,10 @@
 	#define UART6_ALL_INTERRUPT			0x000001C0
 #endif
 //endif
+
+
+#define	_MIPS32 __attribute__((nomips16,noinline))
+
 /*	----------------------------------------------------------------------------
 	IntSetPriority
 	----------------------------------------------------------------------------
@@ -325,7 +328,7 @@
 	IFSx: Interrupt Flag Status Registers
 	--------------------------------------------------------------------------*/
 
-void IntSetVectorPriority(u8 vector, u8 pri, u8 sub)
+void _MIPS32 IntSetVectorPriority(u8 vector, u8 pri, u8 sub)
 {
 	//IFSxCLR = ;
 	//IPCxCLR = ;		// clear the priority level
@@ -537,7 +540,7 @@ void IntSetVectorPriority(u8 vector, u8 pri, u8 sub)
 		interrupt vector's priority
 	--------------------------------------------------------------------------*/
 
-unsigned int IntGetVectorPriority(u8 vector)
+unsigned int _MIPS32 IntGetVectorPriority(u8 vector)
 {
 	unsigned int pri = 0;
 
@@ -685,7 +688,7 @@ unsigned int IntGetVectorPriority(u8 vector)
 		interrupt vector's sub-priority
 	--------------------------------------------------------------------------*/
 
-unsigned int IntGetVectorSubPriority(u8 vector)
+unsigned int _MIPS32 IntGetVectorSubPriority(u8 vector)
 {
 	unsigned int sub = 0;
 
@@ -830,7 +833,7 @@ unsigned int IntGetVectorSubPriority(u8 vector)
 
 void IntClearFlag(u8 numinter)
 {
-    #if defined(UBW32_795) || defined(EMPEROR795) || defined(PIC32_PINGUINO_T795)
+    #if defined(UBW32_795) || defined(EMPEROR795)
 	if (numinter > 63)
 	{
 		numinter -= 64;
@@ -862,7 +865,7 @@ void IntClearFlag(u8 numinter)
 
 unsigned int IntGetFlag(u8 numinter)
 {
-    #if defined(UBW32_795) || defined(EMPEROR795) || defined(PIC32_PINGUINO_T795)
+    #if defined(UBW32_795) || defined(EMPEROR795)
 	if (numinter > 63)
 	{
 		numinter -= 64;
@@ -891,7 +894,7 @@ unsigned int IntGetFlag(u8 numinter)
 
 void IntEnable(u8 numinter)
 {
-    #if defined(UBW32_795) || defined(EMPEROR795) || defined(PIC32_PINGUINO_T795)
+    #if defined(UBW32_795) || defined(EMPEROR795)
 	if (numinter > 63)
 	{
 		numinter -= 64;
@@ -920,7 +923,7 @@ void IntEnable(u8 numinter)
 
 void IntDisable(u8 numinter)
 {
-    #if defined(UBW32_795) || defined(EMPEROR795) || defined(PIC32_PINGUINO_T795)
+    #if defined(UBW32_795) || defined(EMPEROR795)
 	if (numinter > 63)
 	{
 		numinter -= 64;
@@ -978,7 +981,7 @@ unsigned int IntGetInterruptVectorPriority(void)
 	function can be used in other routines to restore the system interrupt state.
 	--------------------------------------------------------------------------*/
 
-unsigned int MIPS32 IntDisableInterrupts()
+unsigned int _MIPS32 IntDisableInterrupts()
 {
 	unsigned int intStatus;
 
@@ -998,7 +1001,7 @@ unsigned int MIPS32 IntDisableInterrupts()
 	the system interrupt state.
 	--------------------------------------------------------------------------*/
 
-unsigned int MIPS32 IntEnableInterrupts()
+unsigned int _MIPS32 IntEnableInterrupts()
 {
 	unsigned int intStatus;
 
@@ -1016,7 +1019,7 @@ unsigned int MIPS32 IntEnableInterrupts()
 		status      - the state of the CP0 register Status.IE
 	--------------------------------------------------------------------------*/
 
-void MIPS32 IntRestoreInterrupts(unsigned int intStatus)
+void _MIPS32 IntRestoreInterrupts(unsigned int intStatus)
 {
 	_CP0_SET_STATUS(intStatus); // Update Status
 }
@@ -1033,13 +1036,10 @@ void MIPS32 IntRestoreInterrupts(unsigned int intStatus)
 	NB : EBASE at 0xBD000000 (microchip) or 0xBD005000 (jean-pierre mandon)
 	--------------------------------------------------------------------------*/
 
-void MIPS32 IntSetEBASE(unsigned int ebase_address)
+void _MIPS32 IntSetEBASE(unsigned int ebase_address)
 {
 	_CP0_SET_EBASE(ebase_address);
 }
-
-
-extern	int _ebase_address[];	// From: procdefs.ld
 
 /*	----------------------------------------------------------------------------
 	IntConfigureSystem
@@ -1054,7 +1054,7 @@ extern	int _ebase_address[];	// From: procdefs.ld
 	NB : Place EBASE at 0xBD000000 (microchip) or 0xBD005000 (jean-pierre mandon)
 	--------------------------------------------------------------------------*/
 
-void MIPS32 IntConfigureSystem(u8 mode)
+void _MIPS32 IntConfigureSystem(u8 mode)
 {
 	unsigned int temp;
 
@@ -1062,336 +1062,33 @@ void MIPS32 IntConfigureSystem(u8 mode)
 	temp = _CP0_GET_STATUS(); // Get Status
 	temp |= 0x00400000; // Set BEV bit
 	_CP0_SET_STATUS(temp); // Update Status
-
-	_CP0_SET_EBASE(_ebase_address);	// from Linker script
-
+	#if defined(PIC32_PINGUINO_220) || defined(GENERIC32MX250F128) || defined(GENERIC32MX220F032)
+	_CP0_SET_EBASE(0xBD003000); // Set an EBase value of 0xBD003000	
+	#else
+	_CP0_SET_EBASE(0xBD005000); // Set an EBase value of 0xBD005000	
+	#endif
 	_CP0_SET_INTCTL(0x00000020); // Set the Vector Spacing to non-zero value
-
 	temp = _CP0_GET_CAUSE(); // Get Cause
 	temp |= 0x00800000; // Set IV
 	_CP0_SET_CAUSE(temp); // Update Cause
-
 	temp = _CP0_GET_STATUS(); // Get Status
 	temp &= 0xFFBFFFFD; // Clear BEV and EXL
 	_CP0_SET_STATUS(temp); // Update Status
 
-	switch (mode) {
+	switch (mode)
+	{
 		case INT_SYSTEM_CONFIG_MULT_VECTOR:
 			// Set the CP0 registers for multi-vector interrupt
 			INTCONSET = 0x1000; // Set MVEC bit
-			break;
+		break;
 		case INT_SYSTEM_CONFIG_SINGLE_VECTOR:
 			// Set the CP0 registers for single-vector interrupt
 			INTCONCLR = 0x1000; // Clear MVEC bit
-			break;	
+		break;	
 	}
 
 	asm("ei"); // Enable all interrupts
 }
-
-
-
-/*	----------------------------------------------------------------------------
-	---------- OnTimerX
-	----------------------------------------------------------------------------
-	@author		Regis Blanchot <rblanchot@gmail.com>
-	@descr		Configure timers to execute function func every delay ms, us or sec
-	@param		timediv:	INT_MICROSEC, INT_MILLISEC, INT_SEC
-				func:		function called when interrupt occures
-				delay:		delay before overload
-	--------------------------------------------------------------------------*/
-
-	typedef void (*callback) (void);				// type of: void callback()
-
-	/// Interrupts list
-
-	#define INT_TMR0			0
-	#define INT_TMR1			1
-	#define INT_TMR2			2
-	#define INT_TMR3			3
-	#define INT_TMR4			4
-	#define INT_TMR5			5
-	#define	INT_NUMS			6
-
-	#define INT_NOT_USED		0
-	#define INT_USED			0xFF
-	#define INT_MICROSEC		1
-	#define INT_MILLISEC		2
-	#define INT_SEC				3
-
-	static callback intFunction[INT_NUMS];
-			 u8  intUsed[INT_NUMS];
-	volatile u32 intCount[INT_NUMS];
-	volatile u32 intCountLimit[INT_NUMS];
-
-//	in:	 Timer Interval (microSec)
-//	out: *tcon  :(TxCON reg) Prescaler
-//		 *limit :software divide counter Value.
-//		 pr1    :(PRx + 1) Preset Counter Value.
-//
-int TMR_X_calc_preset_divider(int timediv,u32 delay,int *tx_con,int *limit)
-{
-	int Mhz = (GetPeripheralClock() / 1000000);	// 40.0
-	int usec,msec;
-	switch(timediv) {
-	 case INT_MICROSEC:	usec = delay;			msec=delay/1000;break;
-	 default:
-	 case INT_MILLISEC:	usec = delay*1000;		msec=delay;break;
-	 case INT_SEC:		usec = delay*1000*1000;	msec=delay*1000;break;
-	}
-
-	*limit=0;
-	// NEED software msec divide counter ?
-	if( usec > (100*1000) ) {	// Over 100mS ?
-		*limit = msec;			// set softwre counter.
-		usec = 1000;			// 1mS interval.
-	}
-
-	// PRx+1 calculation
-	int pr1 = usec * Mhz;
-	int _txcon = 0b000;							// prescaler is 1
-
-	// pr1 (PRx+1) cannot over 65535.
-	if( pr1 >= 0x10000 ) {		// Over 16bit
-		pr1 >>= 4;
-		_txcon = 0b100;			// prescaler is 16
-		if( pr1 >= 0x10000 ) {		// Over 16bit
-			pr1 >>= 4;
-			_txcon = 0b111;			// prescaler is 256
-		}
-	}
-	*tx_con = (_txcon << 4) ;
-	return pr1;
-}
-
-#define	TMR_X_CALLBACK(INT_TMRX)	\
-		if (intCount[INT_TMRX]++ >= intCountLimit[INT_TMRX]) {	\
-			intCount[INT_TMRX] = 0;		\
-			intFunction[INT_TMRX]();	\
-		}
-
-/*	----------------------------------------------------------------------------
-	---------- OnTimer1
-	----------------------------------------------------------------------------*/
-#ifdef TMR1INT
-void Tmr1Interrupt(void)
-{
-	if (IFS0bits.T1IF) {	// Timer Interrupt flag
-		TMR_X_CALLBACK(INT_TMR1);
-		IFS0CLR=(1<<4);		// IFS04: Clear the timer interrupt flag
-	}
-}
-u8 OnTimer1(callback func, u8 timediv, u32 delay)
-{
-    int _prx;
-    int _tx_con=0;
-    int _limit =0;
-
-	if (intUsed[INT_TMR1] == INT_NOT_USED) {
-		intUsed[INT_TMR1] = INT_USED;
-		intFunction[INT_TMR1] = func;
-		intCount[INT_TMR1] = 0;
-
-		_prx = TMR_X_calc_preset_divider(timediv,delay,&_tx_con,&_limit);
-
-		T1CON=0;			// reset timer 1 configuration
-		intCountLimit[INT_TMR1] = _limit;
-		TMR1=0;				// reset timer 1 counter register
-		PR1=(_prx-1);		// define the preload register
-		IPC1SET=(7<<2);		// select interrupt priority and sub-priority
-		IFS0CLR=(1<<4);		// clear interrupt flag
-		IEC0SET=(1<<4);		// enable timer 1 interrupt
-		T1CON=_tx_con;		// set prescaler(1/n)   (n=1,16,or 256)
-		T1CONSET=0x8000;	// start timer
-
-		return INT_TMR1;
-	}else{
-	#ifdef DEBUG
-		debug("Error : interrupt TIMER1 is already used !");
-	#endif
-		return INT_USED;
-	}
-}
-#endif
-
-
-/*	----------------------------------------------------------------------------
-	---------- OnTimer2
-	----------------------------------------------------------------------------*/
-#ifdef TMR2INT
-void Tmr2Interrupt(void)
-{
-	if (IFS0bits.T2IF) {	// Timer Interrupt flag
-		TMR_X_CALLBACK(INT_TMR2);
-		IFS0CLR=(1<<9);		// IFS09: Clear the timer interrupt flag
-	}
-}
-u8 OnTimer2(callback func, u8 timediv, u32 delay)
-{
-    int _prx;
-    int _tx_con=0;
-    int _limit =0;
-
-	if (intUsed[INT_TMR2] == INT_NOT_USED) {
-		intUsed[INT_TMR2] = INT_USED;
-		intFunction[INT_TMR2] = func;
-		intCount[INT_TMR2] = 0;
-
-		_prx = TMR_X_calc_preset_divider(timediv,delay,&_tx_con,&_limit);
-
-		T2CON=0;			// reset timer 2 configuration
-		intCountLimit[INT_TMR2] = _limit;
-		TMR2=0;				// reset timer 2 counter register
-		PR2=(_prx-1);		// define the preload register
-		IPC2SET=(5<<2);		// select interrupt priority and sub-priority
-		IFS0CLR=(1<<9);		// clear interrupt flag
-		IEC0SET=(1<<9);		// enable timer 2 interrupt
-		T2CON=_tx_con;		// set prescaler(1/n)   (n=1,16,or 256)
-		T2CONSET=0x8000;	// start timer
-
-		return INT_TMR2;
-	}else{
-	#ifdef DEBUG
-		debug("Error : interrupt TIMER1 is already used !");
-	#endif
-		return INT_USED;
-	}
-}
-#endif
-
-
-/*	----------------------------------------------------------------------------
-	---------- OnTimer3
-	----------------------------------------------------------------------------*/
-#ifdef TMR3INT
-void Tmr3Interrupt(void)
-{
-	if (IFS0bits.T3IF) {	// Timer Interrupt flag
-		TMR_X_CALLBACK(INT_TMR3);
-		IFS0CLR=(1<<14);		// IFS14: Clear the timer interrupt flag
-	}
-}
-u8 OnTimer3(callback func, u8 timediv, u32 delay)
-{
-    int _prx;
-    int _tx_con=0;
-    int _limit =0;
-
-	if (intUsed[INT_TMR3] == INT_NOT_USED) {
-		intUsed[INT_TMR3] = INT_USED;
-		intFunction[INT_TMR3] = func;
-		intCount[INT_TMR3] = 0;
-
-		_prx = TMR_X_calc_preset_divider(timediv,delay,&_tx_con,&_limit);
-
-		T3CON=0;			// reset timer 2 configuration
-		intCountLimit[INT_TMR3] = _limit;
-		TMR3=0;				// reset timer 2 counter register
-		PR3=(_prx-1);		// define the preload register
-		IPC3SET=(5<<2);		// select interrupt priority and sub-priority
-		IFS0CLR=(1<<14);	// clear interrupt flag
-		IEC0SET=(1<<14);	// enable timer 2 interrupt
-		T3CON=_tx_con;		// set prescaler(1/n)   (n=1,16,or 256)
-		T3CONSET=0x8000;	// start timer
-
-		return INT_TMR3;
-	}else{
-	#ifdef DEBUG
-		debug("Error : interrupt TIMER1 is already used !");
-	#endif
-		return INT_USED;
-	}
-}
-#endif
-
-/*	----------------------------------------------------------------------------
-	---------- OnTimer4
-	----------------------------------------------------------------------------*/
-#ifdef TMR4INT
-void Tmr4Interrupt(void)
-{
-	if (IFS0bits.T4IF) {	// Timer Interrupt flag
-		TMR_X_CALLBACK(INT_TMR4);
-		IFS0CLR=(1<<19);		// IFS19: Clear the timer interrupt flag
-	}
-}
-u8 OnTimer4(callback func, u8 timediv, u32 delay)
-{
-    int _prx;
-    int _tx_con=0;
-    int _limit =0;
-
-	if (intUsed[INT_TMR4] == INT_NOT_USED) {
-		intUsed[INT_TMR4] = INT_USED;
-		intFunction[INT_TMR4] = func;
-		intCount[INT_TMR4] = 0;
-
-		_prx = TMR_X_calc_preset_divider(timediv,delay,&_tx_con,&_limit);
-
-		T4CON=0;			// reset timer 2 configuration
-		intCountLimit[INT_TMR4] = _limit;
-		TMR4=0;				// reset timer 2 counter register
-		PR4=(_prx-1);		// define the preload register
-		IPC4SET=(5<<2);		// select interrupt priority and sub-priority
-		IFS0CLR=(1<<19);	// clear interrupt flag
-		IEC0SET=(1<<19);	// enable timer 2 interrupt
-		T4CON=_tx_con;		// set prescaler(1/n)   (n=1,16,or 256)
-		T4CONSET=0x8000;	// start timer
-
-		return INT_TMR4;
-	}else{
-	#ifdef DEBUG
-		debug("Error : interrupt TIMER1 is already used !");
-	#endif
-		return INT_USED;
-	}
-}
-#endif
-
-/*	----------------------------------------------------------------------------
-	---------- OnTimer5
-	----------------------------------------------------------------------------*/
-#ifdef TMR5INT
-void Tmr5Interrupt(void)
-{
-	if (IFS0bits.T5IF) {	// Timer Interrupt flag
-		TMR_X_CALLBACK(INT_TMR5);
-		IFS0CLR=(1<<24);		// IFS24: Clear the timer interrupt flag
-	}
-}
-u8 OnTimer5(callback func, u8 timediv, u32 delay)
-{
-    int _prx;
-    int _tx_con=0;
-    int _limit =0;
-
-	if (intUsed[INT_TMR5] == INT_NOT_USED) {
-		intUsed[INT_TMR5] = INT_USED;
-		intFunction[INT_TMR5] = func;
-		intCount[INT_TMR5] = 0;
-
-		_prx = TMR_X_calc_preset_divider(timediv,delay,&_tx_con,&_limit);
-
-		T5CON=0;			// reset timer 2 configuration
-		intCountLimit[INT_TMR5] = _limit;
-		TMR5=0;				// reset timer 2 counter register
-		PR5=(_prx-1);		// define the preload register
-		IPC5SET=(5<<2);		// select interrupt priority and sub-priority
-		IFS0CLR=(1<<24);	// clear interrupt flag
-		IEC0SET=(1<<24);	// enable timer 2 interrupt
-		T5CON=_tx_con;		// set prescaler(1/n)   (n=1,16,or 256)
-		T5CONSET=0x8000;	// start timer
-		
-		return INT_TMR5;
-	}else{
-	#ifdef DEBUG
-		debug("Error : interrupt TIMER1 is already used !");
-	#endif
-		return INT_USED;
-	}
-}
-#endif
-
 
 #endif	/* __INTERRUPT_C */
 

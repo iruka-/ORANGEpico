@@ -1,137 +1,186 @@
 /********************************************************************
- *	PIC32MX220F032B 用 UARTサンプル Main:
- ********************************************************************
- *
+ FileName:      main.c
+********************************************************************/
 
-- Pinguinoコンパイル環境のみを使用.(MicroChip gccヘッダー非依存)
+/** INCLUDES *******************************************************/
+//#include "USB/usb.h"
+//#include "USB/usb_function_generic.h"
+//#include "GenericTypeDefs.h"
+#include <plib.h>
 
- ********************************************************************
- */
-#include <p32xxxx.h>			// always in first place to avoid conflict with const.h ON
-#include <typedef.h>			// Pinguino's types definitions
-#include <const.h>				// Pinguino's constants definitions
-#include <macro.h>				// Pinguino's macros definitions
+#include "HardwareProfile.h"
+#include "spi2.h"
 
+/** VARIABLES ******************************************************/
+//unsigned char INPacket[USBGEN_EP_SIZE] ;	//User application buffer for sending IN packets to the host
+//unsigned char OUTPacket[USBGEN_EP_SIZE];	//User application buffer for receiving and holding OUT packets sent from the host
+
+BOOL blinkStatusValid;
+
+//USB_HANDLE USBGenericOutHandle; //USB handle.  Must be initialized to 0 at startup.
+//USB_HANDLE USBGenericInHandle;  //USB handle.  Must be initialized to 0 at startup.
+
+
+/** PRIVATE PROTOTYPES *********************************************/
+static void InitializeSystem(void);
+void USBDeviceTasks(void);
+void YourHighPriorityISRCode(void);
+void YourLowPriorityISRCode(void);
+void USBCBSendResume(void);
+void UserInit(void);
+void ProcessIO(void);
+void BlinkUSBStatus(void);
+
+void init_vga(void);
+
+
+
+/** VECTOR REMAPPING ***********************************************/
+
+/** DECLARATIONS ***************************************************/
+
+#ifdef	USE_INTERNAL_FRC_OSC	// RC OSC
 /********************************************************************
- *
- ********************************************************************
- */
-#define	__SERIAL__
-#define __SYSTEM_C
+ * Function:	Clock Select to FRC
+ *******************************************************************/
+void InitializeFRC()
+{
+	mSysUnlockOpLock( 
+		{PPSOutput(3, RPA4, REFCLKO);}
+	);
 
+	OSCREFConfig(OSC_REFOCON_FRC,
+	OSC_REFOCON_OE | OSC_REFOCON_ON, 1);
 
-#include <system.c>				// PIC32 System Core Functions
-//#include <io.c>					// Pinguino Boards Peripheral Remappage and IOs configurations
+	mSysUnlockOpLock(
+		{OSCCONbits.NOSC = 3; //ECPLL
+		 OSCCONbits.OSWEN = 1;}
+	);
 
-#include "serial1.h"
+	while(OSCCONbits.COSC != 3);
 
-#ifndef	BAUDRATE
-#define	BAUDRATE	500000
+	SYSTEMConfigPerformance(48000000);
+
+}
 #endif
 
-#define mInitBootSwitch()   TRISBbits.TRISB7=1;
-#define mGetSWRFlag()       RCONbits.SWR
-#define Boot_SW             PORTBbits.RB7
+//void wait_ms(int ms);
 
-/*	----------------------------------------------------------------------------
-	SystemUnlock() perform a system unlock sequence
-	--------------------------------------------------------------------------*/
-
-void system_unlock()
+void led_test()
 {
-	SYSKEY = 0;				// ensure OSCCON is locked
-	SYSKEY = 0xAA996655;	// Write Key1 to SYSKEY
-	SYSKEY = 0x556699AA;	// Write Key2 to SYSKEY
+	mInitAllLEDs();
+	while(1) {
+		mLED_1_Toggle();
+		wait_ms(500);
+	}
 }
 
-/*	----------------------------------------------------------------------------
-	SystemLock() relock OSCCON by relocking the SYSKEY
-	--------------------------------------------------------------------------*/
 
-void system_lock()
+void led_toggle()
 {
-	SYSKEY = 0x12345678;	// Write any value other than Key1 or Key2
+	mLED_1_Toggle();
 }
+
+void led_on()
+{
+	mLED_1_On();
+}
+
+void led_off()
+{
+	mLED_1_Off();
+}
+
+#define	_MIPS32 __attribute__((nomips16,noinline))
+
+_MIPS32 void ei()
+{
+//	crt0.S の初期化にて、すでにMultiVectordにはなっている。
+	INTCONSET=0x1000;		// EI PORT
+//	INTEnableSystemMultiVectoredInt();	この関数内に INTCONSET設定が含まれる.
+
+	INTEnableInterrupts();	// ei命令.
+}
+/******************************************************************************
+ * Function:        void main(void)
+ *
+ * PreCondition:    None
+ *
+ * Input:           None
+ *
+ * Output:          None
+ *
+ * Side Effects:    None
+ *
+ * Overview:        Main program entry point.
+ *
+ * Note:            None
+ *******************************************************************/
+int _MIPS32 main(void)
+{
+#ifdef	USE_INTERNAL_FRC_OSC	// RC OSC
+	InitializeFRC();
+#endif
+	InitializeSystem();
+	init_vga();
+	ei();
+	gr_test();
+
+	mInitAllLEDs();
+//	USBmonit();
+	led_test();
+}
+
+
+/********************************************************************
+ * Function:        static void InitializeSystem(void)
+ *
+ * PreCondition:    None
+ *
+ * Input:           None
+ *
+ * Output:          None
+ *
+ * Side Effects:    None
+ *
+ * Overview:        InitializeSystem is a centralize initialization
+ *                  routine. All required USB initialization routines
+ *                  are called from here.
+ *
+ *                  User application initialization routine should
+ *                  also be called from here.
+ *
+ * Note:            None
+ *******************************************************************/
+static void InitializeSystem(void)
+{
+
+	UserInit();			//Application related initialization.  See user.c
+
+}//end InitializeSystem
+
 
 // All Analog Pins as Digital IOs
-void io_setDigital()
+static	void IOsetDigital()
 {
+//#ifdef __32MX220F032D__
 	DDPCONbits.JTAGEN=0;		// check : already in system.c
 	ANSELA = 0;
 	ANSELB = 0;
-	#if defined(__32MX220F032D__)
-		ANSELC = 0;
-	#endif
+//	ANSELC = 0;
+//#else
+//	AD1PCFG = 0xFFFF;
+//#endif
 }
 
-
-/********************************************************************
- *		PIC32 Peripheral Remappage
- ********************************************************************
- */
-void io_setRemap()
+void UserInit(void)
 {
-	system_unlock();
-	CFGCONbits.IOLOCK=0;			// unlock configuration
-	CFGCONbits.PMDLOCK=0;
-	{
-		U1RXRbits.U1RXR=2;			// Define U1RX as RA4 ( UEXT SERIAL )
-		RPB4Rbits.RPB4R=1;			// Define U1TX as RB4 ( UEXT SERIAL )
-	}
-	CFGCONbits.IOLOCK=1;			// relock configuration
-	CFGCONbits.PMDLOCK=1;
-	system_lock();
-}
-/********************************************************************
- *		Arduino風:	初期化処理
- ********************************************************************
- */
-static	inline void setup()
-{
-	TRISBCLR=0x8000;	//	pinmode(13, OUTPUT);
-	SerialConfigure(UART1, UART_ENABLE,	UART_RX_TX_ENABLED,	BAUDRATE);
+	IOsetDigital();
+	mInitAllLEDs();
+	mInitAllSwitches();
 
-	Serial1WriteString("\r\n\r\nHello,World.\r\n");
-}
+	blinkStatusValid = TRUE;	//Blink the normal USB state on the LEDs.
 
-/********************************************************************
- *		Arduino風:	繰り返し処理
- ********************************************************************
- */
-static	inline	void loop(void)
-{
-	int ch = Serial1GetKey();
+}//end UserInit
 
-	Serial1WriteChar(ch);
 
-	if(ch == '\r') {
-		Serial1WriteChar('\n');
-	}
-}
-
-/********************************************************************
- *		メイン
- ********************************************************************
- */
-
-int main()
-{
-	mInitBootSwitch();
-
-	DDPCONbits.JTAGEN=0;	// PORTA is used as digital instead of JTAG
-	io_setDigital();		// Analog から Digital I/Oに切り替えます.
-	io_setRemap();          // RA4/RB4 をUARTに割り当てます.
-	// 初期化:ユーザー処理
-	setup();
-	// ループ:ユーザー処理
-	while (1) {
-		loop();
-	}
-
-	return(0);
-}
-
-/********************************************************************
- *
- ********************************************************************
- */

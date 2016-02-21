@@ -16,8 +16,8 @@
 #define	WIDTH		48	// 4‚Ì”{”‚ÉŒÀ‚é.
 #define	HEIGHT		300	// 800 x 600 ‚Ì 600 ‚ğ2‚ÅŠ„‚Á‚Ä‚¢‚é.
 #else
-#define	WIDTH		60	// 4‚Ì”{”‚ÉŒÀ‚é.
-#define	HEIGHT		30
+#define	WIDTH		32	// 4‚Ì”{”‚ÉŒÀ‚é.
+#define	HEIGHT		240
 #endif
 
 #define	WIDTH_DMA	WIDTH	//(32bit) ‚S‚Ì”{”‚ÉŒÀ‚é. WIDTH‚Æ“¯’l.

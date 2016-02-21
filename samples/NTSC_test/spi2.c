@@ -122,7 +122,6 @@ void SPI2_close() //(u8 num)
 void SPI2_init()
 {
 	unsigned char rData;
-//	calcsine();
 	SPICONCLR = 0x8000; // bit 15
 	rData = SPIBUFFER;
 #if	USE_SPI2_INTERRUPT
@@ -138,12 +137,19 @@ void SPI2_init()
 #if	DDS_TEST
 	SPI2_clock(4000000); //  800k bps 
 #else
-	SPI2_clock(20000000); // 20M bps
+	SPI2_clock(4800000); //  4.8M bps
 #endif
 	SPI2_mode(SPI2_MASTER);
 
+#if	1
+	RPB13R=0x04;	// PB13=SDO2
+	TRISBCLR=1<<13;	// PB13 output.
+#else
 	RPB2R=0x04;		// PB2=SDO2
 	TRISBCLR=1<<2;	// PB2 output.
+#endif
+
+
 #if	TEST_SPI2_TONE
 	int i;
 	for(i=0;i<32;i++) {

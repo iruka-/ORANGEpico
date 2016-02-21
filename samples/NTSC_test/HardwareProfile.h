@@ -80,7 +80,7 @@
     #define BRGH2           1 
 
     // Various clock values
-    #define GetSystemClock()            40000000UL
+    #define GetSystemClock()            48000000UL
     #define GetPeripheralClock()        GetSystemClock()
 
 //    #define GetInstructionClock()       (GetSystemClock() / 2) ???

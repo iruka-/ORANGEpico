@@ -1,14 +1,26 @@
 ---------------------------------------------------------------------
-	PIC32MX 用 LED blinker サンプル
+	PIC32MX250F128B で NTSCグラフィック出力 サンプル.
 ---------------------------------------------------------------------
 
 ■ 概要
 
-- PIC32MX で LED 点滅を行います。
+-  Pinguino のコンパイラを使用して、NTSCグラフィック出力サンプルをビルドします。
+-  スタンドアローンで動作するHEXと、Pinguinoのブートローダーから書き込んで
+   実行できるHEXを共通化してあります。どちらで書き込んでも動作します。
 
 
-■ 配線         PIC32MX220F032B 8MHz水晶使用.
+■ 解像度
+-  240x200dotぐらいです.(VRAMは256x200)
 
+-  SPIクロックは4.8MHzです
+-  さらに、32bit SPIモードなので、dotは32の倍数になります
+
+■ NTSC出力の配線
+   Video -- 560 RB0
+            240 RB13
+
+
+■ 配線         PIC32MX250F128B 
 
                 3.3V
                  |
@@ -18,141 +30,112 @@
    ラ   -->  ----*-MCLR [1  |__| 28] AVDD-*-||---GND
    イ   -->  --PGD3/RA0 [2       27] AVSS--------GND  LED
    ター -->  --PGC3/RA1 [3       26] RB15--1kΩ-------|＞|--GND
-                    RB0 [4       25] RB14
-                    RB1 [5       24] RB13
-               SDA2/RB2 [6       23] 
-               SCL2/RB3 [7       22] 
-    Xtal     GND----Vss [8       21]          +10uF
+          ---HSYNC--RB0 [4       25] RB14
+                  --RB1 [5       24] RB13--240Ω------------>Video OUT<---560Ω----RB0(HSYNC/VSYNC)
+                  --RB2 [6       23] Vusb3v3--------3.3V
+               SCL2/RB3 [7       22] usb D-
+    Xtal     GND----Vss [8       21] usb D+   +10uF
  +-----------------OSC1 [9       20] Vcap------||---GND
  *--|□|--*--------OSC2 [10      19] Vss------------GND
- |  8MHz  |    U1TX/RB4 [11      18] RB9                        *--10k------3.3V
- 22pF    22pF  U1RX/RA4 [12      17] RB8                        |
- |        |   3.3v--Vdd [13      16] RB7 -----------------------*--BOOT_SW--GND
- |        |         RB5 [14      15] 
+ |  8MHz  |    U1TX/RB4 [11      18] RB9
+ 22pF    22pF  U1RX/RA4 [12      17] RB8
+ |        |   3.3v--Vdd [13      16] RB7
+ |        |         RB5 [14      15] Vbus-----------USB Vbus(5V)
  GND    GND              ~~~~~~~~~~
+            
 
-
--  対応PICは MX220 以外に、MX250 , MX170 などもOKです。(同じHEXが使用できます)
--  RB7にBOOT_SW , MCLRにRESET_SWを実装してください。
--  PIC32MX220F032B の RB15 に接続されたLED を点滅します。
 
 
             
-■ 開発環境 構築
+■ Pinguino 開発環境構築
             
-- （１）Windows XP / Vista / 7 / 8.1 / 10 のどれかを用意します。(64bit OK)
+- Windows XP / Vista / 7 / 8 のどれかを用意します。
 
-- （２）Pinguino-11 をダウンロードしてインストールします。
-        http://www.pinguino.cc/download.php
+- Pinguino X.3 安定版を下記サイトから入手してインストールします。
+  http://wiki.pinguino.cc/index.php/Main_Page/ja
+
+- Pinguino X.3 コンパイラーにパスを通します。
+
+  setenv.bat
+    PATH C:\PinguinoX.3\win32\p32\bin;%PATH%
+
+
+■ MPLAB 開発環境の追加
+            
+- MPLAB_IDE_8_89.zip を入手してインストールします。
+  インストール時の選択で、PIC32用のコンパイラも同時にインストールするようにしてください。
+
+
+■ Microchip USBライブラリの追加
+            
+- 次にMicrochip Libraries for Applications v2012-10-15 Windows を入手してインストールします。
+
+  microchip-application-libraries-v2012-10-15-windows-installer.exe
+
+- このアーカイブを展開したディレクトリと並列に、MicroChipのUSBフレームワークが来るようにディレクトリを配置します。
+
+例）  D:\Pic32\MicroChip\USB\     ←Microchip Libraries for Applications 
+      D:\Pic32\pic32mon\          ←このアーカイブを展開したもの.
 
 
 ■ コンパイル方法
 
- -    setenv.bat を実行して、Pinguinoのgccに実行パスを通します。
- -    注意：他の環境(MinGW,Cygwin等)の make.exe ではビルドできません。
+- コマンドラインから 
 
- -    make を実行してください。
+  D:>  make
 
-■ ファームウェアHEXの書き込み方法
+  でビルドしてください。
 
-- uart_bootloaderを想定しています。
+
+■ コンパイル上の注意点
+
+- Pinguinoに付属のmake.exe を使用してください。
+
+    PATH C:\PinguinoX.3\win32\p32\bin;%PATH%
+
+- ここで使用するMakefileはCygwinやMinGWのshellに依存しない (cmd.exeを呼び出す) make
+- でないと正しく動かないようです。
+
+
+■ 書き込み方法
+
+- pic32progを想定しています。
+  http://code.google.com/p/pic32prog/
+
+  pic32prog.exeをパスの通った場所に設置してある場合は
+  wp.bat を起動すると書き込めます。
   
-  w.bat を起動すると書き込んだ後、実行します。
-  
+  書き込めたかどうか確かめる場合は、
+  r.bat を実行してみてください。
+
+
 - 各種の書き込み方法は下記ＨＰを参照してください。
   http://hp.vector.co.jp/authors/VA000177/html/PIC32MX.html
 
-- PICKit3で書き込む場合は、main32.hex のかわりに pickit3.hex を書き込んでください。
+
+■ Pinguinoのブートローダーからの書き込み方法
+
+- w.bat を実行します。
 
 
-
-■ 動作確認方法
-
-- LEDが点滅していれば成功です。
-
-- uart_bootloaderを使用の場合は、元々LEDが点滅していますので
-  LED点滅速度が変われば成功です。
-
-- LED点滅と並行して、UARTの文字エコーバックも実行されています。
- （ボーレートはuart_bootloaderと同じ500kBPSです）
-
-- Pinguinoのスケッチやアプリケーションを書き込む場合は、
-  uartboot/hostpc/uartflash32.exe -r main32.hex
-  のようにして書き込みます。(-rオプションで実行まで行います)
-
-- BOOT_SWはオープンでuart bootloaderが起動し、クローズでユーザープログラム
-  が起動するようになっています。(UBW32と逆の論理になっています)
-  通常の開発時は、リセットボタンのみでスケッチの再書き込みが行えます。
-
-- 基板をアプリ単体起動で使用したい場合は、BOOT_SWを押ボタン式ではなくジャンパー
-  のようなものにして、クローズすると良いです。
+注意：
+	ユーザーエリアを広くするために、プログラム開始番地を9D00_1000に繰り上げています。
+	ブートローダーには HIDBoot_mips32gcc.X.zip に同梱されている8KB(+3kB)のサイズの
+	ものを使用してください。
 
 
 ■ ファームウェアの動作説明
 
-- UARTから操作しますが、コマンドライン上は、Pinguino4.X 付属の mphidflash.exe 互換
- （予定）です。
+- VGA(正確にはSVGA 800x600 @ 60Hz)の信号を出力します。
+- USB接続して直接ポートを見たり書き換えたりメモリーを覗いたりすることができます。
+  pic32mon.exe を使用してください。
 
-- RESETあるいは電源投入時、RB7に接続されたBOOT_SWがOFFであれば BOOTLOADERモード
-　になります。
+- グラフィックRAMの割り当てはoutput.map(コンパイル時に生成されます)で参照できます。
+  何も変更しなければたぶん 0xa0000004 番地から 0x1900 バイトあります。
+  このメモリーをpic32mon.exeから書き換えることで、グラフィック表示のパターンを
+  書き換えできます。
 
-- BOOTLOADERモードのときは U1RX/U1TXのシリアルポートを経由して、PCからのコマンド
-  を待ちます。
-
-- パソコンから uartflash32.exe を実行すると、指定されたHEXファイルを自分自身の
-  9D00_0000～9D00_7FFFの領域に書き込んだ後、0x1000番地単位で開始アドレスをサーチ
-  して、その開始アドレスへ分岐します。
-
-- このような動作なので、例えば9D00_4000番地スタートのHEXファイルでも起動させること
-  が可能です。
-  
-- HEXファイルが全く書き込まれていない状態ではBOOT_SWのON/OFF如何にかかわらず、
-  BOOTLOADERモードになります。
-
-- BOOTLOADERモードのときは電源投入するとRB15に繋がっているLEDを点滅します。
-
-- BOOT_SWを押して、RESETあるいは電源投入した場合は、書き込んだHEXファイルのファーム
-　ウェアのほうが起動します。
-
-注意：
-
-  BOOT_SWの(ON/OFF)論理はUBW32と逆になっています。変更したい場合は、HardwareProfile.hの
-  #define	Boot_SW_POLARITY	1		// If not PRESSED , Then Run Sketch Program (UBW32 Compat)
-  に変更してください。
-
-
-■ 拡張機能について。
-
-（１）ユーザーエリアを32kBに拡張しています。
-	  また、さまざまな開始番地のアプリを自動的にサーチします。
-
-	以下のアドレスから開始するアプリケーションを起動できます。
-	（アドレスの若い方からサーチ）
-      9D00_0000		28k
-      9D00_1000		28k
-      9D00_2000		24k
-      9D00_3000		20k
-      9D00_4000		16k
-
-    アプリケーションが用意する割り込みベクターは通常なら先頭4kBにあります。
-    その場合、割り込みベクターのオフセット０には何も書かない(0xFFFFFFFF)か
-    あるいは、リセット処理への分岐命令を置いてください。
-    
-
-（３）以下のコマンドを用意しています。
-
-#define GET_DATA					    0x07	// RAMやPORTからデータを読み込む. 最大56byteまで.
-												// 4の倍数サイズであれば intでアクセス. そうでない
-												// 場合はmemcpy()を使用してアクセス.
-
-#define PUT_DATA					    0x09	// GET_DATAの逆で、RAMやPORTにデータを書き込む.
-
-#define EXEC_CODE					    0x0a	// 指定アドレスに分岐する.
-
-コマンドのテストルーチンは hostpc/ 以下にあります。
-
-
-
+- グラフィック描画関数やコマンドについては未実装です。
 
 
 
@@ -185,9 +168,9 @@ A000_0000 +---------------+
 
 ■ メモリーマップ（Flash ROM/RAM領域）
 
-A000_1FFF +---------------+
+A000_7FFF +---------------+
           |               |
-          |   SRAM (8kB)  |
+          |   SRAM (32kB) |
           |               |
 A000_0000 +---------------+
 
@@ -197,24 +180,13 @@ A000_0000 +---------------+
 9FC0_0000 +---------------+ Config Fuseは BFC0_0BF0～BFC0_0BFFの16byteです。
 (BFC00000)                  割り込みベクターもBOOT Flash内に置かれます。
 
-9D00_7FFF +---------------+
+9D00_1FFFF+---------------+
           |               |
           |Program Flash  |
-          |    (32kB)     |
+          |    (128kB)    |
           |               |
 9D00_0000 +---------------+
 
-
-
-■ ツール
-
-- xdump   :  バイナリーファイルを１６進数でダンプする.
-
-- hex2dump:  HEXファイルを１６進数ダンプリストにする. / HEXファイルのコマンド05をフィルタリングする。
-
-- hex2pickit3:  HEXファイルを PICKit3で書き込めるメモリー空間のHEXに変換する.
-
-- pic32prog.exe : PicKit2を経由してPIC32MXにHEXファイルを書き込む.
 
 
 

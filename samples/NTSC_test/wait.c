@@ -91,7 +91,7 @@ void InitializeFRC()
 
 	while(OSCCONbits.COSC != 3);
 
-	SYSTEMConfigPerformance(40000000);
+	SYSTEMConfigPerformance(48000000);
 
 }
 #endif

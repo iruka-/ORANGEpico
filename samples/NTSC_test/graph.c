@@ -16,12 +16,12 @@
  */
 
 //	dot size
-#if	0
+#if	1
 #define	WIDTH		256
-#define	HEIGHT		200
+#define	HEIGHT		240
 #define	STRIDE32	WIDTH
 #else
-#define	WIDTH		384
+#define	WIDTH		400
 #define	HEIGHT		300
 #define	STRIDE32	WIDTH
 #endif

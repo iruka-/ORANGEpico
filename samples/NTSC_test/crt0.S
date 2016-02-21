@@ -4,6 +4,8 @@
 #	- pic32mx220に合わせて改造してあります。
 
 #	- Pinguinoのmips-gccで使えます。
+#	- 割り込み処理のjmpテーブルを含みます。
+#	- 各関数名はこのソースの最後の章をお読みください。
 #
 
 #include "regdef.h"
@@ -22,25 +24,30 @@
 _reset:
         la      k0, _startup
         jr      k0                      # Jump to startup code
-		nop
-
-# CAUTION:  Replacement of instruction.
-#  BFC0_000C     nop	
-#        ||
-#        VV
-#  9FC0_000C     lui    sp,high(_stack)
-#
-
+        nop
+  
         .end _reset
         .globl _reset
 
         ##################################################################
-        # Startup code	= 9FC0_000C   (NOT 0010)
+        # Startup code
         ##################################################################
-        .section .bootrom,"ax",@progbits
+        .section .startup,"ax",@progbits
         .set noreorder
         .ent _startup
 _startup:
+        ##################################################################
+        # If entered because of an NMI, jump to the NMI handler.
+        ##################################################################
+        mfc0    k0,_CP0_STATUS
+        ext     k0,k0,19,1              # Extract NMI bit
+        beqz    k0,_no_nmi
+        nop
+        # AF la      k0,_nmi_handler
+        # AF jr      k0
+        nop
+_no_nmi:
+
         ##################################################################
         # Initialize Stack Pointer
         #   _stack is initialized by the linker script to point to the
@@ -48,9 +55,6 @@ _startup:
         ##################################################################
         la      sp,_stack
 
-		# DisableInterrupts
-		di		v0
- 
         ##################################################################
         # Initialize Global Pointer
         #   _gp is initialized by the linker script to point to "middle"
@@ -80,17 +84,15 @@ _startup:
         ##################################################################
         # AF la      t0,_on_reset
         # AF jalr    t0
-        # nop
+        nop
 
         ##################################################################
         # Clear uninitialized data sections
         ##################################################################
         la      t0,_bss_begin
         la      t1,_bss_end
-
-# CAUTION: Fall Through
-#        b       _bss_check
-#        nop
+        b       _bss_check
+        nop
 
 _bss_init:
         sw      zero,0x0(t0)
@@ -106,9 +108,8 @@ _bss_check:
         la      t0,_data_image_begin
         la      t1,_data_begin
         la      t2,_data_end
-# CAUTION: Fall Through
-#        b       _init_check
-#        nop
+        b       _init_check
+        nop
 
 _init_data:     
         lw      t3,(t0)
@@ -220,24 +221,22 @@ _ramfunc_done:
         mfc0    t0,_CP0_STATUS
         and     t0,t0,0x00580000        # Preserve SR, NMI, and BEV
         or      t0,t1,t0                # Include Status.CEE (from UDI)
-#        mtc0    t0,_CP0_STATUS
+        mtc0    t0,_CP0_STATUS
 
         ##################################################################
         # Call the "on bootstrap" procedure
         ##################################################################
         # AF la      t0,_on_bootstrap
         # AF jalr    t0
-        #nop
+        nop
 
         ##################################################################
         # Initialize Status<BEV> for normal exception vectors
         ##################################################################
-#        mfc0    t0,_CP0_STATUS
+        mfc0    t0,_CP0_STATUS
         and     t0,t0,0xffbfffff        # Clear BEV
-		jalx	main
         mtc0    t0,_CP0_STATUS
 
-#if	0
         ##################################################################
         # Call main. We do this via a thunk in the text section so that
         # a normal jump and link can be used, enabling the startup code
@@ -247,19 +246,294 @@ _ramfunc_done:
         ##################################################################
         and     a0,a0,0
         and     a1,a1,0
-        la      t0,main
-        jalr    t0
+        la      t0,_main_entry
+        jr      t0
         nop
+
+        
+        .end _startup
+
+        ##################################################################
+        # Boot Exception Vector Handler
+        # Jumps to _bootstrap_exception_handler
+        ##################################################################
+        .section .bev_handler,"ax",@progbits
+        .set noreorder
+        .ent _bev_exception
+_bev_exception:
+		j	_bootstrap_exception_handler
+		nop
+	.weak	_bootstrap_exception_handler
+	.set	_bootstrap_exception_handler,Default_Handler
+        # AF la      k0,_bootstrap_exception_handler
+        # AF jr      k0
+        #nop
+
+        .end _bev_exception
+                        
+        ##################################################################
+        # General Exception Vector Handler
+        # Jumps to _general_exception_handler
+        ##################################################################
+        .section .gen_handler,"ax",@progbits
+        .set noreorder
+        .ent _gen_exception
+_gen_exception:
+		j	_general_exception_context
+		nop
+	.weak	_general_exception_context
+	.set	_general_exception_context,Default_Handler
+        # AF la      k0,_general_exception_context
+        # AF jr      k0
+        #nop
+
+        .end _gen_exception
+
+
+        .text
+        .ent _main_entry
+_main_entry:
+        ##################################################################
+        # Call main
+        ##################################################################
+        jal main
+        nop
+
+        ##################################################################
+        # Call exit
+        ##################################################################
+        # jal    exit
+        nop
+
         ##################################################################
         # Just in case, go into infinite loop
         ##################################################################
 1:
         b       1b
         nop
-#endif
-        .end _startup
+        .end _main_entry
+
 
 ##################################################################
-		
+#	
+#	.weak 擬似命令は、該当ラベルがＣ言語側で未定義だったら、
+#		  このダミーハンドラーがリンクされる。弱いシンボル定義.
+#
+        .ent Default_Handler
+Default_Handler:
+		eret
+        .end Default_Handler
 
+
+##################################################################
+# TMR1 ISR VECTOR 
+#
+	.section .vector_4,"ax",%progbits
+		j	_Tmr1Interrupt
+		nop
+	.weak	_Tmr1Interrupt
+	.set	_Tmr1Interrupt,Default_Handler
+
+##################################################################
+# TMR2 ISR VECTOR 
+#
+	.section .vector_8,"ax",%progbits
+		j	_Tmr2Interrupt
+		nop
+	.weak	_Tmr2Interrupt
+	.set	_Tmr2Interrupt,Default_Handler
+
+##################################################################
+# TMR3 ISR VECTOR 
+#
+#	.section .vector_12,"ax",%progbits
+#		j	_Tmr3Interrupt
+#		nop
+#	.weak	_Tmr3Interrupt
+#	.set	_Tmr3Interrupt,Default_Handler
+
+##################################################################
+# TMR4 ISR VECTOR 
+#
+	.section .vector_16,"ax",%progbits
+		j	_Tmr4Interrupt
+		nop
+	.weak	_Tmr4Interrupt
+	.set	_Tmr4Interrupt,Default_Handler
+
+##################################################################
+# ADC ISR VECTOR (IFS0<28>)
+#
+	.section .vector_23,"ax",%progbits
+		j	_ADC1Interrupt
+		nop
+	.weak	_ADC1Interrupt
+	.set	_ADC1Interrupt,Default_Handler
+
+##################################################################
+# USB ISR VECTOR 
+#
+	.section .vector_30,"ax",%progbits
+		j	_USB1Interrupt
+		nop
+	.weak	_USB1Interrupt
+	.set	_USB1Interrupt,Default_Handler
+
+##################################################################
+# SPI1 ISR VECTOR 
+#
+	.section .vector_31,"ax",%progbits
+		j	_SPI1Interrupt
+		nop
+	.weak	_SPI1Interrupt
+	.set	_SPI1Interrupt,Default_Handler
+
+##################################################################
+# UART1 ISR VECTOR 
+#
+	.section .vector_32,"ax",%progbits
+		j	_UART1Interrupt
+		nop
+	.weak	_UART1Interrupt
+	.set	_UART1Interrupt,Default_Handler
+
+##################################################################
+# SPI2 ISR VECTOR 
+#
+	.section .vector_36,"ax",%progbits
+		j	_SPI2Interrupt
+		nop
+	.weak	_SPI2Interrupt
+	.set	_SPI2Interrupt,Default_Handler
+
+##################################################################
+# UART2 ISR VECTOR 
+#
+	.section .vector_37,"ax",%progbits
+		j	_UART2Interrupt
+		nop
+	.weak	_UART2Interrupt
+	.set	_UART2Interrupt,Default_Handler
+
+##################################################################
+# DMA0 ISR VECTOR 
+#
+	.section .vector_40,"ax",%progbits
+		j	_DMA0Interrupt
+		nop
+	.weak	_DMA0Interrupt
+	.set	_DMA0Interrupt,Default_Handler
+
+##################################################################
+# DMA1 ISR VECTOR 
+#
+	.section .vector_41,"ax",%progbits
+		j	_DMA1Interrupt
+		nop
+	.weak	_DMA1Interrupt
+	.set	_DMA1Interrupt,Default_Handler
+
+##################################################################
+# DMA2 ISR VECTOR 
+#
+	.section .vector_42,"ax",%progbits
+		j	_DMA2Interrupt
+		nop
+	.weak	_DMA2Interrupt
+	.set	_DMA2Interrupt,Default_Handler
+
+##################################################################
+# DMA3 ISR VECTOR 
+#
+	.section .vector_43,"ax",%progbits
+		j	_DMA3Interrupt
+		nop
+	.weak	_DMA3Interrupt
+	.set	_DMA3Interrupt,Default_Handler
+
+##################################################################
+# SELFBOOT RESET VECTOR  (IGNORE THIS INSTRUCTION FOR BOOTLOADER MODE)
+#
+	.section .bootrom,"ax",%progbits
+        .set noreorder
+        .ent _bootrom_reset
+_bootrom_reset:
+        la      k0, _startup
+        jr      k0                      # Jump to startup code
+        nop
+  
+        .end _bootrom_reset
+        .globl _bootrom_reset
+
+
+
+##################################################################
+
+#	現在、以下の関数名の割り込みハンドラーをＣ言語から定義できます。
+#	.weak	_bootstrap_exception_handler
+#	.weak	_general_exception_context
+#	.weak	_Tmr1Interrupt
+#	.weak	_Tmr2Interrupt
+#	.weak	_Tmr3Interrupt
+#	.weak	_Tmr4Interrupt
+#	.weak	_ADC1Interrupt
+#	.weak	_USB1Interrupt
+#	.weak	_SPI1Interrupt
+#	.weak	_SPI2Interrupt
+#	.weak	_UART1Interrupt
+#	.weak	_UART2Interrupt
+#	.weak	_DMA0Interrupt
+#	.weak	_DMA1Interrupt
+#	.weak	_DMA2Interrupt
+#	.weak	_DMA3Interrupt
+
+
+#	さらに追加したい場合は、下記の割り込み番号を参考にweakエントリー
+#	を増やしてください.
+
+# /* Vector Numbers */
+#define _CORE_TIMER_VECTOR                       0
+#define _CORE_SOFTWARE_0_VECTOR                  1
+#define _CORE_SOFTWARE_1_VECTOR                  2
+#define _EXTERNAL_0_VECTOR                       3
+#define _TIMER_1_VECTOR                          4
+#define _INPUT_CAPTURE_1_VECTOR                  5
+#define _OUTPUT_COMPARE_1_VECTOR                 6
+#define _EXTERNAL_1_VECTOR                       7
+#define _TIMER_2_VECTOR                          8	// IRQ=9
+#define _INPUT_CAPTURE_2_VECTOR                  9
+#define _OUTPUT_COMPARE_2_VECTOR                 10
+#define _EXTERNAL_2_VECTOR                       11
+#define _TIMER_3_VECTOR                          12	// IRQ=14
+#define _INPUT_CAPTURE_3_VECTOR                  13
+#define _OUTPUT_COMPARE_3_VECTOR                 14
+#define _EXTERNAL_3_VECTOR                       15
+#define _TIMER_4_VECTOR                          16	// IRQ=19
+#define _INPUT_CAPTURE_4_VECTOR                  17
+#define _OUTPUT_COMPARE_4_VECTOR                 18
+#define _EXTERNAL_4_VECTOR                       19
+#define _TIMER_5_VECTOR                          20
+#define _INPUT_CAPTURE_5_VECTOR                  21
+#define _OUTPUT_COMPARE_5_VECTOR                 22
+#define _ADC_VECTOR                              23
+#define _FAIL_SAFE_MONITOR_VECTOR                24
+#define _RTCC_VECTOR                             25
+#define _FCE_VECTOR                              26
+#define _COMPARATOR_1_VECTOR                     27
+#define _COMPARATOR_2_VECTOR                     28
+#define _COMPARATOR_3_VECTOR                     29
+#define _USB_1_VECTOR                            30
+#define _SPI_1_VECTOR                            31
+#define _UART_1_VECTOR                           32
+#define _I2C_1_VECTOR                            33
+#define _CHANGE_NOTICE_VECTOR                    34
+#define _PMP_VECTOR                              35
+#define _SPI_2_VECTOR                            36
+#define _UART_2_VECTOR                           37
+#define _I2C_2_VECTOR                            38
+#define _CTMU_VECTOR                             39
+#define _DMA_0_VECTOR                            40
+#define _DMA_1_VECTOR                            41
+#define _DMA_2_VECTOR                            42
+#define _DMA_3_VECTOR                            43
 

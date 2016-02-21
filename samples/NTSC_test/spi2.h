@@ -6,7 +6,7 @@
 //================================================================
 //	SPI Config:
 #define	USE_SPI2				(1)	// SPI2 を使用する.
-#define	SVGA_MODE				(1)	// 0:VGA 1:SVGA
+#define	SVGA_MODE				(0)	// 0:VGA 1:SVGA
 
 #define	DDS_TEST				(0)	// DDS
 #define	TEST_SPI2_TONE			(0)	// SPI2 初期化直後にテストデータをWriteする.

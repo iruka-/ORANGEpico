@@ -15,7 +15,12 @@ void	init_timer2(void);
 //	（ここを奇数にすると、実際の周期は偶数clockになります）
 
 #else
-#define	HSYNC_PR	(635*2-1)		//635*2	// (31.77uS * 20MHz) = 635.547
+#define	HSYNC_PR	(1525+1525-1)		// (63.557uS * 24MHz) = 1525.35
+//262.5本 - 21 = 241.5
+// 240
+// 6
+// 6
+// 6
 #endif
 
 //	デバッグ用のグローバルカウンタ・タップ
@@ -85,29 +90,26 @@ VGA
   GREEN-------RB2
 */
 
+//#define	HSYNC	0	// PB0
+//#define	VSYNC	1	// PB1
+//#define	GREEN	2	// PB2
+
 #define	HSYNC	0	// PB0
-#define	VSYNC	1	// PB1
-#define	GREEN	2	// PB2
+//#define	VSYNC	1	// PB1
+#define	GREEN	13	// PB13
 
-#define	HSYNC_pin	(PB0+HSYNC)
-#define	VSYNC_pin	(PB0+VSYNC)
-#define	GREEN_pin	(PB0+GREEN)
 
-#if	1
 #define	setHIGH(n)	LATBSET=(1<<(n))
 #define	setLOW(n)	LATBCLR=(1<<(n))
-#else
-#define	setHIGH(n)	PORTBSET=(1<<(n))
-#define	setLOW(n)	PORTBCLR=(1<<(n))
-#endif
+
 /**********************************************************************
- *	RB0,RB1,RB2を出力ポートにする.
+ *	RB0,RB13を出力ポートにする.
  **********************************************************************
  */
 void init_vga_port()
 {
-	TRISBCLR=0x07;
-	LATBSET=0x07;
+	TRISBCLR=0x2001;
+	LATBSET =0x2001;
 }
 
 /**********************************************************************
@@ -184,13 +186,18 @@ inline	void gen_VSYNC()
 	}
 }
 #else
+
+// HH1 = 縦の表示dot数
+#define	HH1 200
+// HH2 = 上下の余白dot ＝ (240 - 縦の表示dot数)/2
+#define	HH2 (240-HH1)/2
 //
 //	VGA @60Hz mode
 //
 inline void gen_VSYNC()
 {
 	g_Hcount++;
-	if(	g_Hcount < 480 ) {
+	if(	g_Hcount < HH1 ) {
 #if	USE_SPI2
 #if	USE_DMA
 			dma_kick(g_Hcount);
@@ -203,15 +210,15 @@ inline void gen_VSYNC()
 		}
 #endif
 	}else{
-		if(	g_Hcount==490) {
-			setLOW(VSYNC);
-		}
-		if(	g_Hcount==(490+2) ) {
-			setHIGH(VSYNC);
+		// 垂直帰線を作る.
+		if((g_Hcount>=(HH1+HH2+6) )&&(g_Hcount< (HH1+HH2+12))) {
+			setLOW(GREEN);
+			setLOW(HSYNC);
 		}
 
-		if(	g_Hcount>=525) {
+		if(	g_Hcount>=262) {
 			g_Hcount=0;
+			dma_clear();
 		}
 	}
 }
@@ -234,10 +241,11 @@ void __attribute__((interrupt,nomips16,noinline)) _Tmr1Interrupt(void)
 		setLOW(HSYNC);
 //		wait_125ns(1);		// porch
 #else
+		setLOW(GREEN);
 		setLOW(HSYNC);
-		wait_125ns(3*8);	// 3.77uS
+		wait_125ns(5*8);	// 4.7uS
 		setHIGH(HSYNC);
-		wait_125ns(2);		// porch
+		wait_125ns(4);		// porch
 #endif
 		gen_VSYNC();
 		g_Timer1++;		// increment the counter

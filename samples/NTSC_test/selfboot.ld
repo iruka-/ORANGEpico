@@ -1,3 +1,21 @@
+/* Default linker script, for normal executables */
+/*OUTPUT_FORMAT("elf32-tradlittlemips")*/
+/*OUTPUT_ARCH(pic32mx)*/
+ENTRY(_reset)
+/*
+ * Provide for a minimum stack and heap size
+ * - _min_stack_size - represents the minimum space that must be made
+ *                     available for the stack.  Can be overridden from
+ *                     the command line using the linker's --defsym option.
+ * - _min_heap_size  - represents the minimum space that must be made
+ *                     available for the heap.  Can be overridden from
+ *                     the command line using the linker's --defsym option.
+ */
+EXTERN (_min_stack_size _min_heap_size)
+PROVIDE(_min_stack_size = 0x400) ;
+PROVIDE(_min_heap_size = 0) ;
+
+
 /*************************************************************************
  * Processor-specific object file.  Contains SFR definitions.
  *************************************************************************/
@@ -6,10 +24,14 @@
 /*************************************************************************
  * Processor-specific peripheral libraries are optional
  *************************************************************************/
+/*OPTIONAL("libmchp_peripheral.a")
+OPTIONAL("libmchp_peripheral_32MX220F032B.a")
+*/
 /*************************************************************************
  * For interrupt vector handling
  *************************************************************************/
 PROVIDE(_vector_spacing = 0x00000001);
+/*_ebase_address = 0x9D000000;*/
 _ebase_address = 0x9FC00000;
 
 /*************************************************************************
@@ -24,7 +46,7 @@ _ebase_address = 0x9FC00000;
 _RESET_ADDR              = 0xBFC00000;
 _BEV_EXCPT_ADDR          = 0xBFC00380;
 _DBG_EXCPT_ADDR          = 0xBFC00480;
-_DBG_CODE_ADDR           = 0x9FC02490;
+_DBG_CODE_ADDR           = 0x9FC00490;
 _DBG_CODE_SIZE           = 0x760     ;
 _GEN_EXCPT_ADDR          = _ebase_address + 0x180;
 
@@ -39,12 +61,12 @@ MEMORY
 {
   exception_mem              : ORIGIN = 0x9FC00000, LENGTH = 0x1000
   /* User can change the length of kseg0_program_mem based on the size of the bootloader*/
-  kseg0_program_mem    (rx)  : ORIGIN = 0x9FC00610, LENGTH = 0x15e0
-  debug_exec_mem             : ORIGIN = 0x9FC02490, LENGTH = 0x760
-  kseg0_boot_mem             : ORIGIN = 0x9FC00490, LENGTH = 0x0
-  kseg1_boot_mem             : ORIGIN = 0xBFC00000, LENGTH = 0x490
-  kseg0rom                   : ORIGIN = 0x9D000000, LENGTH = 0x180
-  bootrom                    : ORIGIN = 0x9FC0000c, LENGTH = 0x5f4
+  kseg0_program_mem    (rx)  : ORIGIN = 0x9D000000, LENGTH = 0x3FFF
+  debug_exec_mem             : ORIGIN = 0x9FC02000, LENGTH = 0x760
+  kseg0_boot_mem             : ORIGIN = 0x9FC00010, LENGTH = 0x170
+  kseg1_boot_mem             : ORIGIN = 0xBFC00010, LENGTH = 0xBE0
+  bootrom2                   : ORIGIN = 0x9FC00190, LENGTH = 0x1F0	/* to 9FC0_0380 */
+  bootrom                    : ORIGIN = 0x9FC00390, LENGTH = 0x860	/* to 9FC0_0BF0 */
   
   config3                    : ORIGIN = 0xBFC00BF0, LENGTH = 0x4
   config2                    : ORIGIN = 0xBFC00BF4, LENGTH = 0x4
@@ -70,9 +92,13 @@ SECTIONS
     KEEP(*(.bootrom))
   } > bootrom
 
+  .bootrom2 : {
+    KEEP(*(.bootrom2))
+  } > bootrom2
+
   .kseg0rom : {
     KEEP(*(.kseg0rom))
-  } > kseg0rom
+  } > bootrom2
 
   .config_BFC00BF0 : {
     KEEP(*(.config_BFC00BF0))
