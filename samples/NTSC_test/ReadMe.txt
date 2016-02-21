@@ -5,6 +5,7 @@
 ■ 概要
 
 -  Pinguino のコンパイラを使用して、NTSCグラフィック出力サンプルをビルドします。
+
 -  スタンドアローンで動作するHEXと、Pinguinoのブートローダーから書き込んで
    実行できるHEXを共通化してあります。どちらで書き込んでも動作します。
 
@@ -49,33 +50,28 @@
             
 ■ Pinguino 開発環境構築
             
-- Windows XP / Vista / 7 / 8 のどれかを用意します。
+- Windows XP / Vista / 7 / 8.1 / 10  のどれかを用意します。(64bit OK)
 
-- Pinguino X.3 安定版を下記サイトから入手してインストールします。
-  http://wiki.pinguino.cc/index.php/Main_Page/ja
-
-- Pinguino X.3 コンパイラーにパスを通します。
-
-  setenv.bat
-    PATH C:\PinguinoX.3\win32\p32\bin;%PATH%
+- Pinguino-11 を下記サイトから入手してインストールします。
+        http://www.pinguino.cc/download.php
 
 
 ■ MPLAB 開発環境の追加
             
 - MPLAB_IDE_8_89.zip を入手してインストールします。
   インストール時の選択で、PIC32用のコンパイラも同時にインストールするようにしてください。
+  説明単純化のため、インストールフォルダーは
+  
+  MPLAB	= D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite
+
+  と仮定します。別の場所にインストールした場合はMakefile等を読みかえてください。
 
 
-■ Microchip USBライブラリの追加
-            
-- 次にMicrochip Libraries for Applications v2012-10-15 Windows を入手してインストールします。
+- MPLAB (C32)はヘッダーとライブラリリンクで使用しているだけなので、別環境OS（例えばVMWare上）
+  にインストールしたものからヘッダーとライブラリのみコピーしてくればOKです。
+  （すなわち、実際によく使用するのはMPLAB-X であってもOK）
 
-  microchip-application-libraries-v2012-10-15-windows-installer.exe
-
-- このアーカイブを展開したディレクトリと並列に、MicroChipのUSBフレームワークが来るようにディレクトリを配置します。
-
-例）  D:\Pic32\MicroChip\USB\     ←Microchip Libraries for Applications 
-      D:\Pic32\pic32mon\          ←このアーカイブを展開したもの.
+- 今のところ、ペリフェラルライブラリをxc32に移植できていません
 
 
 ■ コンパイル方法
@@ -91,53 +87,29 @@
 
 - Pinguinoに付属のmake.exe を使用してください。
 
-    PATH C:\PinguinoX.3\win32\p32\bin;%PATH%
+    PATH C:\pinguino-11\compilers\p32\bin;%PATH%
 
 - ここで使用するMakefileはCygwinやMinGWのshellに依存しない (cmd.exeを呼び出す) make
 - でないと正しく動かないようです。
 
 
-■ 書き込み方法
+■ ファームウェアHEXの書き込み方法
 
-- pic32progを想定しています。
-  http://code.google.com/p/pic32prog/
-
-  pic32prog.exeをパスの通った場所に設置してある場合は
-  wp.bat を起動すると書き込めます。
+- uart_bootloaderを想定しています。
   
-  書き込めたかどうか確かめる場合は、
-  r.bat を実行してみてください。
-
-
+  w.bat を起動すると書き込んだ後、実行します。
+  
 - 各種の書き込み方法は下記ＨＰを参照してください。
   http://hp.vector.co.jp/authors/VA000177/html/PIC32MX.html
 
-
-■ Pinguinoのブートローダーからの書き込み方法
-
-- w.bat を実行します。
-
-
-注意：
-	ユーザーエリアを広くするために、プログラム開始番地を9D00_1000に繰り上げています。
-	ブートローダーには HIDBoot_mips32gcc.X.zip に同梱されている8KB(+3kB)のサイズの
-	ものを使用してください。
+- PICKit3で書き込む場合は、main32.hex のかわりに pickit3.hex を書き込んでください。
 
 
 ■ ファームウェアの動作説明
 
-- VGA(正確にはSVGA 800x600 @ 60Hz)の信号を出力します。
-- USB接続して直接ポートを見たり書き換えたりメモリーを覗いたりすることができます。
-  pic32mon.exe を使用してください。
+- NTSC信号を出力します。
 
-- グラフィックRAMの割り当てはoutput.map(コンパイル時に生成されます)で参照できます。
-  何も変更しなければたぶん 0xa0000004 番地から 0x1900 バイトあります。
-  このメモリーをpic32mon.exeから書き換えることで、グラフィック表示のパターンを
-  書き換えできます。
-
-- グラフィック描画関数やコマンドについては未実装です。
-
-
+- 簡易なグラフ命令を実行しています。
 
 ■ メモリーマップ（全体）
 

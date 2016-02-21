@@ -1,4 +1,4 @@
 rem ÉpÉXê›íË.
 
-PATH D:\PinguinoX.4\win32\p32\bin;%PATH%
+PATH C:\pinguino-11\compilers\p32\bin;%PATH%
 

@@ -2,11 +2,10 @@
 #	Makefile for Pinguino4.X make
 # ------------------------------------------------------------------------------
 # type:
-# C:> PATH D:\x4-easy-rev999\win32\p32\bin;%PATH%
+#   PATH C:\pinguino-11\compilers\p32\bin;%PATH%
 
 SHELL			=	cmd.exe
-#HOME			=   D:\PinguinoX.4
-HOME			=   D:\x4-easy-rev999
+HOME			=   C:\pinguino-11
 BOARD			=	PIC32_PINGUINO_220
 PROC			=	32MX220F032D
 
@@ -14,16 +13,9 @@ PROC			=	32MX220F032D
 #   MPLAB C32 Suite Dir ( IMPORTANT! -->  NOT MPLAB-X )
 #
 MPLAB			=	D:\BROWSER\Pic32\MPLAB\MPLAB C32 Suite
-#MPLAB			=	D:\BROWSER\MPLAB8\MPLAB C32 Suite
-#MPLAB			=	C:\Program files\MPLAB\MPLAB C32 Suite
+#MPLAB			=	D:\Microchip\xc32\v1.40
 
-# SETME!
-#	Microchip Libraries for Applications v2012-10-15 Windows Directory.
-MCHPUSB			=	../MicroChip
-
-# 以下を定義すると、Pinguino Bootloader使用のメモリー配置になります.
 BOOTLOADER		=	Yes
-# 定義しない場合は、Bootloaderの領域も使用するセルフブートになります.
 
 # ------------------------------------------------------------------------------
 # Makefile.win32 \ 32-bit Pinguino
@@ -35,29 +27,22 @@ BOOTLOADER		=	Yes
 # ------------------------------------------------------------------------------
 # HOME, PROC & BOARD are defined in pinguinobetax.py
  
-OSDIR		=	win32
-#SRCDIR		=	$(HOME)\source
 SRCDIR		=	.
 P32DIR		=	$(HOME)\p32
-P32CORE		=	$(HOME)\$(OSDIR)\p32
+P32CORE		=	$(HOME)\compilers\p32
 BINDIR		=	$(P32CORE)\bin
 INCDIR		=	$(P32DIR)\include
-LKRDIR		=	$(P32DIR)\lkr\$(BOARD)
+LKRDIR		=	$(P32DIR)\lkr
 OBJDIR		=	$(P32DIR)\obj\non-free
 
 INCLUDEDIRS	=	\
 				-I$(HOME)/win32/p32/mips-elf/include	\
 				-I"$(MPLAB)\pic32mx\Include" \
-				-I$(MCHPUSB)\include \
-				-I$(MCHPUSB)\include\USB \
 				-I$(LKRDIR) \
 				-I. \
 				-I$(OBJDIR) \
 				-I$(INCDIR)\non-free \
 				-I$(INCDIR)\pinguino\core \
-
-#				-I$(INCDIR)\pinguino\core \
-#				-I$(INCDIR)\pinguino\libraries \
 
 LIBDIRS		=	-L$(OBJDIR)\usb
 
@@ -101,9 +86,9 @@ MIPS16=-mips16
 # commands
 # ------------------------------------------------------------------------------
 
-CC				=	$(BINDIR)\mips-gcc.exe
-OBJC			=	$(BINDIR)\mips-objcopy.exe
-OBJDUMP			=	$(BINDIR)\mips-objdump.exe
+CC				=	$(BINDIR)\p32-gcc.exe
+OBJC			=	$(BINDIR)\p32-objcopy.exe
+OBJDUMP			=	$(BINDIR)\p32-objdump.exe
 BOOTCMD			=	$(BINDIR)\mphidflash.exe
 LIBS			=	-lm -lgcc -lc
 #-nostdlib
@@ -187,12 +172,6 @@ clean:
 	if exist $(SRCDIR)\main32.lss $(RM) $(SRCDIR)\main32.lss
 	if exist $(SRCDIR)\output.map $(RM) $(SRCDIR)\output.map
 
-usb_device.o :			$(MCHPUSB)/Usb/usb_device.c
-	$(CC) $(ELF_FLAGS) $(CFLAGS) -c $< -o $@
-#	$(CC) $(ELF_FLAGS) $(CFLAGS) $(MIPS16) -c $< -o $@
-
-usb_function_generic.o :	$(MCHPUSB)/Usb/Generic\ Device\ Driver/usb_function_generic.c
-	$(CC) $(ELF_FLAGS) $(CFLAGS) $(MIPS16) -c "$<" -o $@
 
 crt.o : crt0.S
 	$(CC) $(ELF_FLAGS) $(CFLAGS) -c $< -o $@
