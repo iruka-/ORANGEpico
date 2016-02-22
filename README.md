@@ -15,7 +15,12 @@ PIC32MXを搭載した基板 [ORANGEpico](http://www.picosoft.co.jp/orange/) ユ
 * MIPS-gcc開発環境を整える
 * ゆくゆくはPythonとか走らせたい
 
+# ライセンス
 
+* コンパイラやビルド環境は Pinguino-11 を使用しています。
+* Pinguino のライセンス形態は GPLv2なので、このリポジトリもGPLv2でリリースします。Fork等はご自由に。
+* Pinguino 自体もそうですが、このリポジトリ内にも一部non_freeなヘッダー等がありますので御注意ください。
+> (それらにはMICROCHIPのCopyRightが入っています)
 
 
 --------
