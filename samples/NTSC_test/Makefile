@@ -36,13 +36,15 @@ LKRDIR		=	$(P32DIR)\lkr
 OBJDIR		=	$(P32DIR)\obj\non-free
 
 INCLUDEDIRS	=	\
-				-I$(HOME)/win32/p32/mips-elf/include	\
 				-I"$(MPLAB)\pic32mx\Include" \
 				-I$(LKRDIR) \
 				-I. \
 				-I$(OBJDIR) \
-				-I$(INCDIR)\non-free \
-				-I$(INCDIR)\pinguino\core \
+
+#				-I$(INCDIR)\non-free \
+#				-I$(INCDIR)\pinguino\core \
+
+#				-I$(HOME)/win32/p32/mips-elf/include	\
 
 LIBDIRS		=	-L$(OBJDIR)\usb
 

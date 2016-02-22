@@ -29,7 +29,7 @@
 #define __INTERRUPT_C
 
 	#include <p32xxxx.h>
-	#include <macro.h>
+//	#include <macro.h>
 
 typedef	unsigned char u8;
 
