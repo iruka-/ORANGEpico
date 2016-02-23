@@ -167,7 +167,7 @@ void _BOOTROM_ SerialPinConfigure(u8 port)
 
 void _BOOTROM_ SerialIntConfigure(u8 port, u8 priority, u8 subpriority)
 {
-	IntConfigureSystem(INT_SYSTEM_CONFIG_MULT_VECTOR);
+//	IntConfigureSystem(INT_SYSTEM_CONFIG_MULT_VECTOR);
 	
 	IPC8bits.U1IP = priority;
 	IPC8bits.U1IS = subpriority;

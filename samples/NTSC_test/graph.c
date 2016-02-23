@@ -18,7 +18,7 @@
 //	dot size
 #if	1
 #define	WIDTH		256
-#define	HEIGHT		240
+#define	HEIGHT		200
 #define	STRIDE32	WIDTH
 #else
 #define	WIDTH		400

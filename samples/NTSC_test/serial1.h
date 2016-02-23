@@ -3,8 +3,6 @@
 
 #include <p32xxxx.h>			// always in first place to avoid conflict with const.h ON
 #include "utype.h"
-//#include <typedef.h>
-//#include <const.h>
 #include "fifo.h"
 
     #ifndef INPUT

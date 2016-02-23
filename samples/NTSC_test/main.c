@@ -2,48 +2,21 @@
  FileName:      main.c
 ********************************************************************/
 
-/** INCLUDES *******************************************************/
-//#include "USB/usb.h"
-//#include "USB/usb_function_generic.h"
-//#include "GenericTypeDefs.h"
 #include <plib.h>
 
 #include "HardwareProfile.h"
 #include "spi2.h"
-
 #include "serial1.h"
 
 #ifndef	BAUDRATE
 #define	BAUDRATE	500000
 #endif
 
-/** VARIABLES ******************************************************/
-//unsigned char INPacket[USBGEN_EP_SIZE] ;	//User application buffer for sending IN packets to the host
-//unsigned char OUTPacket[USBGEN_EP_SIZE];	//User application buffer for receiving and holding OUT packets sent from the host
-
-BOOL blinkStatusValid;
-
-//USB_HANDLE USBGenericOutHandle; //USB handle.  Must be initialized to 0 at startup.
-//USB_HANDLE USBGenericInHandle;  //USB handle.  Must be initialized to 0 at startup.
-
-
 /** PRIVATE PROTOTYPES *********************************************/
 static void InitializeSystem(void);
-void USBDeviceTasks(void);
-void YourHighPriorityISRCode(void);
-void YourLowPriorityISRCode(void);
-void USBCBSendResume(void);
+
 void UserInit(void);
-void ProcessIO(void);
-void BlinkUSBStatus(void);
-
 void init_vga(void);
-
-
-
-/** VECTOR REMAPPING ***********************************************/
-
-/** DECLARATIONS ***************************************************/
 
 #ifdef	USE_INTERNAL_FRC_OSC	// RC OSC
 /********************************************************************
@@ -70,18 +43,6 @@ void InitializeFRC()
 }
 #endif
 
-//void wait_ms(int ms);
-
-void led_test()
-{
-	mInitAllLEDs();
-	while(1) {
-		mLED_1_Toggle();
-		wait_ms(500);
-	}
-}
-
-
 void led_toggle()
 {
 	mLED_1_Toggle();
@@ -97,6 +58,44 @@ void led_off()
 	mLED_1_Off();
 }
 
+/********************************************************************
+ *		
+ ********************************************************************
+ */
+void led_flip()
+{
+	LATBINV=0x8000;	// LATB.bit15を反転
+}
+
+/********************************************************************
+ *		
+ ********************************************************************
+ */
+void led_test()
+{
+	while(1) {
+		led_flip();
+		wait_ms(500);
+	}
+}
+
+/********************************************************************
+ *		
+ ********************************************************************
+ */
+#define	CNTMAX		400000
+
+void led_blink()
+{
+	static int cnt=0;
+	cnt++;
+	if(	cnt >= CNTMAX) {
+		cnt=0;
+		led_flip();
+	}
+}
+
+
 #define	_MIPS32 __attribute__((nomips16,noinline))
 
 _MIPS32 void ei()
@@ -104,79 +103,16 @@ _MIPS32 void ei()
 //	crt0.S の初期化にて、すでにMultiVectordにはなっている。
 	INTCONSET=0x1000;		// EI PORT
 //	INTEnableSystemMultiVectoredInt();	この関数内に INTCONSET設定が含まれる.
-
 	INTEnableInterrupts();	// ei命令.
 }
-/******************************************************************************
- * Function:        void main(void)
- *
- * PreCondition:    None
- *
- * Input:           None
- *
- * Output:          None
- *
- * Side Effects:    None
- *
- * Overview:        Main program entry point.
- *
- * Note:            None
- *******************************************************************/
-int _MIPS32 main(void)
-{
-#ifdef	USE_INTERNAL_FRC_OSC	// RC OSC
-	InitializeFRC();
-#endif
-	InitializeSystem();
-	init_vga();
-	ei();
-	gr_test();
-
-	mInitAllLEDs();
-//	USBmonit();
-	led_test();
-}
-
-
-/********************************************************************
- * Function:        static void InitializeSystem(void)
- *
- * PreCondition:    None
- *
- * Input:           None
- *
- * Output:          None
- *
- * Side Effects:    None
- *
- * Overview:        InitializeSystem is a centralize initialization
- *                  routine. All required USB initialization routines
- *                  are called from here.
- *
- *                  User application initialization routine should
- *                  also be called from here.
- *
- * Note:            None
- *******************************************************************/
-static void InitializeSystem(void)
-{
-
-	UserInit();			//Application related initialization.  See user.c
-
-}//end InitializeSystem
-
-
 // All Analog Pins as Digital IOs
 static	void IOsetDigital()
 {
-//#ifdef __32MX220F032D__
 	DDPCONbits.JTAGEN=0;		// check : already in system.c
 	ANSELA = 0;
 	ANSELB = 0;
 //	ANSELC = 0;
-//#else
-//	AD1PCFG = 0xFFFF;
-//#endif
+	TRISBCLR=0x8000;	//	pinmode(13, OUTPUT);
 }
 
 void UserInit(void)
@@ -184,10 +120,56 @@ void UserInit(void)
 	IOsetDigital();
 	mInitAllLEDs();
 	mInitAllSwitches();
+	SerialConfigure(UART1, UART_ENABLE,	UART_RX_TX_ENABLED,	BAUDRATE);
+}
 
-	blinkStatusValid = TRUE;	//Blink the normal USB state on the LEDs.
-//	SerialConfigure(UART1, UART_ENABLE,	UART_RX_TX_ENABLED,	BAUDRATE);
+/********************************************************************
+ *		Arduino風:	初期化処理
+ ********************************************************************
+ */
+static	inline void setup()
+{
+	UserInit();			//Application related initialization.  See user.c
+	init_vga();
+	ei();
+	gr_test();
+}
 
-}//end UserInit
+/********************************************************************
+ *		Arduino風:	繰り返し処理
+ ********************************************************************
+ */
+static	inline	void loop(void)
+{
+//	int ch = Serial1GetKey();
+	int ch = '.';
+
+	Serial1WriteChar(ch);
+
+	if(ch == '\r') {
+		Serial1WriteChar('\n');
+	}
+	wait_ms(100);
+}
+
+/********************************************************************
+ *		main()
+ ********************************************************************
+ */
+int _MIPS32 main(void)
+{
+#ifdef	USE_INTERNAL_FRC_OSC	// RC OSC
+	InitializeFRC();
+#endif
+
+	// 初期化:ユーザー処理
+	setup();
+	// ループ:ユーザー処理
+	while (1) {
+		loop();
+	}
+
+//	led_test();
+}
 
 
