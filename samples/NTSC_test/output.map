@@ -119,6 +119,9 @@ Discarded input sections
  .bss           0x0000000000000000        0x0 fifo.o
  .reginfo       0x0000000000000000       0x18 fifo.o
  .pdr           0x0000000000000000       0xa0 fifo.o
+ .mdebug.abi32  0x0000000000000000        0x0 fifo.o
+ .text.FIFO_init
+                0x0000000000000000        0xc fifo.o
  .text.FIFO_enqueue
                 0x0000000000000000       0x34 fifo.o
  .text.FIFO_getsize
@@ -127,19 +130,38 @@ Discarded input sections
                 0x0000000000000000       0x10 fifo.o
  .text.FIFO_dequeue
                 0x0000000000000000       0x30 fifo.o
+ .debug_info    0x0000000000000000      0x1ed fifo.o
+ .debug_abbrev  0x0000000000000000      0x103 fifo.o
+ .debug_loc     0x0000000000000000       0xe4 fifo.o
+ .debug_aranges
+                0x0000000000000000       0x40 fifo.o
+ .debug_ranges  0x0000000000000000       0x30 fifo.o
+ .debug_line    0x0000000000000000       0xba fifo.o
+ .debug_str     0x0000000000000000      0x11e fifo.o
+ .comment       0x0000000000000000       0x12 fifo.o
+ .gnu.attributes
+                0x0000000000000000       0x10 fifo.o
+ .debug_frame   0x0000000000000000       0x84 fifo.o
  .text          0x0000000000000000        0x0 serial.o
  .data          0x0000000000000000        0x0 serial.o
  .bss           0x0000000000000000        0x0 serial.o
  .reginfo       0x0000000000000000       0x18 serial.o
  .pdr           0x0000000000000000      0x1e0 serial.o
+ .mdebug.abi32  0x0000000000000000        0x0 serial.o
  .text.get_PeripheralClock
                 0x0000000000000000        0x8 serial.o
  .text.near_div
                 0x0000000000000000       0x18 serial.o
+ .text.SerialSetDataRate
+                0x0000000000000000       0x3c serial.o
  .text.SerialSetLineControl
                 0x0000000000000000        0xc serial.o
  .text.SerialPinConfigure
                 0x0000000000000000       0x20 serial.o
+ .text.SerialIntConfigure
+                0x0000000000000000       0x4c serial.o
+ .text.SerialConfigure
+                0x0000000000000000       0x6c serial.o
  .text.Serial1WriteChar
                 0x0000000000000000       0x2c serial.o
  .text.Serial1Available
@@ -156,11 +178,26 @@ Discarded input sections
                 0x0000000000000000       0x24 serial.o
  .text.Serial1Interrupt
                 0x0000000000000000       0x6c serial.o
+ .bss.rx_buff   0x0000000000000000      0x100 serial.o
+ .bss.rx_fifo   0x0000000000000000       0x10 serial.o
+ .debug_info    0x0000000000000000     0x126d serial.o
+ .debug_abbrev  0x0000000000000000      0x39c serial.o
+ .debug_loc     0x0000000000000000      0x38a serial.o
+ .debug_aranges
+                0x0000000000000000       0x90 serial.o
+ .debug_ranges  0x0000000000000000       0xe0 serial.o
+ .debug_line    0x0000000000000000      0x1f3 serial.o
+ .debug_str     0x0000000000000000      0x760 serial.o
+ .comment       0x0000000000000000       0x12 serial.o
+ .gnu.attributes
+                0x0000000000000000       0x10 serial.o
+ .debug_frame   0x0000000000000000      0x180 serial.o
  .text          0x0000000000000000        0x0 interrupt.o
  .data          0x0000000000000000        0x0 interrupt.o
  .bss           0x0000000000000000        0x0 interrupt.o
  .reginfo       0x0000000000000000       0x18 interrupt.o
  .pdr           0x0000000000000000      0x1c0 interrupt.o
+ .mdebug.abi32  0x0000000000000000        0x0 interrupt.o
  .text.IntSetVectorPriority
                 0x0000000000000000      0x1d4 interrupt.o
  .text.IntGetVectorPriority
@@ -180,13 +217,27 @@ Discarded input sections
  .text.IntGetInterruptVectorPriority
                 0x0000000000000000       0x10 interrupt.o
  .text.IntDisableInterrupts
-                0x0000000000000000       0x24 interrupt.o
+                0x0000000000000000        0xc interrupt.o
  .text.IntEnableInterrupts
-                0x0000000000000000       0x24 interrupt.o
+                0x0000000000000000        0xc interrupt.o
  .text.IntRestoreInterrupts
-                0x0000000000000000       0x24 interrupt.o
+                0x0000000000000000       0x10 interrupt.o
  .text.IntSetEBASE
-                0x0000000000000000       0x24 interrupt.o
+                0x0000000000000000       0x10 interrupt.o
+ .text.IntConfigureSystem
+                0x0000000000000000       0x98 interrupt.o
+ .debug_info    0x0000000000000000     0x15fa interrupt.o
+ .debug_abbrev  0x0000000000000000      0x282 interrupt.o
+ .debug_loc     0x0000000000000000      0x1f6 interrupt.o
+ .debug_aranges
+                0x0000000000000000       0x88 interrupt.o
+ .debug_ranges  0x0000000000000000       0x78 interrupt.o
+ .debug_line    0x0000000000000000      0x28e interrupt.o
+ .debug_str     0x0000000000000000      0x96d interrupt.o
+ .comment       0x0000000000000000       0x12 interrupt.o
+ .gnu.attributes
+                0x0000000000000000       0x10 interrupt.o
+ .debug_frame   0x0000000000000000      0x120 interrupt.o
  .text          0x0000000000000000        0x0 config.o
  .data          0x0000000000000000        0x0 config.o
  .bss           0x0000000000000000        0x0 config.o
@@ -662,7 +713,7 @@ LOAD c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/cr
  *(.vector_63)
                 0x0000000000000001                ASSERT (((_vector_spacing == 0x0) || (SIZEOF (.vector_63) <= (_vector_spacing << 0x5))), function at exception vector 63 too large)
 
-.text           0x000000009d001a90      0xd50
+.text           0x000000009d001a90      0xb5c
                 0x000000009d001a90                _text_begin = .
  *(.text .stub .text.* .gnu.linkonce.t.*)
  .text          0x000000009d001a90       0x20 crt.o
@@ -685,141 +736,126 @@ LOAD c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/cr
  .text.ei       0x000000009d001b08       0x14 main.o
                 0x000000009d001b08                ei
  .text.UserInit
-                0x000000009d001b1c       0x7c main.o
+                0x000000009d001b1c       0x64 main.o
                 0x000000009d001b1d                UserInit
  .text.InitializeSystem
-                0x000000009d001b98        0xc main.o
+                0x000000009d001b80        0xc main.o
  .text.startup.main
-                0x000000009d001ba4       0x68 main.o
-                0x000000009d001ba4                main
+                0x000000009d001b8c       0x68 main.o
+                0x000000009d001b8c                main
  .text.SPI2_mode
-                0x000000009d001c0c       0x38 spi2.o
-                0x000000009d001c0d                SPI2_mode
+                0x000000009d001bf4       0x38 spi2.o
+                0x000000009d001bf5                SPI2_mode
  .text.SPI2_init
-                0x000000009d001c44       0x40 spi2.o
-                0x000000009d001c45                SPI2_init
+                0x000000009d001c2c       0x40 spi2.o
+                0x000000009d001c2d                SPI2_init
  .text.dma_init
-                0x000000009d001c84       0x40 dma1.o
-                0x000000009d001c85                dma_init
+                0x000000009d001c6c       0x40 dma1.o
+                0x000000009d001c6d                dma_init
  .text.dma_kick
-                0x000000009d001cc4       0x74 dma1.o
-                0x000000009d001cc4                dma_kick
+                0x000000009d001cac       0x74 dma1.o
+                0x000000009d001cac                dma_kick
  .text.dma_clear
-                0x000000009d001d38        0xc dma1.o
-                0x000000009d001d39                dma_clear
- .text.p_adr    0x000000009d001d44       0x20 graph.o
-                0x000000009d001d45                p_adr
- .text.pset     0x000000009d001d64       0x1c graph.o
-                0x000000009d001d65                pset
+                0x000000009d001d20        0xc dma1.o
+                0x000000009d001d21                dma_clear
+ .text.p_adr    0x000000009d001d2c       0x20 graph.o
+                0x000000009d001d2d                p_adr
+ .text.pset     0x000000009d001d4c       0x1c graph.o
+                0x000000009d001d4d                pset
  .text.gr_circle.part.0
-                0x000000009d001d80       0xc0 graph.o
- .text.gr_line  0x000000009d001e40       0x9c graph.o
-                0x000000009d001e41                gr_line
- .text.gr_test  0x000000009d001edc       0x2c graph.o
-                0x000000009d001edd                gr_test
+                0x000000009d001d68       0xc0 graph.o
+ .text.gr_line  0x000000009d001e28       0x9c graph.o
+                0x000000009d001e29                gr_line
+ .text.gr_test  0x000000009d001ec4       0x2c graph.o
+                0x000000009d001ec5                gr_test
  .text.wait_125ns
-                0x000000009d001f08       0x24 wait.o
-                0x000000009d001f08                wait_125ns
- .text.wait_ms  0x000000009d001f2c       0x44 wait.o
-                0x000000009d001f2c                wait_ms
+                0x000000009d001ef0       0x24 wait.o
+                0x000000009d001ef0                wait_125ns
+ .text.wait_ms  0x000000009d001f14       0x44 wait.o
+                0x000000009d001f14                wait_ms
  .text.init_timer1
-                0x000000009d001f70       0x44 timer.o
-                0x000000009d001f71                init_timer1
+                0x000000009d001f58       0x44 timer.o
+                0x000000009d001f59                init_timer1
  .text.init_timer2
-                0x000000009d001fb4       0x40 timer.o
-                0x000000009d001fb5                init_timer2
+                0x000000009d001f9c       0x40 timer.o
+                0x000000009d001f9d                init_timer2
  .text.init_vga_port
-                0x000000009d001ff4       0x18 timer.o
-                0x000000009d001ff5                init_vga_port
+                0x000000009d001fdc       0x18 timer.o
+                0x000000009d001fdd                init_vga_port
  .text.init_vga
-                0x000000009d00200c       0x24 timer.o
-                0x000000009d00200d                init_vga
+                0x000000009d001ff4       0x24 timer.o
+                0x000000009d001ff5                init_vga
  .text.gen_VSYNC
-                0x000000009d002030       0x5c timer.o
-                0x000000009d002031                gen_VSYNC
+                0x000000009d002018       0x5c timer.o
+                0x000000009d002019                gen_VSYNC
  .text._Tmr1Interrupt
-                0x000000009d00208c      0x17c timer.o
-                0x000000009d00208c                _Tmr1Interrupt
+                0x000000009d002074      0x17c timer.o
+                0x000000009d002074                _Tmr1Interrupt
  .text._Tmr2Interrupt
-                0x000000009d002208       0x98 timer.o
-                0x000000009d002208                _Tmr2Interrupt
- .text.FIFO_init
-                0x000000009d0022a0        0xc fifo.o
-                0x000000009d0022a1                FIFO_init
- .text.SerialSetDataRate
-                0x000000009d0022ac       0x3c serial.o
-                0x000000009d0022ad                SerialSetDataRate
- .text.SerialIntConfigure
-                0x000000009d0022e8       0x4c serial.o
-                0x000000009d0022e9                SerialIntConfigure
- .text.SerialConfigure
-                0x000000009d002334       0x6c serial.o
-                0x000000009d002335                SerialConfigure
- .text.IntConfigureSystem
-                0x000000009d0023a0       0xdc interrupt.o
-                0x000000009d0023a0                IntConfigureSystem
+                0x000000009d0021f0       0x98 timer.o
+                0x000000009d0021f0                _Tmr2Interrupt
  .text.INTEnableInterrupts
-                0x000000009d00247c        0x8 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
-                0x000000009d00247c                INTEnableInterrupts
+                0x000000009d002288        0x8 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
+                0x000000009d002288                INTEnableInterrupts
  .text.INTClearFlag
-                0x000000009d002484       0x2c D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
-                0x000000009d002484                INTClearFlag
+                0x000000009d002290       0x2c D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
+                0x000000009d002290                INTClearFlag
  .text.INTEnable
-                0x000000009d0024b0       0x3c D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
-                0x000000009d0024b0                INTEnable
+                0x000000009d0022bc       0x3c D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
+                0x000000009d0022bc                INTEnable
  .text.DmaChnOpen
-                0x000000009d0024ec       0xf0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
-                0x000000009d0024ec                DmaChnOpen
+                0x000000009d0022f8       0xf0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
+                0x000000009d0022f8                DmaChnOpen
  .text.DmaChnWriteEventControlFlags
-                0x000000009d0025dc       0x30 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
-                0x000000009d0025dc                DmaChnWriteEventControlFlags
+                0x000000009d0023e8       0x30 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
+                0x000000009d0023e8                DmaChnWriteEventControlFlags
  .text.DmaChnSetTxfer
-                0x000000009d00260c       0x9c D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
-                0x000000009d00260c                DmaChnSetTxfer
+                0x000000009d002418       0x9c D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
+                0x000000009d002418                DmaChnSetTxfer
  .text.DmaChnStartTxfer
-                0x000000009d0026a8      0x138 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
-                0x000000009d0026a8                DmaChnStartTxfer
+                0x000000009d0024b4      0x138 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
+                0x000000009d0024b4                DmaChnStartTxfer
  *(.text.*personality*)
  *(.gnu.warning)
  *(.mips16.fn.*)
  *(.mips16.call.*)
-                0x000000009d0027e0                _text_end = .
+                0x000000009d0025ec                _text_end = .
 
-.rodata         0x000000009d0027e0      0x55c
+.rodata         0x000000009d0025ec      0x55c
  *(.rodata .rodata.* .gnu.linkonce.r.*)
- .rodata        0x000000009d0027e0      0x558 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
-                0x000000009d0027e0                __IntSrcTbl
-                0x000000009d002b28                __IntVectorTbl
- .rodata        0x000000009d002d38        0x4 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_reg_map_tbl_lib.o)
-                0x000000009d002d38                _DmaMapTbl
+ .rodata        0x000000009d0025ec      0x558 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
+                0x000000009d0025ec                __IntSrcTbl
+                0x000000009d002934                __IntVectorTbl
+ .rodata        0x000000009d002b44        0x4 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_reg_map_tbl_lib.o)
+                0x000000009d002b44                _DmaMapTbl
  *(.rodata1)
-                0x000000009d002d3c                . = ALIGN (0x4)
+                0x000000009d002b48                . = ALIGN (0x4)
 
-.sdata2         0x000000009d002d3c        0x0
+.sdata2         0x000000009d002b48        0x0
  *(.sdata2 .sdata2.* .gnu.linkonce.s2.*)
-                0x000000009d002d3c                . = ALIGN (0x4)
+                0x000000009d002b48                . = ALIGN (0x4)
 
-.sbss2          0x000000009d002d3c        0x0
+.sbss2          0x000000009d002b48        0x0
  *(.sbss2 .sbss2.* .gnu.linkonce.sb2.*)
-                0x000000009d002d3c                . = ALIGN (0x4)
+                0x000000009d002b48                . = ALIGN (0x4)
 
 .eh_frame_hdr
  *(.eh_frame_hdr)
 
-.eh_frame       0x000000009d002d3c        0x4
+.eh_frame       0x000000009d002b48        0x4
  *(.eh_frame)
- .eh_frame      0x000000009d002d3c        0x0 c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/crtbegin.o
- .eh_frame      0x000000009d002d3c        0x4 c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/crtend.o
+ .eh_frame      0x000000009d002b48        0x0 c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/crtbegin.o
+ .eh_frame      0x000000009d002b48        0x4 c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/crtend.o
 
 .dbg_data       0x00000000a0000000        0x0
                 0x00000000a0000000                . = (. + DEFINED (_DEBUGGER)?0x200:0x0)
 
-.data           0x00000000a0000000        0x0 load address 0x000000009d002d40
+.data           0x00000000a0000000        0x0 load address 0x000000009d002b4c
                 0x00000000a0000000                _data_begin = .
  *(.data .data.* .gnu.linkonce.d.*)
  *(.gnu.linkonce.d.*personality*)
  *(.data1)
-                0x000000009d002d40                _data_image_begin = LOADADDR (.data)
+                0x000000009d002b4c                _data_image_begin = LOADADDR (.data)
 
 .eh_frame
  *(.eh_frame)
@@ -829,7 +865,7 @@ LOAD c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/cr
  *(.got.plt)
  *(.got)
 
-.sdata          0x00000000a0000000        0x0 load address 0x000000009d002d40
+.sdata          0x00000000a0000000        0x0 load address 0x000000009d002b4c
                 0x00000000a0000000                _sdata_begin = .
  *(.sdata .sdata.* .gnu.linkonce.s.*)
                 0x00000000a0000000                _sdata_end = .
@@ -843,14 +879,14 @@ LOAD c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/cr
                 0x00000000a0000000                _data_end = .
                 0x00000000a0000000                _bss_begin = .
 
-.sbss           0x00000000a0000000        0x0 load address 0x000000009d002d40
+.sbss           0x00000000a0000000        0x0 load address 0x000000009d002b4c
                 0x00000000a0000000                _sbss_begin = .
  *(.dynsbss)
  *(.sbss .sbss.* .gnu.linkonce.sb.*)
  *(.scommon)
                 0x00000000a0000000                _sbss_end = .
 
-.bss            0x00000000a0000000     0x1f1c load address 0x000000009d002d40
+.bss            0x00000000a0000000     0x1e0c load address 0x000000009d002b4c
  *(.dynbss)
  *(.bss .bss.* .gnu.linkonce.b.*)
  .bss.g_Line    0x00000000a0000000        0x2 dma1.o
@@ -858,36 +894,34 @@ LOAD c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/cr
                 0x00000000a0000002                g_Hcount
  .bss.g_Timer1  0x00000000a0000004        0x4 timer.o
                 0x00000000a0000004                g_Timer1
- .bss.rx_buff   0x00000000a0000008      0x100 serial.o
- .bss.rx_fifo   0x00000000a0000108       0x10 serial.o
  *(COMMON)
- COMMON         0x00000000a0000118        0x4 main.o
-                0x00000000a0000118                blinkStatusValid
- COMMON         0x00000000a000011c     0x1e00 dma1.o
-                0x00000000a000011c                txferTxBuff
-                0x00000000a0001f1c                . = ALIGN (0x4)
-                0x00000000a0001f1c                . = ALIGN (0x4)
-                0x00000000a0001f1c                _end = .
-                0x00000000a0001f1c                _bss_end = .
+ COMMON         0x00000000a0000008        0x4 main.o
+                0x00000000a0000008                blinkStatusValid
+ COMMON         0x00000000a000000c     0x1e00 dma1.o
+                0x00000000a000000c                txferTxBuff
+                0x00000000a0001e0c                . = ALIGN (0x4)
+                0x00000000a0001e0c                . = ALIGN (0x4)
+                0x00000000a0001e0c                _end = .
+                0x00000000a0001e0c                _bss_end = .
 
-.heap           0x00000000a0001f1c        0x0
-                0x00000000a0001f1c                _heap = .
-                0x00000000a0001f1c                . = (. + _min_heap_size)
+.heap           0x00000000a0001e0c        0x0
+                0x00000000a0001e0c                _heap = .
+                0x00000000a0001e0c                . = (. + _min_heap_size)
 
-.stack          0x00000000a0001f1c      0x100
-                0x00000000a0001f1c                _splim = .
-                0x00000000a0001f1c                _SPLIM = .
-                0x00000000a000201c                . = (. + _min_stack_size)
- *fill*         0x00000000a0001f1c      0x100 
+.stack          0x00000000a0001e0c      0x100
+                0x00000000a0001e0c                _splim = .
+                0x00000000a0001e0c                _SPLIM = .
+                0x00000000a0001f0c                . = (. + _min_stack_size)
+ *fill*         0x00000000a0001e0c      0x100 
 
-.ramfunc        0x00000000a0002800        0x0 load address 0x000000009d002d40
-                0x00000000a0002800                _ramfunc_begin = .
+.ramfunc        0x00000000a0002000        0x0 load address 0x000000009d002b4c
+                0x00000000a0002000                _ramfunc_begin = .
  *(.ramfunc .ramfunc.*)
-                0x00000000a0002800                . = ALIGN (0x4)
-                0x00000000a0002800                _ramfunc_end = .
-                0x000000009d002d40                _ramfunc_image_begin = LOADADDR (.ramfunc)
+                0x00000000a0002000                . = ALIGN (0x4)
+                0x00000000a0002000                _ramfunc_end = .
+                0x000000009d002b4c                _ramfunc_image_begin = LOADADDR (.ramfunc)
                 0x0000000000000000                _ramfunc_length = SIZEOF (.ramfunc)
-                0x0000000000002800                _bmxdkpba_address = (_ramfunc_begin - ORIGIN (kseg1_data_mem))
+                0x0000000000002000                _bmxdkpba_address = (_ramfunc_begin - ORIGIN (kseg1_data_mem))
                 0x0000000000008000                _bmxdudba_address = 0x8000
                 0x0000000000008000                _bmxdupba_address = 0x8000
                 0x00000000a0008000                _stack = (_ramfunc_length > 0x0)?(_ramfunc_begin - 0x4):(ORIGIN (kseg1_data_mem) + 0x8000)
@@ -907,9 +941,6 @@ LOAD c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/cr
  .mdebug.abi32  0x0000000000000000        0x0 graph.o
  .mdebug.abi32  0x0000000000000000        0x0 wait.o
  .mdebug.abi32  0x0000000000000000        0x0 timer.o
- .mdebug.abi32  0x0000000000000000        0x0 fifo.o
- .mdebug.abi32  0x0000000000000000        0x0 serial.o
- .mdebug.abi32  0x0000000000000000        0x0 interrupt.o
  .mdebug.abi32  0x0000000000000000        0x0 config.o
  .mdebug.abi32  0x0000000000000000        0x0 c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/crtend.o
 
@@ -922,9 +953,6 @@ LOAD c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/cr
  .comment       0x0000000000000000       0x12 graph.o
  .comment       0x0000000000000000       0x12 wait.o
  .comment       0x0000000000000000       0x12 timer.o
- .comment       0x0000000000000000       0x12 fifo.o
- .comment       0x0000000000000000       0x12 serial.o
- .comment       0x0000000000000000       0x12 interrupt.o
  .comment       0x0000000000000000       0x12 config.o
  .comment       0x0000000000000011       0x3c D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
                                          0x3d (size before relaxing)
@@ -953,79 +981,64 @@ LOAD c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/cr
  .gnu.attributes
                 0x0000000000000060       0x10 timer.o
  .gnu.attributes
-                0x0000000000000070       0x10 fifo.o
+                0x0000000000000070       0x10 config.o
  .gnu.attributes
-                0x0000000000000080       0x10 serial.o
- .gnu.attributes
-                0x0000000000000090       0x10 interrupt.o
- .gnu.attributes
-                0x00000000000000a0       0x10 config.o
- .gnu.attributes
-                0x00000000000000b0       0x10 c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/crtend.o
+                0x0000000000000080       0x10 c:/pinguino-11/compilers/p32/bin/../lib/gcc/mips-elf/4.9.2/soft-float/el/crtend.o
 
 .reginfo
  *(.reginfo)
 OUTPUT(.\main32.elf elf32-littlemips)
 
-.debug_line     0x0000000000000000     0x1272
+.debug_line     0x0000000000000000      0xd8c
  .debug_line    0x0000000000000000      0x1b4 crt.o
- .debug_line    0x00000000000001b4      0x1d4 main.o
- .debug_line    0x0000000000000388      0x113 spi2.o
- .debug_line    0x000000000000049b      0x1ad dma1.o
- .debug_line    0x0000000000000648      0x1fd graph.o
- .debug_line    0x0000000000000845       0xf9 wait.o
- .debug_line    0x000000000000093e      0x13a timer.o
- .debug_line    0x0000000000000a78       0xba fifo.o
- .debug_line    0x0000000000000b32      0x1f3 serial.o
- .debug_line    0x0000000000000d25      0x218 interrupt.o
- .debug_line    0x0000000000000f3d       0x47 config.o
- .debug_line    0x0000000000000f84       0x6f D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
- .debug_line    0x0000000000000ff3       0x61 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
- .debug_line    0x0000000000001054       0x78 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
- .debug_line    0x00000000000010cc       0x7b D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
- .debug_line    0x0000000000001147       0x7d D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
- .debug_line    0x00000000000011c4       0xae D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
- .debug_line    0x0000000000001272        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_reg_map_tbl_lib.o)
+ .debug_line    0x00000000000001b4      0x1b3 main.o
+ .debug_line    0x0000000000000367      0x113 spi2.o
+ .debug_line    0x000000000000047a      0x1ad dma1.o
+ .debug_line    0x0000000000000627      0x1fd graph.o
+ .debug_line    0x0000000000000824       0xf9 wait.o
+ .debug_line    0x000000000000091d      0x13a timer.o
+ .debug_line    0x0000000000000a57       0x47 config.o
+ .debug_line    0x0000000000000a9e       0x6f D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
+ .debug_line    0x0000000000000b0d       0x61 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
+ .debug_line    0x0000000000000b6e       0x78 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
+ .debug_line    0x0000000000000be6       0x7b D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
+ .debug_line    0x0000000000000c61       0x7d D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
+ .debug_line    0x0000000000000cde       0xae D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
+ .debug_line    0x0000000000000d8c        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_reg_map_tbl_lib.o)
 
-.debug_info     0x0000000000000000     0x62cb
+.debug_info     0x0000000000000000     0x3fde
  .debug_info    0x0000000000000000       0x4e crt.o
- .debug_info    0x000000000000004e      0xe82 main.o
- .debug_info    0x0000000000000ed0      0x39f spi2.o
- .debug_info    0x000000000000126f      0xfc1 dma1.o
- .debug_info    0x0000000000002230      0xe92 graph.o
- .debug_info    0x00000000000030c2      0x1c7 wait.o
- .debug_info    0x0000000000003289      0x525 timer.o
- .debug_info    0x00000000000037ae      0x1ed fifo.o
- .debug_info    0x000000000000399b     0x126d serial.o
- .debug_info    0x0000000000004c08      0xe38 interrupt.o
- .debug_info    0x0000000000005a40      0x343 config.o
- .debug_info    0x0000000000005d83       0xb2 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
- .debug_info    0x0000000000005e35      0x19c D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
- .debug_info    0x0000000000005fd1       0xb3 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
- .debug_info    0x0000000000006084       0xc7 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
- .debug_info    0x000000000000614b       0xba D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
- .debug_info    0x0000000000006205       0xc6 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
+ .debug_info    0x000000000000004e      0xe27 main.o
+ .debug_info    0x0000000000000e75      0x39f spi2.o
+ .debug_info    0x0000000000001214      0xfc1 dma1.o
+ .debug_info    0x00000000000021d5      0xe92 graph.o
+ .debug_info    0x0000000000003067      0x1c7 wait.o
+ .debug_info    0x000000000000322e      0x525 timer.o
+ .debug_info    0x0000000000003753      0x343 config.o
+ .debug_info    0x0000000000003a96       0xb2 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
+ .debug_info    0x0000000000003b48      0x19c D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
+ .debug_info    0x0000000000003ce4       0xb3 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
+ .debug_info    0x0000000000003d97       0xc7 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
+ .debug_info    0x0000000000003e5e       0xba D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
+ .debug_info    0x0000000000003f18       0xc6 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
 
-.debug_abbrev   0x0000000000000000     0x15df
+.debug_abbrev   0x0000000000000000      0xf49
  .debug_abbrev  0x0000000000000000       0x12 crt.o
- .debug_abbrev  0x0000000000000012      0x2db main.o
- .debug_abbrev  0x00000000000002ed      0x22e spi2.o
- .debug_abbrev  0x000000000000051b      0x2b3 dma1.o
- .debug_abbrev  0x00000000000007ce      0x2b0 graph.o
- .debug_abbrev  0x0000000000000a7e      0x124 wait.o
- .debug_abbrev  0x0000000000000ba2      0x227 timer.o
- .debug_abbrev  0x0000000000000dc9      0x103 fifo.o
- .debug_abbrev  0x0000000000000ecc      0x39c serial.o
- .debug_abbrev  0x0000000000001268      0x1ea interrupt.o
- .debug_abbrev  0x0000000000001452       0x70 config.o
- .debug_abbrev  0x00000000000014c2       0x28 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
- .debug_abbrev  0x00000000000014ea       0x28 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
- .debug_abbrev  0x0000000000001512       0x37 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
- .debug_abbrev  0x0000000000001549       0x28 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
- .debug_abbrev  0x0000000000001571       0x37 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
- .debug_abbrev  0x00000000000015a8       0x37 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
+ .debug_abbrev  0x0000000000000012      0x2ce main.o
+ .debug_abbrev  0x00000000000002e0      0x22e spi2.o
+ .debug_abbrev  0x000000000000050e      0x2b3 dma1.o
+ .debug_abbrev  0x00000000000007c1      0x2b0 graph.o
+ .debug_abbrev  0x0000000000000a71      0x124 wait.o
+ .debug_abbrev  0x0000000000000b95      0x227 timer.o
+ .debug_abbrev  0x0000000000000dbc       0x70 config.o
+ .debug_abbrev  0x0000000000000e2c       0x28 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
+ .debug_abbrev  0x0000000000000e54       0x28 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
+ .debug_abbrev  0x0000000000000e7c       0x37 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
+ .debug_abbrev  0x0000000000000eb3       0x28 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
+ .debug_abbrev  0x0000000000000edb       0x37 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
+ .debug_abbrev  0x0000000000000f12       0x37 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
 
-.debug_aranges  0x0000000000000000      0x4f8
+.debug_aranges  0x0000000000000000      0x3a0
  .debug_aranges
                 0x0000000000000000       0xb0 crt.o
  .debug_aranges
@@ -1041,27 +1054,21 @@ OUTPUT(.\main32.elf elf32-littlemips)
  .debug_aranges
                 0x0000000000000238       0x50 timer.o
  .debug_aranges
-                0x0000000000000288       0x40 fifo.o
+                0x0000000000000288       0x18 config.o
  .debug_aranges
-                0x00000000000002c8       0x90 serial.o
+                0x00000000000002a0       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
  .debug_aranges
-                0x0000000000000358       0x88 interrupt.o
+                0x00000000000002c0       0x60 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
  .debug_aranges
-                0x00000000000003e0       0x18 config.o
+                0x0000000000000320       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
  .debug_aranges
-                0x00000000000003f8       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
+                0x0000000000000340       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
  .debug_aranges
-                0x0000000000000418       0x60 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
+                0x0000000000000360       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
  .debug_aranges
-                0x0000000000000478       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
- .debug_aranges
-                0x0000000000000498       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
- .debug_aranges
-                0x00000000000004b8       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
- .debug_aranges
-                0x00000000000004d8       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
+                0x0000000000000380       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
 
-.debug_ranges   0x0000000000000000      0x490
+.debug_ranges   0x0000000000000000      0x308
  .debug_ranges  0x0000000000000000       0xa8 crt.o
  .debug_ranges  0x00000000000000a8       0x60 main.o
  .debug_ranges  0x0000000000000108       0x50 spi2.o
@@ -1069,67 +1076,52 @@ OUTPUT(.\main32.elf elf32-littlemips)
  .debug_ranges  0x0000000000000190       0x60 graph.o
  .debug_ranges  0x00000000000001f0       0x38 wait.o
  .debug_ranges  0x0000000000000228       0x40 timer.o
- .debug_ranges  0x0000000000000268       0x30 fifo.o
- .debug_ranges  0x0000000000000298       0xe0 serial.o
- .debug_ranges  0x0000000000000378       0x78 interrupt.o
- .debug_ranges  0x00000000000003f0       0x10 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
- .debug_ranges  0x0000000000000400       0x50 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
- .debug_ranges  0x0000000000000450       0x10 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
- .debug_ranges  0x0000000000000460       0x10 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
- .debug_ranges  0x0000000000000470       0x10 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
- .debug_ranges  0x0000000000000480       0x10 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
+ .debug_ranges  0x0000000000000268       0x10 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
+ .debug_ranges  0x0000000000000278       0x50 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
+ .debug_ranges  0x00000000000002c8       0x10 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
+ .debug_ranges  0x00000000000002d8       0x10 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
+ .debug_ranges  0x00000000000002e8       0x10 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
+ .debug_ranges  0x00000000000002f8       0x10 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
 
-.debug_str      0x0000000000000000     0x18cc
- .debug_str     0x0000000000000000      0x67e main.o
-                                        0x6ea (size before relaxing)
- .debug_str     0x000000000000067e      0x11f spi2.o
+.debug_str      0x0000000000000000     0x10bf
+ .debug_str     0x0000000000000000      0x673 main.o
+                                        0x6da (size before relaxing)
+ .debug_str     0x0000000000000673      0x11f spi2.o
                                         0x212 (size before relaxing)
- .debug_str     0x000000000000079d      0x606 dma1.o
+ .debug_str     0x0000000000000792      0x606 dma1.o
                                         0xafa (size before relaxing)
- .debug_str     0x0000000000000da3       0x31 graph.o
+ .debug_str     0x0000000000000d98       0x31 graph.o
                                         0x53c (size before relaxing)
- .debug_str     0x0000000000000dd4       0x3d wait.o
+ .debug_str     0x0000000000000dc9       0x42 wait.o
                                         0x11d (size before relaxing)
- .debug_str     0x0000000000000e11      0x184 timer.o
+ .debug_str     0x0000000000000e0b      0x184 timer.o
                                         0x2d3 (size before relaxing)
- .debug_str     0x0000000000000f95       0x69 fifo.o
-                                        0x11e (size before relaxing)
- .debug_str     0x0000000000000ffe      0x561 serial.o
-                                        0x760 (size before relaxing)
- .debug_str     0x000000000000155f      0x23d interrupt.o
-                                        0x5b6 (size before relaxing)
- .debug_str     0x000000000000179c      0x130 config.o
+ .debug_str     0x0000000000000f8f      0x130 config.o
                                         0x240 (size before relaxing)
- .debug_str     0x00000000000018cc        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
- .debug_str     0x00000000000018cc        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
- .debug_str     0x00000000000018cc        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
- .debug_str     0x00000000000018cc        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
- .debug_str     0x00000000000018cc        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
- .debug_str     0x00000000000018cc        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
- .debug_str     0x00000000000018cc        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_reg_map_tbl_lib.o)
+ .debug_str     0x00000000000010bf        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
+ .debug_str     0x00000000000010bf        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
+ .debug_str     0x00000000000010bf        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
+ .debug_str     0x00000000000010bf        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
+ .debug_str     0x00000000000010bf        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
+ .debug_str     0x00000000000010bf        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
+ .debug_str     0x00000000000010bf        0x0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_reg_map_tbl_lib.o)
 
-.debug_frame    0x0000000000000000      0x930
- .debug_frame   0x0000000000000000       0xb8 main.o
- .debug_frame   0x00000000000000b8       0x88 spi2.o
- .debug_frame   0x0000000000000140       0xd8 dma1.o
- .debug_frame   0x0000000000000218       0xec graph.o
- .debug_frame   0x0000000000000304       0x80 wait.o
- .debug_frame   0x0000000000000384       0xf8 timer.o
- .debug_frame   0x000000000000047c       0x84 fifo.o
- .debug_frame   0x0000000000000500      0x180 serial.o
- .debug_frame   0x0000000000000680      0x160 interrupt.o
- .debug_frame   0x00000000000007e0       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
- .debug_frame   0x0000000000000800       0xa0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
- .debug_frame   0x00000000000008a0       0x30 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
- .debug_frame   0x00000000000008d0       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
- .debug_frame   0x00000000000008f0       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
- .debug_frame   0x0000000000000910       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
+.debug_frame    0x0000000000000000      0x5c0
+ .debug_frame   0x0000000000000000       0xac main.o
+ .debug_frame   0x00000000000000ac       0x88 spi2.o
+ .debug_frame   0x0000000000000134       0xd8 dma1.o
+ .debug_frame   0x000000000000020c       0xec graph.o
+ .debug_frame   0x00000000000002f8       0x80 wait.o
+ .debug_frame   0x0000000000000378       0xf8 timer.o
+ .debug_frame   0x0000000000000470       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_enable_interrupts_lib.o)
+ .debug_frame   0x0000000000000490       0xa0 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(int_tbl_lib.o)
+ .debug_frame   0x0000000000000530       0x30 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_open_lib.o)
+ .debug_frame   0x0000000000000560       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_write_event_control_flags_lib.o)
+ .debug_frame   0x0000000000000580       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_set_txfer_lib.o)
+ .debug_frame   0x00000000000005a0       0x20 D:\Microchip\xc32\v1.40/pic32mx/lib/no-float/libmchp_peripheral_32MX220F032B.a(dma_chn_start_txfer_lib.o)
 
-.debug_loc      0x0000000000000000      0xfb4
+.debug_loc      0x0000000000000000      0x8df
  .debug_loc     0x0000000000000000       0x74 spi2.o
  .debug_loc     0x0000000000000074      0x122 dma1.o
  .debug_loc     0x0000000000000196      0x532 graph.o
  .debug_loc     0x00000000000006c8      0x217 wait.o
- .debug_loc     0x00000000000008df       0xe4 fifo.o
- .debug_loc     0x00000000000009c3      0x38a serial.o
- .debug_loc     0x0000000000000d4d      0x267 interrupt.o

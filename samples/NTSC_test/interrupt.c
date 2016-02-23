@@ -27,9 +27,30 @@
 
 #ifndef __INTERRUPT_C
 #define __INTERRUPT_C
+#include <plib.h>
+
 
 	#include <p32xxxx.h>
 //	#include <macro.h>
+
+#define _mfc0(reg, sel) \
+__extension__ ({ \
+  register unsigned long __r; \
+  __asm__ __volatile__ ("mfc0 %0,$%1,%2" \
+                        : "=d" (__r) \
+                        : "JK" (reg), "JK" (sel)); \
+  __r; \
+})
+
+#define _mtc0(reg, sel, val) \
+do { \
+    __asm__ __volatile__ ("%(mtc0 %z0,$%1,%2; ehb%)" \
+                          : \
+                          : "dJ" ((_reg_t)(val)), "JK" (reg), "JK" (sel) \
+                          : "memory"); \
+} while (0)
+
+
 	#include "non-free/cp0defs.h"
 
 typedef	unsigned char u8;

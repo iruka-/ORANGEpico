@@ -186,7 +186,7 @@ void UserInit(void)
 	mInitAllSwitches();
 
 	blinkStatusValid = TRUE;	//Blink the normal USB state on the LEDs.
-	SerialConfigure(UART1, UART_ENABLE,	UART_RX_TX_ENABLED,	BAUDRATE);
+//	SerialConfigure(UART1, UART_ENABLE,	UART_RX_TX_ENABLED,	BAUDRATE);
 
 }//end UserInit
 
