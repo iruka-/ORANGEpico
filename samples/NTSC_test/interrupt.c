@@ -30,6 +30,7 @@
 
 	#include <p32xxxx.h>
 //	#include <macro.h>
+	#include "non-free/cp0defs.h"
 
 typedef	unsigned char u8;
 
