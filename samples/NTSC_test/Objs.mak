@@ -9,6 +9,8 @@ OBJS = \
 	graph.o					\
 	wait.o					\
 	timer.o 	    		\
+	fifo.o 		    		\
+	serial.o 	    		\
 	interrupt.o     		\
 	config.o				\
 

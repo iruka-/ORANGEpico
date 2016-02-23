@@ -11,6 +11,12 @@
 #include "HardwareProfile.h"
 #include "spi2.h"
 
+#include "serial1.h"
+
+#ifndef	BAUDRATE
+#define	BAUDRATE	500000
+#endif
+
 /** VARIABLES ******************************************************/
 //unsigned char INPacket[USBGEN_EP_SIZE] ;	//User application buffer for sending IN packets to the host
 //unsigned char OUTPacket[USBGEN_EP_SIZE];	//User application buffer for receiving and holding OUT packets sent from the host
@@ -180,6 +186,7 @@ void UserInit(void)
 	mInitAllSwitches();
 
 	blinkStatusValid = TRUE;	//Blink the normal USB state on the LEDs.
+	SerialConfigure(UART1, UART_ENABLE,	UART_RX_TX_ENABLED,	BAUDRATE);
 
 }//end UserInit
 

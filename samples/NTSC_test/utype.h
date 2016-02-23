@@ -10,5 +10,8 @@ typedef unsigned short  word;           // 16-bit
 typedef unsigned int    uint;           // 32-bit
 typedef unsigned int    dword;          // 32-bit
 
+typedef unsigned char   u8;  	        // 8-bit
+typedef unsigned int    u32;            // 32-bit
+
 #endif
 
