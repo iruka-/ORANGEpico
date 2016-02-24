@@ -159,6 +159,38 @@ void _BOOTROM_ SerialPinConfigure(u8 port)
 	TRISAbits.TRISA4 = INPUT;	// RA4 / U1RX input
 }
 
+#if	0
+//	Remapレジスタ操作を許可.
+static	void SystemUnlock()
+{
+	SYSKEY = 0;				// ensure OSCCON is locked
+	SYSKEY = 0xAA996655;	// Write Key1 to SYSKEY
+	SYSKEY = 0x556699AA;	// Write Key2 to SYSKEY
+}
+
+//	Remapレジスタ操作を禁止.
+static	void SystemLock()
+{
+	SYSKEY = 0x12345678;	// Write any value other than Key1 or Key2
+}
+//	Remapレジスタ操作の実行.
+static  void IO_Remap1()
+{
+	SystemUnlock();
+	CFGCONbits.IOLOCK=0;			// unlock configuration
+	CFGCONbits.PMDLOCK=0;
+	{//IO_ReMap
+		U1RXRbits.U1RXR=2;			// Define U1RX as RA4 ( UEXT SERIAL )
+		RPB4Rbits.RPB4R=1;			// Define U1TX as RB4 ( UEXT SERIAL )
+	}
+//		U2RXRbits.U2RXR=4;			// Define U2RX as RB8 ( UEXT SERIAL )
+//		RPB9Rbits.RPB9R=2;			// Define U2TX as RB9 ( UEXT SERIAL )
+	CFGCONbits.IOLOCK=1;			// relock configuration
+	CFGCONbits.PMDLOCK=1;	
+	SystemLock();
+}
+#endif
+
 /*	----------------------------------------------------------------------------
 	SerialIntConfigure() : Serial Interrupts Configuration
 	----------------------------------------------------------------------------
@@ -170,8 +202,6 @@ void _BOOTROM_ SerialPinConfigure(u8 port)
 
 void _BOOTROM_ SerialIntConfigure(u8 port, u8 priority, u8 subpriority)
 {
-//	IntConfigureSystem(INT_SYSTEM_CONFIG_MULT_VECTOR);
-	
 	IPC8bits.U1IP = priority;
 	IPC8bits.U1IS = subpriority;
 	IEC1bits.U1RXIE=1;
@@ -187,13 +217,14 @@ void _BOOTROM_ SerialIntConfigure(u8 port, u8 priority, u8 subpriority)
 
 void _BOOTROM_ SerialConfigure(u8 port, u32 config, u32 enable, u32 baudrate)
 {
+	// single channel only.
+	FIFO_init( &rx_fifo , rx_buff , FIFO_SIZE );	//初期化.
+
+	//IO_Remap1();
 	{//IO_ReMap
 		U1RXRbits.U1RXR=2;			// Define U1RX as RA4 ( UEXT SERIAL )
 		RPB4Rbits.RPB4R=1;			// Define U1TX as RB4 ( UEXT SERIAL )
 	}
-	// single channel only.
-	FIFO_init( &rx_fifo , rx_buff , FIFO_SIZE );	//初期化.
-
 	SerialPinConfigure(port);
 	SerialSetDataRate(port, baudrate);		// UxBRG
 	SerialSetLineControl(port, config);		// UxMODE

@@ -1,5 +1,5 @@
 /********************************************************************
- FileName:      main.c
+    NTSCêMçÜèoóÕ / UART1 test
 ********************************************************************/
 
 #include <plib.h>
@@ -126,9 +126,9 @@ static	inline void setup()
 	mInitAllLEDs();
 	mInitAllSwitches();
 
+	init_vga();
 	SerialConfigure(UART1, UART_ENABLE,	UART_RX_TX_ENABLED,	BAUDRATE);
 
-	init_vga();
 	ei();
 
 	gr_test();
