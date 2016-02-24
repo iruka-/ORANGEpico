@@ -126,6 +126,4 @@ void	Serial1Interrupt(void);
 void UARTwrite(unsigned char *buf,int len);
 int	 UARTgetpacket(char *buf,int size);
 
-#define	GetPeripheralClock() get_PeripheralClock()
-
 #endif	/* __SERIAL__ */

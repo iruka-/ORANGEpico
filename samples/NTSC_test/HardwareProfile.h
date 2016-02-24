@@ -40,10 +40,11 @@
 
     /** LED ************************************************************/
     
-    #define mLED_1              LATBbits.LATB15
-    #define mLED_2              LATBbits.LATB14
-    #define mLED_3              LATBbits.LATB1
-    #define mLED_4              LATBbits.LATB0
+    #define mLED_1              LATAbits.LATA1
+
+//    #define mLED_2              LATBbits.LATB14
+//    #define mLED_3              LATBbits.LATB1
+//    #define mLED_4              LATBbits.LATB0
 
     #define mGetLED_1()         mLED_1
     #define mGetLED_2()         mLED_2
@@ -61,11 +62,12 @@
     #define mLED_4_Off()        mLED_4 = 0;
     
     #define mLED_1_Toggle()     mLED_1 = !mLED_1;
-    #define mLED_2_Toggle()     mLED_2 = !mLED_2;
-    #define mLED_3_Toggle()     mLED_3 = !mLED_3;
-    #define mLED_4_Toggle()     mLED_4 = !mLED_4;
+//    #define mLED_2_Toggle()     mLED_2 = !mLED_2;
+//    #define mLED_3_Toggle()     mLED_3 = !mLED_3;
+//    #define mLED_4_Toggle()     mLED_4 = !mLED_4;
     
-    #define mInitAllLEDs()      TRISBbits.TRISB15=0;TRISBbits.TRISB14=0;mLED_1_Off();mLED_2_Off();
+//    #define mInitAllLEDs()      TRISBbits.TRISB15=0;TRISBbits.TRISB14=0;mLED_1_Off();mLED_2_Off();
+    #define mInitAllLEDs()      TRISAbits.TRISA1=0;mLED_1_Off();
     /** SWITCH *********************************************************/
     #define mInitSwitch2()      TRISBbits.TRISB7=1;
     #define mInitSwitch3()      TRISBbits.TRISB3=1;

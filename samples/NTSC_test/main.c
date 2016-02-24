@@ -43,11 +43,10 @@ void InitializeFRC()
 }
 #endif
 
-void led_toggle()
-{
-	mLED_1_Toggle();
-}
-
+/********************************************************************
+ *		
+ ********************************************************************
+ */
 void led_on()
 {
 	mLED_1_On();
@@ -58,13 +57,9 @@ void led_off()
 	mLED_1_Off();
 }
 
-/********************************************************************
- *		
- ********************************************************************
- */
 void led_flip()
 {
-	LATBINV=0x8000;	// LATB.bit15を反転
+	mLED_1_Toggle();
 }
 
 /********************************************************************
@@ -73,6 +68,7 @@ void led_flip()
  */
 void led_test()
 {
+	mInitAllLEDs();
 	while(1) {
 		led_flip();
 		wait_ms(500);
@@ -112,7 +108,7 @@ static	void IOsetDigital()
 	ANSELA = 0;
 	ANSELB = 0;
 //	ANSELC = 0;
-	TRISBCLR=0x8000;	//	pinmode(13, OUTPUT);
+//	TRISBCLR=0x8000;	//	pinmode(13, OUTPUT);
 }
 
 void UserInit(void)
@@ -129,6 +125,10 @@ void UserInit(void)
  */
 static	inline void setup()
 {
+#ifdef	USE_INTERNAL_FRC_OSC	// RC OSC
+	InitializeFRC();
+#endif
+
 	UserInit();			//Application related initialization.  See user.c
 	init_vga();
 	ei();
@@ -150,6 +150,7 @@ static	inline	void loop(void)
 		Serial1WriteChar('\n');
 	}
 	wait_ms(100);
+	led_flip();
 }
 
 /********************************************************************
@@ -158,18 +159,14 @@ static	inline	void loop(void)
  */
 int _MIPS32 main(void)
 {
-#ifdef	USE_INTERNAL_FRC_OSC	// RC OSC
-	InitializeFRC();
-#endif
-
 	// 初期化:ユーザー処理
 	setup();
 	// ループ:ユーザー処理
 	while (1) {
 		loop();
 	}
+	led_test();
 
-//	led_test();
 }
 
 

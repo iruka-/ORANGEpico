@@ -84,6 +84,9 @@ int near_div(int pbc , int baud)
 	int rc = (pbc + baud/2) / baud;	//ŽlŽÌŒÜ“ü“I‚È.
 	return rc;
 }
+
+#define	GetPeripheralClock() get_PeripheralClock()
+
 /*	----------------------------------------------------------------------------
 	SerialSetDataRate()
 	----------------------------------------------------------------------------
@@ -288,7 +291,8 @@ int	UARTgetpacket(char *buf,int size)
 	--------------------------------------------------------------------------*/
 
 // vector 24 or 32 (PIC32_PINGUINO_220)
-void _BOOTROM_ Serial1Interrupt(void)
+//void _BOOTROM_ Serial1Interrupt(void)
+void __attribute__((interrupt,nomips16,noinline)) _UART1Interrupt(void)
 {
 	// Is this an RX interrupt from UART1 ?
 	if (IFS1bits.U1RXIF) {

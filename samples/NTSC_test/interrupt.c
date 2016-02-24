@@ -33,6 +33,7 @@
 	#include <p32xxxx.h>
 //	#include <macro.h>
 
+#if	0
 #define _mfc0(reg, sel) \
 __extension__ ({ \
   register unsigned long __r; \
@@ -49,7 +50,7 @@ do { \
                           : "dJ" ((_reg_t)(val)), "JK" (reg), "JK" (sel) \
                           : "memory"); \
 } while (0)
-
+#endif
 
 	#include "non-free/cp0defs.h"
 
