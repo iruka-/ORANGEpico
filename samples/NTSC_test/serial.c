@@ -187,6 +187,10 @@ void _BOOTROM_ SerialIntConfigure(u8 port, u8 priority, u8 subpriority)
 
 void _BOOTROM_ SerialConfigure(u8 port, u32 config, u32 enable, u32 baudrate)
 {
+	{//IO_ReMap
+		U1RXRbits.U1RXR=2;			// Define U1RX as RA4 ( UEXT SERIAL )
+		RPB4Rbits.RPB4R=1;			// Define U1TX as RB4 ( UEXT SERIAL )
+	}
 	// single channel only.
 	FIFO_init( &rx_fifo , rx_buff , FIFO_SIZE );	//èâä˙âª.
 
@@ -242,9 +246,13 @@ int _BOOTROM_ Serial1Read()
 int _BOOTROM_ Serial1GetKey()
 {
 	int c;
+	static int x=0;
 	while (!(Serial1Available())) {
-		led_blink();
+//		led_blink();
+		x++;
+		if((x & 0xfffff)==0) return '.';
 	}
+	led_flip();
 	c = Serial1Read();
 	return (c);
 }
@@ -298,6 +306,7 @@ void __attribute__((interrupt,nomips16,noinline)) _UART1Interrupt(void)
 	if (IFS1bits.U1RXIF) {
 		char c = U1RXREG;			// read received char
 		FIFO_enqueue( &rx_fifo, &c, 1);
+		led_flip();
 		IFS1bits.U1RXIF=0;
 	}
 	// Is this an TX interrupt from UART1 ?

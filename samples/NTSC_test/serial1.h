@@ -13,8 +13,8 @@
         #define OUTPUT      0
     #endif
 
-#define UART1			1
-#define UART2			2
+//#define UART1			1
+//#define UART2			2
 // bit 15 ON: UARTx Enable bit
 #define UART_DISABLE							0x0000
 #define UART_ENABLE								0x8000

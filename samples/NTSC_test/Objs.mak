@@ -11,6 +11,6 @@ OBJS = \
 	timer.o 	    		\
 	fifo.o 		    		\
 	serial.o 	    		\
-	interrupt.o     		\
 	config.o				\
 
+#	interrupt.o     		\

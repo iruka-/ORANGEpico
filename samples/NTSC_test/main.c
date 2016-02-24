@@ -111,14 +111,6 @@ static	void IOsetDigital()
 //	TRISBCLR=0x8000;	//	pinmode(13, OUTPUT);
 }
 
-void UserInit(void)
-{
-	IOsetDigital();
-	mInitAllLEDs();
-	mInitAllSwitches();
-	SerialConfigure(UART1, UART_ENABLE,	UART_RX_TX_ENABLED,	BAUDRATE);
-}
-
 /********************************************************************
  *		Arduino風:	初期化処理
  ********************************************************************
@@ -129,9 +121,16 @@ static	inline void setup()
 	InitializeFRC();
 #endif
 
-	UserInit();			//Application related initialization.  See user.c
+	IOsetDigital();
+
+	mInitAllLEDs();
+	mInitAllSwitches();
+
+	SerialConfigure(UART1, UART_ENABLE,	UART_RX_TX_ENABLED,	BAUDRATE);
+
 	init_vga();
 	ei();
+
 	gr_test();
 }
 
@@ -141,32 +140,27 @@ static	inline void setup()
  */
 static	inline	void loop(void)
 {
-//	int ch = Serial1GetKey();
-	int ch = '.';
+	int ch = Serial1GetKey();
 
 	Serial1WriteChar(ch);
-
 	if(ch == '\r') {
 		Serial1WriteChar('\n');
 	}
-	wait_ms(100);
-	led_flip();
+
+//	wait_ms(100);
+//	led_flip();
 }
 
 /********************************************************************
  *		main()
  ********************************************************************
  */
-int _MIPS32 main(void)
+int main(void)
 {
-	// 初期化:ユーザー処理
-	setup();
-	// ループ:ユーザー処理
+	setup();		// 初期化:ユーザー処理
 	while (1) {
-		loop();
+		loop();		// ループ:ユーザー処理
 	}
-	led_test();
-
 }
 
 
