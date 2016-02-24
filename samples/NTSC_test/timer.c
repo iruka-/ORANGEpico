@@ -15,7 +15,7 @@ void	init_timer2(void);
 //	（ここを奇数にすると、実際の周期は偶数clockになります）
 
 #else
-#define	HSYNC_PR	(1525+1525-1)		// (63.557uS * 24MHz) = 1525.35
+#define	HSYNC_PR	(1525*2-3)		// (63.557uS * 24MHz) = 1525.35
 //262.5本 - 21 = 241.5
 // 240
 // 6
@@ -188,7 +188,7 @@ inline	void gen_VSYNC()
 #else
 
 // HH1 = 縦の表示dot数
-#define	HH1 200
+#define	HH1 216
 // HH2 = 上下の余白dot ＝ (240 - 縦の表示dot数)/2
 #define	HH2 (240-HH1)/2
 //

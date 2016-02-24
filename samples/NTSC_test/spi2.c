@@ -140,11 +140,10 @@ void SPI2_init()
 			IPC9bits.SPI2IP = pri;
 			IPC9bits.SPI2IS = sub;
 #endif
-#if	DDS_TEST
-	SPI2_clock(4000000); //  800k bps 
-#else
-	SPI2_clock(4800000); //  4.8M bps
-#endif
+
+//	SPI2_clock(4000000); //  4  M bps div=1:6
+//	SPI2_clock(4800000); //  4.8M bps     1:5
+	SPI2_clock(6000000); //  6  M bps     1:4
 	SPI2_mode(SPI2_MASTER);
 
 #if	1

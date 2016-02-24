@@ -19,8 +19,8 @@
  */
 
 //	dot size
-#define	WIDTH		256
-#define	HEIGHT		200
+#define	WIDTH		(36*8)
+#define	HEIGHT		216
 
 //	word size
 #define	STRIDE		(WIDTH/32)	// DMA 1ƒ‰ƒCƒ“•ª‚Ì32bit WORD”.
@@ -268,6 +268,6 @@ void gr_test()
 	gr_locate(0,0);
 	int i;
 	for(i=0;i<30;i++)
-		gr_puts("Hello,World\n");
+		gr_puts("  Hello,World.\n");
 }
 

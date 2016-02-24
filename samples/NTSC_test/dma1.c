@@ -12,19 +12,13 @@
  ********************************************************************
  */
 
-#if	SVGA_MODE		// 0:VGA 1:SVGA
-#define	WIDTH		48	// 4ÇÃî{êîÇ…å¿ÇÈ.
-#define	HEIGHT		300	// 800 x 600 ÇÃ 600 Ç2Ç≈äÑÇ¡ÇƒÇ¢ÇÈ.
-#else
-#define	WIDTH		32	// 4ÇÃî{êîÇ…å¿ÇÈ.
-#define	HEIGHT		240
-#endif
+#define	WIDTH		36		//32	// 4ÇÃî{êîÇ…å¿ÇÈ.
+#define	HEIGHT		216
 
-#define	WIDTH_DMA	WIDTH	//(32bit) ÇSÇÃî{êîÇ…å¿ÇÈ. WIDTHÇ∆ìØíl.
+#define	WIDTH_DMA	 WIDTH	//(32bit) ÇSÇÃî{êîÇ…å¿ÇÈ. WIDTHÇ∆ìØíl.
 #define	WIDTH_WORD	(WIDTH/sizeof(int))	// WORDêî.
-static ushort g_Line=0;
-//static uchar  g_cnt=0;
-//static 
+static  ushort g_Line=0;
+
 uint	txferTxBuff[HEIGHT][WIDTH_WORD];
 
 /********************************************************************
@@ -53,21 +47,9 @@ void dma_init()
  */
 void _MIPS32 dma_kick(int cnt)
 {
-//	if(cnt<HEIGHT) {
-//	DmaChnOpen(DMA_CHANNEL1, DMA_CHN_PRI2, DMA_OPEN_DEFAULT);
-//	DmaChnSetEventControl(DMA_CHANNEL1, DMA_EV_START_IRQ_EN|DMA_EV_START_IRQ(_SPI2_TX_IRQ));
-	int *p = txferTxBuff[g_Line];
+	int *p = txferTxBuff[g_Line++];
 	DmaChnSetTxfer(DMA_CHANNEL1, p, (void*)&SPI2BUF, WIDTH_DMA, 4, 4);
 	DmaChnStartTxfer(DMA_CHANNEL1, DMA_WAIT_NOT, 0);
-	
-//	if(cnt==0) {g_Line=0;g_cnt=0;}
-		g_Line++;
-
-//	g_cnt++;
-//	if(	g_cnt>=2) 
-//	{
-//		g_cnt=0;
-//	}
 }
 
 /********************************************************************
@@ -76,16 +58,7 @@ void _MIPS32 dma_kick(int cnt)
  */
 void dma_clear(void)
 {
-	{g_Line=0;}	//g_cnt=0;}
-	
-#if	0
-	int i,j;
-	for(i=0;i<HEIGHT;i++) {
-		for(j=0;j<WIDTH_WORD;j++) {
-			txferTxBuff[i][j]=0;
-		}
-	}
-#endif
+	g_Line=0;
 }
 
 /********************************************************************
