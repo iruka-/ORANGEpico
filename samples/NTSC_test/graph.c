@@ -16,15 +16,9 @@
  */
 
 //	dot size
-#if	1
 #define	WIDTH		256
 #define	HEIGHT		200
 #define	STRIDE32	WIDTH
-#else
-#define	WIDTH		400
-#define	HEIGHT		300
-#define	STRIDE32	WIDTH
-#endif
 //	word size
 #define	STRIDE		(STRIDE32/32)	// DMA 1ƒ‰ƒCƒ“•ª‚Ì32bit WORD”.
 #define	BITMASK(x)	( ((uint)0x80000000) >> (x & 31) )
