@@ -56,7 +56,7 @@ void _MIPS32 dma_kick(int cnt)
 //	if(cnt<HEIGHT) {
 //	DmaChnOpen(DMA_CHANNEL1, DMA_CHN_PRI2, DMA_OPEN_DEFAULT);
 //	DmaChnSetEventControl(DMA_CHANNEL1, DMA_EV_START_IRQ_EN|DMA_EV_START_IRQ(_SPI2_TX_IRQ));
-	int *p = txferTxBuff[g_Line>>1];
+	int *p = txferTxBuff[g_Line];
 	DmaChnSetTxfer(DMA_CHANNEL1, p, (void*)&SPI2BUF, WIDTH_DMA, 4, 4);
 	DmaChnStartTxfer(DMA_CHANNEL1, DMA_WAIT_NOT, 0);
 	

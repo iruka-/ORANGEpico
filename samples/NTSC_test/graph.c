@@ -5,7 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <plib.h>
+
+#include "utype.h"
 #include "spi2.h"
+#include "font8.h"
 
 #define	M_PI	3.14159
 #define SWAP(x,y)  {int t; t=(x); (x)=(y); (y)=t; }
@@ -18,13 +21,22 @@
 //	dot size
 #define	WIDTH		256
 #define	HEIGHT		200
-#define	STRIDE32	WIDTH
+
 //	word size
-#define	STRIDE		(STRIDE32/32)	// DMA 1ライン分の32bit WORD数.
+#define	STRIDE		(WIDTH/32)	// DMA 1ライン分の32bit WORD数.
+
+//	bit address
 #define	BITMASK(x)	( ((uint)0x80000000) >> (x & 31) )
 
-extern  uint	txferTxBuff[];
+#define	CWIDTH		(WIDTH/8)	//32
+#define	CHEIGHT		(HEIGHT/8)	//25
+#define	CSTRIDE		(CWIDTH)	//文字数
 
+
+extern  uint	txferTxBuff[];
+// スクリーンカーソル座標
+static int sx=0;
+static int sy=0;
 
 /********************************************************************
  *	
@@ -150,6 +162,97 @@ void gr_circle_arc( int cx,int cy,int rx,int ry,int c,int begin,int end)
 }
 #endif
 
+
+//	====================================================
+//	(cx,cy)文字座標からピクセルバッファのbyteポインタ*pを得る.
+//	====================================================
+uchar *ch_adr(int cx,int cy)
+{
+	uchar *t = (uchar*)txferTxBuff;
+	if( ((uint)cx < CWIDTH) && ((uint)cy < CHEIGHT) ) {
+		t += (cy*(8*CWIDTH)+(cx & 0xfffc)); // 4文字単位で 1234 --> 4321 になる (DMA Endian問題)
+		t += (3 -           (cx & 0x0003));
+		return t;
+	}
+	return 0;
+}
+
+//	====================================================
+//	ASCII文字(ch) の8x8フォントデータ(8byte)を得る.
+//	====================================================
+uchar *get_font_adr(int ch)
+{
+	return &font8[ (ch & 0xff) * 8 ];
+}
+
+void gr_scrollup(int y)
+{
+	int *t = txferTxBuff;
+	int *s = t + y * STRIDE;
+	int i;
+	int m = (HEIGHT - y) * STRIDE;
+
+	for(i=0;i<m;i++) *t++ = *s++;
+}
+
+void gr_crlf(void)
+{
+	sx=0;
+	sy++;
+	if(sy>=CHEIGHT) {
+		sy=CHEIGHT-1;
+		gr_scrollup(1);
+	}
+}
+
+void gr_curadv(void)
+{
+	sx++;
+	if(sx>=CWIDTH) {
+		gr_crlf();
+	}
+}
+
+void gr_locate(int cx,int cy)
+{
+	sx=cx;
+	sy=cy;
+}
+
+//	====================================================
+//	文字座標(cx,cy)にASCII文字(ch)をグラフィック描画
+//	====================================================
+void gr_putch(int cx,int cy,int ch)
+{
+	uchar *t = ch_adr(cx,cy);
+	uchar *font = get_font_adr(ch);
+
+	if(t) {
+		int i;
+		for(i=0;i<8;i++) {
+			*t = *font++;
+			t += CSTRIDE;
+		}
+	}
+}
+
+//	====================================================
+//	文字座標(cx,cy)にASCII文字(ch)をグラフィック描画
+//	====================================================
+void gr_puts(char *str)
+{
+	while(1) {
+		int ch = *str++;
+		if( ch==0 ) break;
+		if( ch=='\n' ){
+			gr_crlf();
+		}else{
+			gr_putch(sx,sy,ch);
+			gr_curadv();
+		}
+	}
+}
+
 //	====================================================
 //	グラフィックテスト.
 //	====================================================
@@ -161,5 +264,10 @@ void gr_test()
 	}
 	gr_circle(WIDTH/2,HEIGHT/2,HEIGHT/2,1);
 //	gr_circle_arc(WIDTH/2,HEIGHT/2,HEIGHT/2,HEIGHT/2,60,140,1);
+
+	gr_locate(0,0);
+	int i;
+	for(i=0;i<30;i++)
+		gr_puts("Hello,World\n");
 }
 
