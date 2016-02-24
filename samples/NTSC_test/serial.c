@@ -31,16 +31,10 @@
 //
 
 #include <p32xxxx.h>			// always in first place to avoid conflict with const.h ON
-//#include <typedef.h>
-//#include <const.h>
 
 #include "config.h"
 #include "serial1.h"
 #include "fifo.h"
-
-#define	_BOOTROM_	/**/
-//#define	_BOOTROM_  __attribute__((section(".bootrom")))
-
 
 	// IPCx: INTERRUPT PRIORITY CONTROL REGISTER
 	#define INT_UART1_ALL_PRIORITY		0x0000001F	// disable all UART1 interrupts
@@ -101,7 +95,7 @@ int near_div(int pbc , int baud)
 		then UxBRG = ((FPB/Desired Baud Rate)/16) - 1
 	--------------------------------------------------------------------------*/
 
-void _BOOTROM_ SerialSetDataRate(u8 port, u32 baudrate)
+void  SerialSetDataRate(u8 port, u32 baudrate)
 {
 	u8 speed;
 	u32 max, max1, max2;
@@ -133,7 +127,7 @@ void _BOOTROM_ SerialSetDataRate(u8 port, u32 baudrate)
 	ex : SerialEnable(UART1, UART_RX_TX_ENABLED | UART_INTERRUPT_ON_RX_FULL)
 	--------------------------------------------------------------------------*/
 
-static	void _BOOTROM_ SerialEnable(u8 port, u32 config)
+static	void  SerialEnable(u8 port, u32 config)
 {
 	U1STASET = config;
 }
@@ -153,7 +147,7 @@ void SerialSetLineControl(u8 port, u32 config)
 	SerialPinConfigure : UART I/O pins control
 	--------------------------------------------------------------------------*/
 
-void _BOOTROM_ SerialPinConfigure(u8 port)
+void  SerialPinConfigure(u8 port)
 {
 	TRISBbits.TRISB4 = OUTPUT;	// RB4 / U1TX output
 	TRISAbits.TRISA4 = INPUT;	// RA4 / U1RX input
@@ -200,7 +194,7 @@ static  void IO_Remap1()
 	--------------------------------------------------------------------------*/
 #define INT_SYSTEM_CONFIG_MULT_VECTOR	1
 
-void _BOOTROM_ SerialIntConfigure(u8 port, u8 priority, u8 subpriority)
+void  SerialIntConfigure(u8 port, u8 priority, u8 subpriority)
 {
 	IPC8bits.U1IP = priority;
 	IPC8bits.U1IS = subpriority;
@@ -215,7 +209,7 @@ void _BOOTROM_ SerialIntConfigure(u8 port, u8 priority, u8 subpriority)
 	@return		baudrate
 	--------------------------------------------------------------------------*/
 
-void _BOOTROM_ SerialConfigure(u8 port, u32 config, u32 enable, u32 baudrate)
+void  SerialConfigure(u8 port, u32 config, u32 enable, u32 baudrate)
 {
 	// single channel only.
 	FIFO_init( &rx_fifo , rx_buff , FIFO_SIZE );	//èâä˙âª.
@@ -250,7 +244,7 @@ void _MIPS32 Serial1WriteChar(char c)
 	SerialAvailable
 	--------------------------------------------------------------------------*/
 
-int _BOOTROM_ Serial1Available()
+int  Serial1Available()
 {
 	return FIFO_getsize( &rx_fifo );
 }
@@ -259,7 +253,7 @@ int _BOOTROM_ Serial1Available()
 	SerialRead : Get char
 	--------------------------------------------------------------------------*/
 
-int _BOOTROM_ Serial1Read()
+int  Serial1Read()
 {
 	uchar c = 0;
 
@@ -274,16 +268,18 @@ int _BOOTROM_ Serial1Read()
 	SerialGetKey
 	--------------------------------------------------------------------------*/
 
-int _BOOTROM_ Serial1GetKey()
+int  Serial1GetKey()
 {
 	int c;
-	static int x=0;
 	while (!(Serial1Available())) {
-//		led_blink();
-		x++;
-		if((x & 0xfffff)==0) return '.';
+		led_blink();
+
+//		static int x=0;
+//		x++;
+//		if((x & 0xfffff)==0) return '.';
+
 	}
-	led_flip();
+//	led_flip();
 	c = Serial1Read();
 	return (c);
 }
@@ -330,14 +326,13 @@ int	UARTgetpacket(char *buf,int size)
 	--------------------------------------------------------------------------*/
 
 // vector 24 or 32 (PIC32_PINGUINO_220)
-//void _BOOTROM_ Serial1Interrupt(void)
+//void  Serial1Interrupt(void)
 void __attribute__((interrupt,nomips16,noinline)) _UART1Interrupt(void)
 {
 	// Is this an RX interrupt from UART1 ?
 	if (IFS1bits.U1RXIF) {
 		char c = U1RXREG;			// read received char
 		FIFO_enqueue( &rx_fifo, &c, 1);
-		led_flip();
 		IFS1bits.U1RXIF=0;
 	}
 	// Is this an TX interrupt from UART1 ?

@@ -4,7 +4,7 @@
 
 #include <plib.h>
 
-#include "HardwareProfile.h"
+#include "config.h"
 #include "spi2.h"
 #include "serial1.h"
 

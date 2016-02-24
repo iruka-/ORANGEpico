@@ -9,9 +9,6 @@ int FIFO_getfreesize(FIFO *queue);				//キューの空き容量要素数を得る.
  */
 #include "fifo.h"
 
-#define	_BOOTROM_  /* */
-//#define	_BOOTROM_  __attribute__((section(".bootrom")))
-
 /****************************************************************
  *	ワーク
  ****************************************************************
@@ -22,7 +19,7 @@ static uchar rxbuf[RXBUF_SIZE];	// 受信FIFO.
  *	初期化
  ****************************************************************
  */
-int _BOOTROM_ FIFO_init( FIFO *queue,FIFO_t *buf,int size)
+int  FIFO_init( FIFO *queue,FIFO_t *buf,int size)
 {
 	queue->buf = buf;
 	queue->size = size;
@@ -47,7 +44,7 @@ int FIFO_reset( FIFO *queue )
  *	戻り値：詰め込みに成功した要素数. (0 もしくは size)
  *			キューに充分な空きがないときは詰め込みはキャンセル.
  */
-int _BOOTROM_ FIFO_enqueue(FIFO *queue,FIFO_t *data,int size)
+int  FIFO_enqueue(FIFO *queue,FIFO_t *data,int size)
 {
 	int i;
 	int n = queue->inPtr;				// FIFOの書き込みポインタ.
@@ -70,7 +67,7 @@ int _BOOTROM_ FIFO_enqueue(FIFO *queue,FIFO_t *data,int size)
  ****************************************************************
  *	戻り値： queue に溜まっている要素数
  */
-int _BOOTROM_ FIFO_getsize(FIFO *queue)
+int  FIFO_getsize(FIFO *queue)
 {
 	int n = queue->inPtr - queue->outPtr;
 	if(n<0) {
@@ -83,7 +80,7 @@ int _BOOTROM_ FIFO_getsize(FIFO *queue)
  ****************************************************************
  *	戻り値： queue の空いている要素数
  */
-int _BOOTROM_ FIFO_getfreesize(FIFO *queue)
+int  FIFO_getfreesize(FIFO *queue)
 {
 	return queue->size - FIFO_getsize(queue);
 }
@@ -96,7 +93,7 @@ int _BOOTROM_ FIFO_getfreesize(FIFO *queue)
  *			size  : 取り出したい要素数.
  *	戻り値：取り出しに成功した要素数. (0 .. size)
  */
-int _BOOTROM_ FIFO_dequeue(FIFO *queue,FIFO_t *result,int size)
+int  FIFO_dequeue(FIFO *queue,FIFO_t *result,int size)
 {
 	int	n = queue->outPtr;					// FIFOの取り出しポインタ.
 	int	i;

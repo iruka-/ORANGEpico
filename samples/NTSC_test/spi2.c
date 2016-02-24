@@ -22,8 +22,14 @@ unsigned int IntGetFlag(u8 numinter);
  ********************************************************************
  */
 #include <p32xxxx.h>			// always in first place to avoid conflict with const.h ON
-#include "interrupt.h"
-#include "HardwareProfile.h"
+//#include "interrupt.h"
+	#define INT_SPI2_FAULT					37 
+	#define INT_SPI2_TRANSFER_DONE			38 
+	#define INT_SPI2_RECEIVE_DONE			39
+    #define GetPeripheralClock()        GetSystemClock()
+
+
+#include "config.h"
 #include "spi2.h"
 
 #define SPIBUFFER	SPI2BUF

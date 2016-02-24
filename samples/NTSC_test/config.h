@@ -17,4 +17,21 @@
 #endif
 
 
+    /** LED ************************************************************/
+    
+    #define mLED_1              LATAbits.LATA1
+
+
+    #define mGetLED_1()         mLED_1
+    #define mLED_1_On()         mLED_1 = 1;
+    #define mLED_1_Off()        mLED_1 = 0;
+    #define mLED_1_Toggle()     mLED_1 = !mLED_1;
+    #define mInitAllLEDs()      TRISAbits.TRISA1=0;mLED_1_Off();
+    /** SWITCH *********************************************************/
+    #define mInitSwitch2()      TRISBbits.TRISB7=1;
+    #define mInitAllSwitches()  mInitSwitch2();
+
+    // Various clock values
+    #define GetSystemClock()    SYS_FREQ        // 48000000UL
+
 #endif
