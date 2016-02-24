@@ -15,82 +15,7 @@
 /** PRIVATE PROTOTYPES *********************************************/
 static void InitializeSystem(void);
 
-void UserInit(void);
-void init_vga(void);
-
-#ifdef	USE_INTERNAL_FRC_OSC	// RC OSC
-/********************************************************************
- * Function:	Clock Select to FRC
- *******************************************************************/
-void InitializeFRC()
-{
-	mSysUnlockOpLock( 
-		{PPSOutput(3, RPA4, REFCLKO);}
-	);
-
-	OSCREFConfig(OSC_REFOCON_FRC,
-	OSC_REFOCON_OE | OSC_REFOCON_ON, 1);
-
-	mSysUnlockOpLock(
-		{OSCCONbits.NOSC = 3; //ECPLL
-		 OSCCONbits.OSWEN = 1;}
-	);
-
-	while(OSCCONbits.COSC != 3);
-
-	SYSTEMConfigPerformance(48000000);
-
-}
-#endif
-
-/********************************************************************
- *		
- ********************************************************************
- */
-void led_on()
-{
-	mLED_1_On();
-}
-
-void led_off()
-{
-	mLED_1_Off();
-}
-
-void led_flip()
-{
-	mLED_1_Toggle();
-}
-
-/********************************************************************
- *		
- ********************************************************************
- */
-void led_test()
-{
-	mInitAllLEDs();
-	while(1) {
-		led_flip();
-		wait_ms(500);
-	}
-}
-
-/********************************************************************
- *		
- ********************************************************************
- */
-#define	CNTMAX		400000
-
-void led_blink()
-{
-	static int cnt=0;
-	cnt++;
-	if(	cnt >= CNTMAX) {
-		cnt=0;
-		led_flip();
-	}
-}
-
+void NTSC_init(void);
 
 #define	_MIPS32 __attribute__((nomips16,noinline))
 
@@ -117,38 +42,48 @@ static	void IOsetDigital()
  */
 static	inline void setup()
 {
-#ifdef	USE_INTERNAL_FRC_OSC	// RC OSC
+#ifdef	USE_INTERNAL_FRC_OSC	// RC 発振の場合は余分に初期化が必要.
 	InitializeFRC();
 #endif
 
-	IOsetDigital();
+	IOsetDigital();				// 全てデジタル ピンとして初期化.
 
-	mInitAllLEDs();
-	mInitAllSwitches();
+	mInitAllLEDs();				// LED初期化.
+	mInitAllSwitches();			// Switch読み取り初期化.
 
-	init_vga();
+	NTSC_init();				// NTSC 表示初期化.
+
+	// UART1 初期化 (NTSC_initのあと)
 	SerialConfigure(UART1, UART_ENABLE,	UART_RX_TX_ENABLED,	BAUDRATE);
-
+	// 割り込み許可.
 	ei();
-
+	// グラフィックテスト.
 	gr_test();
 }
 
+
+/********************************************************************
+ *		システム: 文字出力
+ ********************************************************************
+ */
+static void Putch(int ch)
+{
+	Serial1WriteChar(ch);
+}
 /********************************************************************
  *		Arduino風:	繰り返し処理
  ********************************************************************
  */
 static	inline	void loop(void)
 {
+	// UART1: から１文字入力  (完了待ちあり)
 	int ch = Serial1GetKey();
 
-	Serial1WriteChar(ch);
-	if(ch == '\r') {
-		Serial1WriteChar('\n');
+	// UART1: にエコーバックする.
+	Putch(ch);
+	if(ch == '\r') {	// CR なら LF も追加
+		Putch(ch);
 	}
-
-//	wait_ms(100);
-//	led_flip();
 }
 
 /********************************************************************

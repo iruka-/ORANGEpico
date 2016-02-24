@@ -37,7 +37,7 @@ uint 	SPI2_write(uint data_out);
 uint 	SPI2_read(void);
 //================================================================
 
-void 	init_vga(void);
+void 	NTSC_init(void);
 void 	_MIPS32 wait_ms(int ms);
 void 	draw_screen(void);
 void	putch_cls();

@@ -1,9 +1,63 @@
-#include <p32xxxx.h>			// always in first place to avoid conflict with const.h ON
-#include <stdlib.h>			// always in first place to avoid conflict with const.h ON
 /********************************************************************
  *	ユーティリティ
  ********************************************************************
  */
+
+#include <plib.h>
+
+#include "config.h"
+#include "spi2.h"
+#include "serial1.h"
+
+/********************************************************************
+ *		
+ ********************************************************************
+ */
+void led_on()
+{
+	mLED_1_On();
+}
+
+void led_off()
+{
+	mLED_1_Off();
+}
+
+void led_flip()
+{
+	mLED_1_Toggle();
+}
+
+/********************************************************************
+ *		
+ ********************************************************************
+ */
+void led_test()
+{
+	mInitAllLEDs();
+	while(1) {
+		led_flip();
+		wait_ms(500);
+	}
+}
+
+/********************************************************************
+ *		
+ ********************************************************************
+ */
+#define	CNTMAX		400000
+
+void led_blink()
+{
+	static int cnt=0;
+	cnt++;
+	if(	cnt >= CNTMAX) {
+		cnt=0;
+		led_flip();
+	}
+}
+
+
 
 
 #ifdef	USE_INTERNAL_FRC_OSC	// RC OSC

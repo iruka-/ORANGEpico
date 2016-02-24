@@ -1,6 +1,6 @@
 /*
  ************************************************************************
-void	init_vga(void);
+void	NTSC_init(void);
 void	init_timer1(void);
 void	init_timer2(void);
  ************************************************************************
@@ -116,7 +116,7 @@ void init_vga_port()
  *
  **********************************************************************
  */
-void init_vga(void)
+void NTSC_init(void)
 {
 	init_vga_port();
 #if	USE_SPI2
