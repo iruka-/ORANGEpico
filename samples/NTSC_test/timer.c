@@ -188,9 +188,9 @@ inline	void gen_VSYNC()
 #else
 
 // HH1 = c‚Ì•\Ž¦dot”
-#define	HH1 216
+#define	HH1  HEIGHT
 // HH2 = ã‰º‚Ì—]”’dot  (240 - c‚Ì•\Ž¦dot”)/2
-#define	HH2 (240-HH1)/2
+#define	HH2 (240-HEIGHT)/2
 //
 //	VGA @60Hz mode
 //
@@ -218,7 +218,6 @@ inline void gen_VSYNC()
 
 		if(	g_Hcount>=262) {
 			g_Hcount=0;
-			dma_clear();
 		}
 	}
 }

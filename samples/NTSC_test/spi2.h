@@ -3,6 +3,7 @@
 
 #define	_MIPS32 __attribute__((nomips16,noinline))
 #define	_ISR    __attribute__((interrupt,nomips16,noinline))
+
 //================================================================
 //	SPI Config:
 #define	USE_SPI2				(1)	// SPI2 を使用する.
@@ -41,6 +42,15 @@ void 	NTSC_init(void);
 void 	_MIPS32 wait_ms(int ms);
 void 	draw_screen(void);
 void	putch_cls();
+
+//================================================================
+//	画面サイズ
+#define	WIDTH32		40		//32	// 4の倍数に限る.
+#define	HEIGHT		208
+
+#define	WIDTH_DMA	 WIDTH32	//(32bit) ４の倍数に限る. WIDTHと同値.
+#define	WIDTH_WORD	(WIDTH32/sizeof(int))	// WORD数.
+
 
 
 #endif

@@ -19,11 +19,11 @@
  */
 
 //	dot size
-#define	WIDTH		(36*8)
-#define	HEIGHT		216
+#define	WIDTH		(WIDTH32 * 8)
+//#define	HEIGHT		216		spi2.hで定義
 
 //	word size
-#define	STRIDE		(WIDTH/32)	// DMA 1ライン分の32bit WORD数.
+#define	STRIDE		(WIDTH / 32)	// DMA 1ライン分の32bit WORD数.
 
 //	bit address
 #define	BITMASK(x)	( ((uint)0x80000000) >> (x & 31) )
@@ -33,7 +33,7 @@
 #define	CSTRIDE		(CWIDTH)	//文字数
 
 
-extern  uint	txferTxBuff[];
+extern uint	txferTxBuff[];
 // スクリーンカーソル座標
 static int sx=0;
 static int sy=0;
@@ -76,6 +76,7 @@ void prev(int x,int y)
 	int *p=p_adr(x,y);
 	if(p) *p ^= BITMASK(x);
 }
+
 #define	gr_pset(x,y,c)	pset(x,y)
 //	====================================================
 //	線分を描画する.
@@ -187,8 +188,10 @@ uchar *get_font_adr(int ch)
 
 void gr_scrollup(int y)
 {
+	y *= 8;
+
 	int *t = txferTxBuff;
-	int *s = t + y * STRIDE;
+	int *s = t + (y * STRIDE);
 	int i;
 	int m = (HEIGHT - y) * STRIDE;
 
@@ -267,7 +270,7 @@ void gr_test()
 
 	gr_locate(0,0);
 	int i;
-	for(i=0;i<30;i++)
+	for(i=0;i<(CHEIGHT-1);i++)
 		gr_puts("  Hello,World.\n");
 }
 

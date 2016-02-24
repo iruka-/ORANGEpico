@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <plib.h>
+
 #include "spi2.h"
 
 /********************************************************************
@@ -12,14 +13,7 @@
  ********************************************************************
  */
 
-#define	WIDTH		36		//32	// 4ÇÃî{êîÇ…å¿ÇÈ.
-#define	HEIGHT		216
-
-#define	WIDTH_DMA	 WIDTH	//(32bit) ÇSÇÃî{êîÇ…å¿ÇÈ. WIDTHÇ∆ìØíl.
-#define	WIDTH_WORD	(WIDTH/sizeof(int))	// WORDêî.
-static  ushort g_Line=0;
-
-uint	txferTxBuff[HEIGHT][WIDTH_WORD];
+uint	txferTxBuff[HEIGHT+16][WIDTH_WORD];
 
 /********************************************************************
  *	
@@ -47,18 +41,9 @@ void dma_init()
  */
 void _MIPS32 dma_kick(int cnt)
 {
-	int *p = txferTxBuff[g_Line++];
+	int *p = txferTxBuff[cnt];
 	DmaChnSetTxfer(DMA_CHANNEL1, p, (void*)&SPI2BUF, WIDTH_DMA, 4, 4);
 	DmaChnStartTxfer(DMA_CHANNEL1, DMA_WAIT_NOT, 0);
-}
-
-/********************************************************************
- *	
- ********************************************************************
- */
-void dma_clear(void)
-{
-	g_Line=0;
 }
 
 /********************************************************************
