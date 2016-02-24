@@ -7,6 +7,7 @@
 #include "config.h"
 #include "spi2.h"
 #include "serial1.h"
+#include "graph.h"
 
 #ifndef	BAUDRATE
 #define	BAUDRATE	500000
@@ -68,7 +69,17 @@ static	inline void setup()
  */
 static void Putch(int ch)
 {
+	// 文字: UART1 に出力
 	Serial1WriteChar(ch);
+	if(ch == '\r') {	// CR なら LF も追加
+		Serial1WriteChar('\n');
+	}
+
+	// 文字: TV画面 に出力
+	if(ch == '\r') {	// CR なら LF に変更
+		ch = '\n';
+	}
+	gr_putch(ch);
 }
 /********************************************************************
  *		Arduino風:	繰り返し処理
@@ -78,12 +89,8 @@ static	inline	void loop(void)
 {
 	// UART1: から１文字入力  (完了待ちあり)
 	int ch = Serial1GetKey();
-
 	// UART1: にエコーバックする.
 	Putch(ch);
-	if(ch == '\r') {	// CR なら LF も追加
-		Putch(ch);
-	}
 }
 
 /********************************************************************

@@ -186,6 +186,12 @@ uchar *get_font_adr(int ch)
 	return &font8[ (ch & 0xff) * 8 ];
 }
 
+void gr_locate(int cx,int cy)
+{
+	sx=cx;
+	sy=cy;
+}
+
 void gr_scrollup(int y)
 {
 	y *= 8;
@@ -194,8 +200,20 @@ void gr_scrollup(int y)
 	int *s = t + (y * STRIDE);
 	int i;
 	int m = (HEIGHT - y) * STRIDE;
+	int n = (HEIGHT    ) * STRIDE;
 
+	// 1行スクロール.
 	for(i=0;i<m;i++) *t++ = *s++;
+	// スクロール最後の行をゼロクリア.
+	for(i=m;i<n;i++) *t++ = 0;
+}
+
+void gr_cls()
+{
+	// スクロール行=画面全体の行数にして、画面クリアの代用品にする.
+	gr_scrollup(CHEIGHT);
+	// カーソルを左上に.
+	gr_locate(0,0);
 }
 
 void gr_crlf(void)
@@ -216,16 +234,10 @@ void gr_curadv(void)
 	}
 }
 
-void gr_locate(int cx,int cy)
-{
-	sx=cx;
-	sy=cy;
-}
-
 //	====================================================
 //	文字座標(cx,cy)にASCII文字(ch)をグラフィック描画
 //	====================================================
-void gr_putch(int cx,int cy,int ch)
+void gr_putch_xy(int ch,int cx,int cy)
 {
 	uchar *t = ch_adr(cx,cy);
 	uchar *font = get_font_adr(ch);
@@ -240,19 +252,31 @@ void gr_putch(int cx,int cy,int ch)
 }
 
 //	====================================================
+//	ASCII文字(ch)をカーソル位置に書き、カーソルを進める
+//	====================================================
+void gr_putch(int ch)
+{
+	if( ch>=' ' ) {
+		gr_putch_xy(ch , sx,sy);
+		gr_curadv();
+	}else{
+		switch(ch){
+		 case '\n':	gr_crlf();break;
+		 case 0x0c:	gr_cls() ;break;
+		 default:
+			break;
+		}
+	}
+}
+
+//	====================================================
 //	文字座標(cx,cy)にASCII文字(ch)をグラフィック描画
 //	====================================================
 void gr_puts(char *str)
 {
 	while(1) {
-		int ch = *str++;
-		if( ch==0 ) break;
-		if( ch=='\n' ){
-			gr_crlf();
-		}else{
-			gr_putch(sx,sy,ch);
-			gr_curadv();
-		}
+		int ch = *str++;if( ch==0 ) break;
+		gr_putch(ch);
 	}
 }
 
