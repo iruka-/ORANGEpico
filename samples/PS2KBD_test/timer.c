@@ -146,7 +146,7 @@ void NTSC_init(void)
 // HH2 = 上下の余白dot ＝ (240 - 縦の表示dot数)/2
 #define	HH2 (240-HEIGHT)/2
 // HH3 = 垂直帰線の開始LINEを遅らせるタイミング(HSYNC数)
-#define	HH3  0
+#define	HH3  6
 //
 void _MIPS32 gen_VSYNC()
 {

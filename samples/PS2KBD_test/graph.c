@@ -23,6 +23,10 @@
 #define	GR_WIDTH	(WIDTH - GR_LSPACE-GR_RSPACE)	// 画面幅dot 320-5*8*2=240
 #define	GR_HEIGHT	(HEIGHT)				// 画面高さdot 208
 
+// 左余白を32の倍数と、その余りに分割する.
+#define	GR_LSPACE_1	32
+#define	GR_LSPACE_2	(GR_LSPACE-GR_LSPACE_1)
+
 //	word size
 #define	WSTRIDE		(WIDTH_DMA / 4)			// DMA 1ライン分の32bit WORD数.
 
@@ -60,6 +64,7 @@ uint *p_adr(int x,int y)
 void pset(int x,int y)
 {
 	uint *p=p_adr(x,y);
+	x+=GR_LSPACE_2;
 	if(p) *p |= BITMASK(x);
 }
 //	====================================================
@@ -68,6 +73,7 @@ void pset(int x,int y)
 void preset(int x,int y)
 {
 	uint *p=p_adr(x,y);
+	x+=GR_LSPACE_2;
 	if(p) *p &= ~BITMASK(x);
 }
 //	====================================================
@@ -76,6 +82,7 @@ void preset(int x,int y)
 void prev(int x,int y)
 {
 	uint *p=p_adr(x,y);
+	x+=GR_LSPACE_2;
 	if(p) *p ^= BITMASK(x);
 }
 
@@ -181,6 +188,8 @@ uchar *ch_adr(int cx,int cy)
 	return 0;
 }
 
+void gr_putch_xy(int ch,int cx,int cy);
+
 //	====================================================
 //	ASCII文字(ch) の8x8フォントデータ(8byte)を得る.
 //	====================================================
@@ -247,6 +256,7 @@ void gr_bs(void)
 		}
 		sx = CWIDTH-1;
 	}
+	gr_putch_xy(' ', sx,sy);
 }
 
 void gr_del(void)
@@ -319,17 +329,21 @@ void gr_puts(char *str)
 void gr_test()
 {
 	int x;
-	for(x=0;x<HEIGHT;x+=16) {
+	//
+	// Text
+	int i;
+	gr_locate(0,0);
+	for(i=0;i<(CHEIGHT);i++) {
+		gr_puts("Hello,World.\n");
+	}
+	gr_locate(0,0);
+	gr_puts("0123456789012345678901234567890123");
+	gr_locate(CHEIGHT-1,0);
+	//
+	// Graphic
+	for(x=16;x<HEIGHT;x+=16) {
 		gr_line(x,0,GR_WIDTH,x,1);
 	}
-	gr_circle(GR_WIDTH/2,HEIGHT/2,HEIGHT/2,1);
-//	gr_circle_arc(GR_WIDTH/2,HEIGHT/2,HEIGHT/2,HEIGHT/2,60,140,1);
-
-	gr_locate(0,0);
-	int i;
-	for(i=0;i<(CHEIGHT);i+=2) {
-		gr_puts("Hello,World.\n");
-		gr_puts("0123456789012345678901234567890123");
-	}
+	gr_circle(GR_WIDTH/2,HEIGHT/2,HEIGHT/2-2,1);
 }
 

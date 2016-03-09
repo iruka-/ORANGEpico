@@ -35,7 +35,7 @@ void	putch_cls();
 //	画面サイズ
 #define	WIDTH_DMA	40				// 4の倍数に限る.
 #define	WIDTH		(WIDTH_DMA*8)	// 320dot
-#define	HEIGHT		208				// 26行
+#define	HEIGHT		200				// 26行
 
 //	左右余白サイズ
 #define LSPACE		5		// 文字数

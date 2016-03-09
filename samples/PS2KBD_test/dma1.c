@@ -114,7 +114,7 @@ void dma_init()
 	for(y=0;y<HEIGHT;y++) {
 		for(x=0;x<WIDTH_WORD;x++) {
 			*vram++ = c;
-			c++;
+//			c++;
 		}
 	}
 	dmaOpen(CH1,PRI2,0);
