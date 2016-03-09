@@ -66,7 +66,7 @@
             
 ■ Pinguino 開発環境構築
             
-- Windows XP / Vista / 7 / 8.1 / 10  のどれかを用意します。(64bit OK)
+- Windows XP / Vista / 7 / 8.1 / 10 / Ubuntu Linux のどれかを用意します。(64bit OK)
 
 - Pinguino-11 を下記サイトから入手してインストールします。
         http://www.pinguino.cc/download.php
