@@ -125,6 +125,8 @@ $(BUILD)/firmware.elf: $(OBJ)
 dump:
 	hex2dump.exe build/main32.hex > build/main32.dump
 #   ~~~~~~~~~~~~ elf or win32 executable
+pickit3:
+	hex2pickit3 build/main32.hex pickit3.hex
 
 include ./mkrules.mk
 
