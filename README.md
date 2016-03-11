@@ -11,9 +11,9 @@ PIC32MXを搭載した基板 [ORANGEpico](http://www.picosoft.co.jp/orange/) ユ
 # 遊び方は、[こちら](https://github.com/iruka-/ORANGEpico/blob/master/firmware/README2.md)
 
 やりたいこと
-* USB経由でのファームウェア更新
-* MIPS-gcc開発環境を整える
-* ゆくゆくはPythonとか走らせたい
+* USB経由でのファームウェア更新 ..(済)
+* MIPS-gcc開発環境を整える..(済)
+* ゆくゆくはPythonとか走らせたい..(済)
 
 # ライセンス
 
@@ -21,6 +21,20 @@ PIC32MXを搭載した基板 [ORANGEpico](http://www.picosoft.co.jp/orange/) ユ
 * Pinguino のライセンス形態は GPLv2なので、このリポジトリもGPLv2でリリースします。Fork等はご自由に。
 * Pinguino 自体もそうですが、このリポジトリ内にも一部non_freeなヘッダー等がありますので御注意ください。
 > (それらにはMICROCHIPのCopyRightが入っています)
+
+# samples/ ディレクトリのステータス
+
+    samples/ --+-- LED_blinker   : いわゆるＬチカ。 (完成済)
+               |
+               +-- UART1_skelton : UART1エコーバック(完成済)
+               |
+               +-- NTSC_test     : NTSC Video out テスト(完成済)
+               |
+               +-- PS2KBD_test   : PS/2キーボード読み取りテスト(完成済)
+               |
+               +-- tinyBasic2    : tinyBasic2 移植テスト(完成済)
+               |
+               +-- microPython   : microPython移植テスト(途上)
 
 
 --------
