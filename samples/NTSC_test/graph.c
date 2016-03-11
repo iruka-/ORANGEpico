@@ -181,7 +181,7 @@ uchar *ch_adr(int cx,int cy)
 //	====================================================
 //	ASCII文字(ch) の8x8フォントデータ(8byte)を得る.
 //	====================================================
-uchar *get_font_adr(int ch)
+const uchar *get_font_adr(int ch)
 {
 	return &font8[ (ch & 0xff) * 8 ];
 }
@@ -240,7 +240,7 @@ void gr_curadv(void)
 void gr_putch_xy(int ch,int cx,int cy)
 {
 	uchar *t = ch_adr(cx,cy);
-	uchar *font = get_font_adr(ch);
+	const uchar *font = get_font_adr(ch);
 
 	if(t) {
 		int i;
