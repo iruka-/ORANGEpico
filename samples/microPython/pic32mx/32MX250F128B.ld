@@ -29,8 +29,8 @@ BMXDUDBA = 0xBF882020;
  * which points to _reset (cf. crt0.S)
  **********************************************************************/
 
-_ebase_address           = 0x9D002000;
-_RESET_ADDR              = 0x9D001000;
+_ebase_address           = 0x9D000000;
+_RESET_ADDR              = 0x9D000000;
 
 /***********************************************************************
  * Memory Regions
@@ -45,22 +45,20 @@ MEMORY
 
     /* 0x200 + 64 vectors * 32 bytes = 0xA00 */
 
-    exception_mem              : ORIGIN = 0x9D002000, LENGTH = 0xA00
+    exception_mem              : ORIGIN = 0x9D000000, LENGTH = 0xA00
 
     /* Startup code is 0x1B0 bytes long */
 
-/*  kseg0_boot_mem             : ORIGIN = 0x9D002A00, LENGTH = 0x200 */
-    kseg0_boot_mem             : ORIGIN = 0x9D002000, LENGTH = 0x200
+    kseg0_boot_mem             : ORIGIN = 0x9D000000, LENGTH = 0x200
 
+    /* User Program */
+
+    kseg0_program_mem    (rx)  : ORIGIN = 0x9D000a10, LENGTH = 0x28FF0
+  
     /* Reset vector */
 
-/*  kseg1_boot_mem             : ORIGIN = 0x9D003000, LENGTH = 0x10*/
     kseg1_boot_mem             : ORIGIN = 0xBFC00000, LENGTH = 0x10
 
-    /* User Program code 0x40000 − 0x3010 = 0x3B000 bytes free */
-
-    kseg0_program_mem    (rx)  : ORIGIN = 0x9D003010, LENGTH = 0x1CFF0
-  
     /* Device Configuration Registers (configuration bits) */
 
     configsfrs                 : ORIGIN = 0xBFC00BF0, LENGTH = 0x10

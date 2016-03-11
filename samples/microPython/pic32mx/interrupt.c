@@ -29,7 +29,8 @@
 //#define __INTERRUPT_C
 
 	#include <p32xxxx.h>
-	#include <typedef.h>
+	//#include <typedef.h>
+	#include "utype.h"
 	#include <macro.h>
 	#include <const.h>
 	#include "serial1.h"

@@ -2,7 +2,8 @@
 #define _SERIAL_H_
 
 #include <p32xxxx.h>			// always in first place to avoid conflict with const.h ON
-#include <typedef.h>
+//#include <typedef.h>
+#include <utype.h>
 #include <const.h>
 #include "fifo.h"
 

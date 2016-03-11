@@ -12,6 +12,7 @@ CROSS_COMPILE = p32-
 OBJCOPY	 = p32-objcopy
 
 
+
 #============================
 # Running under MS-DOS ?
  ifdef ComSpec
@@ -48,14 +49,14 @@ INC += -I$(PINGUINO_INC)/non-free/
 INC +=  -I../lib/mp-readline
 INC += -I$(BUILD)
 
-
 PROC			= 32MX250F128B
 #PROC			= 32MX270F256B
 DEFINES		    = -D__PIC32MX__ -D__$(PROC)__ -DGENERIC32MX250F128
 
 CFLAGS_PIC32MX  = -march=m4k -EL -msoft-float 
 
-CFLAGS  = $(INC) -Wall -Werror -ansi -std=gnu99 $(CFLAGS_PIC32MX)
+#CFLAGS  = $(INC) -Wall -Werror -ansi -std=gnu99 $(CFLAGS_PIC32MX)
+CFLAGS  = $(INC) -Wall -ansi -std=gnu99 $(CFLAGS_PIC32MX)
 CFLAGS += -mips16 -minterlink-mips16 -G4
 CFLAGS += -ffunction-sections -fdata-sections  $(COPT) $(DEFINES)
 #DEBUG = 1
@@ -67,15 +68,15 @@ else
 CFLAGS += -Os -DNDEBUG
 endif
 
-
 #/compilers/p32/mips-elf/lib/soft-float/el/
 #/compilers/p32/lib/gcc/mips-elf/4.9.2/el/
 
 LDFLAGS  = -L$(LIBC_DIR) -L$(LIBGCC_DIR)
 
 LDFLAGS += -nostdlib -T $(PROC).ld -T elf32pic32mx.x
-LDFLAGS += --defsym _min_heap_size=16384
+LDFLAGS += --defsym _min_heap_size=8192
 LDFLAGS += -Map=$@.map --cref --gc-sections 
+
 
 LIBS  = $(PINGUINO_HOME)/p32/obj/non-free/$(PROC).o
 LIBS += -lc -lgcc
@@ -84,18 +85,18 @@ SRC_C = \
 	main.c \
 	syscalls.c \
 	config.c \
-	led.c \
 	util.c \
 	fifo.c \
 	serial1.c \
 	interrupt.c \
 	printf.c \
-
-#    lib/utils/pyexec.c \
-
-#	string0.c \
-#	malloc0.c \
-#	gccollect.c \
+	timer.c \
+	dma1.c \
+	spi2.c \
+	graph.c \
+	ps2keyb.c \
+	\
+	pymain.c \
 
 
 SRC_S = \
@@ -121,6 +122,8 @@ $(BUILD)/firmware.elf: $(OBJ)
 dump:
 	hex2dump.exe build/main32.hex > build/main32.dump
 #   ~~~~~~~~~~~~ elf or win32 executable
+pickit3:
+	hex2pickit3 build/main32.hex pickit3.hex
 
 include ../py/mkrules.mk
 

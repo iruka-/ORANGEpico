@@ -26,10 +26,10 @@
 #define putchar(c) outbyte(c)
 */
 
+#include <stdio.h>
 #include <stdarg.h>
-#include "serial1.h"
 
-#define	putchar	Serial1WriteChar  //putsUART1
+void user_putc(char c);
 
 static void printchar(char **str, int c)
 {
@@ -38,7 +38,7 @@ static void printchar(char **str, int c)
 		++(*str);
 	}
 	else {
-		putchar(c);
+		user_putc(c);
 	}
 }
 
@@ -185,6 +185,7 @@ static int print(char **out, const char *format, va_list args )
 	return pc;
 }
 
+//	•’Ê‚Ìprintf
 int printf(const char *format, ...)
 {
         va_list args;
@@ -193,6 +194,22 @@ int printf(const char *format, ...)
         return print( 0, format, args );
 }
 
+//	•’Ê‚Ìfprintf
+int fprintf(FILE *fp,const char *format, ...)
+{
+        va_list args;
+        
+        va_start( args, format );
+        return print( 0, format, args );
+}
+
+//	‰Â•Ïˆø”‚Ì•”•ª‚ª va_list args ‚É’u‚«Š·‚í‚Á‚½ printf
+int vprintf(const char *format, va_list args)
+{
+	return print( 0, format, args );
+}
+
+//	•’Ê‚Ìsprintf
 int sprintf(char *out, const char *format, ...)
 {
         va_list args;
@@ -200,6 +217,13 @@ int sprintf(char *out, const char *format, ...)
         va_start( args, format );
         return print( &out, format, args );
 }
+
+//	‰Â•Ïˆø”‚Ì•”•ª‚ª va_list args ‚É’u‚«Š·‚í‚Á‚½ printf
+int vsprintf(char *out, const char *format,va_list args)
+{
+	return print( &out, format, args );
+}
+
 
 #ifdef TEST_PRINTF
 int main(void)

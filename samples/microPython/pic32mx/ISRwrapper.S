@@ -157,6 +157,9 @@ vector_\_XX\()_ISR_wrapper:
     ISR_wrapper _RTCC_VECTOR,    RTCCInterrupt
     ISR_wrapper _USB_1_VECTOR,   USBInterrupt
 
+/*  ISR_wrapper _DMA_0_VECTOR    Dma0Interrupt */
+    ISR_wrapper _DMA_1_VECTOR    Dma1Interrupt
+
     /*** SERIAL ***************************************************************/
 
     #if defined(__32MX795F512L__) || \

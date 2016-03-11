@@ -1,6 +1,10 @@
 #ifndef _UTIL_H_
 #define _UTIL_H_
 
+
+#define	_MIPS32_ __attribute__((nomips16,noinline))
+#define	_MIPS32 __attribute__((nomips16))
+
 void    led_on();
 void    led_off();
 void	led_flip();
