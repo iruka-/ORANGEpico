@@ -25,6 +25,10 @@
 
 unsigned int MIPS32 IntEnableInterrupts();
 
+//	syscalls.c
+int user_stdout_mode(int f);
+void user_putc(char c);
+
 /********************************************************************
  *
  ********************************************************************
@@ -135,9 +139,9 @@ char *sbrk(int size);
 void  test_func1()
 {
    char buf[256];
-   sprintf(buf,"%x\n",(int) &_heap);
+   snprintf(buf,256,"%x\n",(int) &_heap);
    Serial1WriteString(buf);
-   sprintf(buf,"%x\n",(int) &_splim );
+   snprintf(buf,256,"%x\n",(int) &_splim );
    Serial1WriteString(buf);
 }
 
@@ -146,7 +150,7 @@ extern int 	g_Timer3;
 void  test_func2()
 {
    char buf[256];
-   sprintf(buf,"v=%d %d\n",g_Vcount,g_Timer3);
+   snprintf(buf,256,"v=%d %d\n",g_Vcount,g_Timer3);
    Serial1WriteString(buf);
 }
 #endif
@@ -155,11 +159,41 @@ int main_python(int argc, char **argv);
 
 int  PYTHON_main(int argc, char **argv);
 void BASIC_main( int argc,	char *argv[] );
+static void	cls(void)
+{
+	user_putc(0x0c);	//画面クリア.
+}
 
 /********************************************************************
  *		Arduino風:	繰り返し処理
  ********************************************************************
  */
+#if	1
+//
+//	UART1 か PS/2キーボードから「改行」が送られて来たらPythonを始動する.
+//	UART1 の場合に限り、標準出力先に UART1 を追加する.
+static	inline	void loop(void)
+{
+ 	if(Serial1Available()) {
+		int seri = Serial1GetKey();
+		if(	seri == 0x0d) {
+			user_stdout_mode(1);
+			cls();
+			PYTHON_main( 0,NULL );
+		}
+	}
+	int key = kbd_getchar();
+	if( key ) {
+		if(	key == 0x0d) {
+			cls();
+			PYTHON_main( 0,NULL );
+		}
+	}
+}
+
+
+#else
+// 機能テストのみ.
 static	inline	void loop(void)
 {
  	if(Serial1Available()) {
@@ -184,9 +218,6 @@ static	inline	void loop(void)
 	}
 	int key = kbd_getchar();
 	if( key ) {
-#if	1
-		PYTHON_main( 0,NULL );
-#else
 		Serial1WriteChar(key);
 		gr_putch(key);
 //		printf("%02x\n",key);
@@ -194,10 +225,9 @@ static	inline	void loop(void)
 			Serial1WriteChar('\n');
 			gr_putch('\n');
 		}
-#endif
 	}
 }
-
+#endif
 /********************************************************************
  *		メイン
  ********************************************************************
@@ -214,22 +244,4 @@ int main()
 
 	return(0);
 }
-
-/********************************************************************
- *  Dummy Interrupt Handler
- ********************************************************************
- */
-
-void I2C1Interrupt(void)	{  }
-void I2C2Interrupt(void)	{  }
-void RTCCInterrupt(void)	{  }
-void SPI1Interrupt(void)	{  }
-void SPI2Interrupt(void)	{  }
-void Serial2Interrupt(void)	{  }
-//void Timer1Interrupt(void)	{  }
-//void Timer2Interrupt(void)	{  }
-//void Timer3Interrupt(void)	{  }
-void Timer4Interrupt(void)	{  }
-void Timer5Interrupt(void)	{  }
-void USBInterrupt(void)		{  }
 

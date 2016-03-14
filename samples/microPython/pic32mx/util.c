@@ -156,6 +156,24 @@ void __attribute__((nomips16,section(".bootrom")))  INTRestoreInterrupts(unsigne
 
 
 /********************************************************************
+ *  Dummy Interrupt Handler
+ ********************************************************************
+ */
+
+void I2C1Interrupt(void)	{  }
+void I2C2Interrupt(void)	{  }
+void RTCCInterrupt(void)	{  }
+void SPI1Interrupt(void)	{  }
+void SPI2Interrupt(void)	{  }
+void Serial2Interrupt(void)	{  }
+//void Timer1Interrupt(void)	{  }
+//void Timer2Interrupt(void)	{  }
+//void Timer3Interrupt(void)	{  }
+void Timer4Interrupt(void)	{  }
+void Timer5Interrupt(void)	{  }
+void USBInterrupt(void)		{  }
+
+/********************************************************************
  *	
  ********************************************************************
  */

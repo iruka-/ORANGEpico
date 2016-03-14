@@ -74,7 +74,7 @@ endif
 LDFLAGS  = -L$(LIBC_DIR) -L$(LIBGCC_DIR)
 
 LDFLAGS += -nostdlib -T $(PROC).ld -T elf32pic32mx.x
-LDFLAGS += --defsym _min_heap_size=8192
+LDFLAGS += --defsym _min_heap_size=16384
 LDFLAGS += -Map=$@.map --cref --gc-sections 
 
 
@@ -89,7 +89,6 @@ SRC_C = \
 	fifo.c \
 	serial1.c \
 	interrupt.c \
-	printf.c \
 	timer.c \
 	dma1.c \
 	spi2.c \
@@ -97,6 +96,14 @@ SRC_C = \
 	ps2keyb.c \
 	\
 	pymain.c \
+	lib/utils/pyexec.c \
+	lib/utils/printf.c \
+	lib/libc/string0.c \
+	lib/mp-readline/readline.c \
+	uart_core.c \
+	uart_extra.c \
+
+#	printf.c \
 
 
 SRC_S = \

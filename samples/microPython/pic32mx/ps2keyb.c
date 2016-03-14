@@ -215,9 +215,9 @@ uchar kbd_getcode(void)
  */
 uchar kbd_getchar(void)
 {
-	uchar pre = prefix;			//一つ前のコードが拡張コードを持っている?
-	uchar c = kbd_getcode();
-	uchar idx;
+	int pre = prefix;			//一つ前のコードが拡張コードを持っている?
+	int c = kbd_getcode();
+	int idx;
 
 	if(c==0) return c;			//入力無し.
 
@@ -256,7 +256,7 @@ uchar kbd_getchar(void)
 	set_press_table(c,pre);
 
 	if(pre & PREFIX_E0) {	//拡張シーケンスはSCAN CODEのMSBを立てて区別する.
-		c |= SKEY_EXTEND;
+		c += SKEY_EXTEND;
 	}
 
 	if(pre & PREFIX_F0) {	//離された情報は無視する.
@@ -269,10 +269,11 @@ uchar kbd_getchar(void)
 	// SCAN CODE --> ASCII CODE
 	c = keycode_table[idx];
 	if(kbd_shift & KBD_CTRL) {
-		c = c & 0x1f;
+		if((c>='A')&&(c<='z')) {
+			c = c & 0x1f;			// Ctrl+A ～ Zに.
+		}
 	}
 	return c;
-//	return __LPM( &keycode_table[idx] );
 }
 #endif
 /**********************************************************************

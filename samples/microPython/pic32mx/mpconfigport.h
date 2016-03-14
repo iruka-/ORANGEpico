@@ -14,7 +14,7 @@
 #define MICROPY_MEM_STATS           (0)
 #define MICROPY_DEBUG_PRINTERS      (0)
 #define MICROPY_ENABLE_GC           (0)
-#define MICROPY_HELPER_REPL         (0)
+#define MICROPY_HELPER_REPL         (1)
 #define MICROPY_HELPER_LEXER_UNIX   (0)
 #define MICROPY_ENABLE_SOURCE_LINE  (0)
 #define MICROPY_ENABLE_DOC_STRING   (0)
@@ -60,9 +60,9 @@ typedef long mp_off_t;
 // dummy print
 //#define MP_PLAT_PRINT_STRN(str, len) (void)0
 
-void    Serial1Write(const char *str,int len);
+void user_write_console(const char *s,int len);
 
-#define MP_PLAT_PRINT_STRN(str, len) Serial1Write(str,len)
+#define MP_PLAT_PRINT_STRN(str, len) user_write_console(str,len)
 
 // extra built in names to add to the global namespace
 extern const struct _mp_obj_fun_builtin_t mp_builtin_open_obj;
@@ -75,3 +75,11 @@ extern const struct _mp_obj_fun_builtin_t mp_builtin_open_obj;
 
 // We need to provide a declaration/definition of alloca()
 #include <alloca.h>
+
+
+#define MICROPY_MIN_USE_STDOUT (1)
+
+#define MP_STATE_PORT MP_STATE_VM
+
+#define MICROPY_PORT_ROOT_POINTERS \
+    const char *readline_hist[8];

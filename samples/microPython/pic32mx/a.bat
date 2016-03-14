@@ -1,2 +1,3 @@
 rem BOOTLOADER
-uartflash32 -r
+uartflash32 -n -r 
+g.bat

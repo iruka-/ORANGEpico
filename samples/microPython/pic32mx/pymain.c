@@ -7,6 +7,9 @@
 #include "py/runtime.h"
 #include "py/repl.h"
 
+#include "py/gc.h"
+#include "lib/utils/pyexec.h"
+
 void do_str(const char *src, mp_parse_input_kind_t input_kind) {
     mp_lexer_t *lex = mp_lexer_new_from_str_len(MP_QSTR__lt_stdin_gt_, src, strlen(src), 0);
     if (lex == NULL) {
@@ -27,6 +30,13 @@ void do_str(const char *src, mp_parse_input_kind_t input_kind) {
 }
 
 int PYTHON_main(int argc, char **argv) {
+    mp_init();
+    pyexec_friendly_repl();
+    mp_deinit();
+    return 0;
+}
+
+int main_python1(int argc, char **argv) {
     mp_init();
     do_str("print('hello world!', list(x+1 for x in range(10)), end='eol\\n')", MP_PARSE_SINGLE_INPUT);
     do_str("for i in range(10):\n  print(i)", MP_PARSE_FILE_INPUT);

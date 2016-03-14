@@ -12,17 +12,55 @@
 
 #define	EXTERN	extern char
 
+static int user_stdout_mode_f=0;
+
+/********************************************************************
+ *
+ ********************************************************************
+ */
 void user_putc(char c)
 {
-    Serial1WriteChar(c);
-	gr_putch(c);
+	if(	user_stdout_mode_f ){	// UARTとNTSCの両方に出力する.
+	    Serial1WriteChar(c);
+	}
+	gr_putch(c);				// NTSCのみ.
 }
-void user_puts(char *s)
+/********************************************************************
+ *
+ ********************************************************************
+ */
+void user_puts(const char *s)
 {
 	while(*s) {
 	    user_putc(*s++);
 	}
 }
+/********************************************************************
+ *
+ ********************************************************************
+ */
+void user_write_console(const char *s,int len)
+{
+	int i;
+	for(i=0;i<len;i++) {
+	    user_putc(*s++);
+	}
+}
+/********************************************************************
+ *
+ ********************************************************************
+ */
+int user_stdout_mode(int f)
+{
+	int ret = user_stdout_mode_f;
+	user_stdout_mode_f = f;
+	return ret;
+}
+
+/********************************************************************
+ *
+ ********************************************************************
+ */
 int user_getc(void)
 {
 	int c;
@@ -70,7 +108,7 @@ int lseek (int file,int ptr,int dir)
 int write (int file,char * ptr,int    len)
 {
 	//仮実装.
-	if(file<3) {
+	if(file<=3) {
 		while(len) {
 			user_putc(*ptr++);
 			len--;
