@@ -34,7 +34,7 @@ PIC32MXを搭載した基板 [ORANGEpico](http://www.picosoft.co.jp/orange/) ユ
                |
                +-- tinyBasic2    : tinyBasic2 移植テスト(完成済)
                |
-               +-- microPython   : microPython移植テスト(途上)
+               +-- microPython   : microPython移植テスト(完成済)
 
 
 --------
