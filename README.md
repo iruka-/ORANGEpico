@@ -36,6 +36,21 @@ PIC32MXを搭載した基板 [ORANGEpico](http://www.picosoft.co.jp/orange/) ユ
                |
                +-- microPython   : microPython移植テスト(完成済)
 
+# microPython
+
+* microPythonはほぼ動くようになりました。(1万回のforループで約1秒ぐらいの速度)
+* たぶんBASICよりずっとパワフルですが、当人にはPythonの知識があんまり無いので宝の持ち腐れになってます。
+* ARM版に存在する asm ディレクティブ（のMIPS版）が影も形もありません。（あると面白いのかな）
+* 扱えるのは整数と文字列とリスト(1,2,3)と配列[1,2,3]と連想配列{'apple':1,'orange':2}ぐらいかな。
+* それだけでもBASICより強力な感じです。
+
+# 【夢を】続：やりたいこと【語れ】
+
+* PythonのロードセーブとかソースエディットとかチュートリアルとかBoard I/Oライブラリ
+* TK-80エミュレータとかZK-MIPSっぽいやつ(MIPSネィティブなTK-MIPS)とか（kats_me氏の7Seg.LED+スイッチ式をオレンジピコに移植するような感じで）
+* 言語シリーズではForthとLispっぽいやつ。(使いこなす側の難易度が高いので)
+* あとは、xv6 (UN!X v6の再実装されたもの) https://github.com/mit-pdos/xv6-public とかRetroBSDとかそんな感じ。
+
 
 --------
 
