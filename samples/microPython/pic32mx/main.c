@@ -35,7 +35,8 @@ void user_putc(char c);
  */
 
 #ifndef	BAUDRATE
-#define	BAUDRATE	500000
+//#define	BAUDRATE	500000
+#define	BAUDRATE	460800
 #endif
 
 #define mGetSWRFlag()       RCONbits.SWR

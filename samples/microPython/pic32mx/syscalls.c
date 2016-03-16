@@ -120,6 +120,7 @@ int write (int file,char * ptr,int    len)
 //	read()はUART1からlenバイト(実際は1文字だけ)読み取る.
 int read (int file,char * ptr,int    len)
 {
+#if	0
 	//仮実装.
 	if(file<3) {
 //		printf("read(%d,%x,%d):\n",file,(int)ptr,len);
@@ -134,6 +135,9 @@ int read (int file,char * ptr,int    len)
 	}
 //	printf("read(%d,%x,%d)=%d\n",file,(int)ptr,len,len0);
 	return len;	
+#else
+	return len;
+#endif
 }
 
 //	fstatは何もしない.

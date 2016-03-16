@@ -42,7 +42,7 @@ extern uint	txferTxBuff[];
 // スクリーンカーソル座標
 static int sx=0;
 static int sy=0;
-
+static char gr_esc_ch=0;
 /********************************************************************
  *	
  ********************************************************************
@@ -246,6 +246,20 @@ void gr_curadv(void)
 	}
 }
 
+void gr_up(void)
+{
+	if( sy ) {
+		sy--;
+	}
+}
+
+void gr_down(void)
+{
+	if( sy < CHEIGHT-2 ) {
+		sy++;
+	}
+}
+
 void gr_left(void)
 {
 	if(	sx == 0) {
@@ -288,6 +302,9 @@ void gr_putch_xy(int ch,int cx,int cy)
 	}
 }
 
+//	====================================================
+//	8 TAB
+//	====================================================
 void gr_tab(void)
 {
 	while(1) {
@@ -299,11 +316,37 @@ void gr_tab(void)
 }
 
 //	====================================================
+//	Erase line right
+//	====================================================
+void gr_kill_right()
+{
+	int x;
+	for(x=sx;x<CWIDTH;x++) {
+		gr_putch_xy(' ',x,sy);
+	}
+}
+
+//	====================================================
 //	ASCII文字(ch)をカーソル位置に書き、カーソルを進める
 //	====================================================
 void gr_putch(int ch)
 {
 	if( ch>=' ' ) {
+		if(gr_esc_ch) {	// ANSI ESC SEQUENCE START
+			if(gr_esc_ch==0x1b) {	// ANSI ESC SEQUENCE START
+				if(ch=='[') {
+					gr_esc_ch='[';
+					return;
+				}
+			}
+			if(gr_esc_ch=='[') {	// ANSI ESC SEQUENCE [
+				gr_esc_ch=0;
+				switch(ch) {
+				 case 'K': gr_kill_right();return;
+				}
+			}
+		}
+		gr_esc_ch=0;
 		gr_putch_xy(ch , sx,sy);
 		gr_curadv();
 	}else{
@@ -312,8 +355,11 @@ void gr_putch(int ch)
 		 case 0x0c:	gr_cls() ;break;	//CLS
 		 case 0x08:	gr_bs()  ;break;	//BS
 		 case 0x09:	gr_tab() ;break;	//TAB
+		 case 0x1b:	gr_esc_ch=0x1b;break; // ANSI ESC SEQUENCE START
 		 case 0x1c:	gr_curadv();break;	//→
 		 case 0x1d:	gr_left();break;	//←
+		 case 0x1e:	gr_up()  ;break;	//↑
+		 case 0x1f:	gr_down();break;	//↓
 		 case 0x7f:	gr_del() ;break;	//DEL
 		 default:
 			break;
