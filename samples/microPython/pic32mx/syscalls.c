@@ -154,9 +154,13 @@ static char *sbrk_ptr = (char *) &_heap;
 //	malloc()から呼び出される可能性がある.
 char *sbrk(int size)
 {
+	int  safe = 512;		// (stack - heap) safety guard size
+	char splev[16];
     char *ret;
 
-    if(0){//sbrk_ptr + size > &_splim ) {
+//	if(sbrk_ptr + size > &_splim ) {
+
+	if( (sbrk_ptr + size + safe) >= splev) {
 		return (char *) (-1);	// メモリーがない.
     }else {
         ret = sbrk_ptr;

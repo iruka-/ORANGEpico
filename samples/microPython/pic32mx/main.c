@@ -125,8 +125,10 @@ static	inline void setup()
 #if 1
 void  test_func()
 {
-   char *p = malloc(100);
-   printf("%x\n",(int)p);
+   char *p = malloc(1000);
+   char buf[256];
+   snprintf(buf,256,"%x\n",(int)p);
+   Serial1WriteString(buf);
 }
 
 #define	EXTERN	extern char
