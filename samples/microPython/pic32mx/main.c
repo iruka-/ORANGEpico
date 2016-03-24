@@ -35,7 +35,8 @@ void user_putc(char c);
  */
 
 #ifndef	BAUDRATE
-#define	BAUDRATE	500000
+//#define	BAUDRATE	500000
+#define	BAUDRATE	460800
 #endif
 
 #define mGetSWRFlag()       RCONbits.SWR
@@ -125,10 +126,8 @@ static	inline void setup()
 #if 1
 void  test_func()
 {
-   char *p = malloc(1000);
-   char buf[256];
-   snprintf(buf,256,"%x\n",(int)p);
-   Serial1WriteString(buf);
+   char *p = malloc(100);
+   printf("%x\n",(int)p);
 }
 
 #define	EXTERN	extern char

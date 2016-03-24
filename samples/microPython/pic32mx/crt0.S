@@ -44,13 +44,7 @@ _no_nmi:
         #   _stack is initialized by the linker script to point to the
         #    starting location of the stack in DRM
         ##################################################################
-
-        #la      sp,_stack
-
-		# BMXDRMSZ‚ðŒ©‚ÄSP‚ðŒˆ‚ß‚é.
-		lw		t1,BMXDRMSZ				# RAM SIZE(0x8000 or 0x10000)
-        la		sp,0xa0000000
-		add		sp,sp,t1				# SP = 0xa0008000 or 0xa0010000
+        la      sp,_stack
 
         ##################################################################
         # Initialize Global Pointer

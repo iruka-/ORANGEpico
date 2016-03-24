@@ -120,6 +120,7 @@ int write (int file,char * ptr,int    len)
 //	read()はUART1からlenバイト(実際は1文字だけ)読み取る.
 int read (int file,char * ptr,int    len)
 {
+#if	0
 	//仮実装.
 	if(file<3) {
 //		printf("read(%d,%x,%d):\n",file,(int)ptr,len);
@@ -134,6 +135,9 @@ int read (int file,char * ptr,int    len)
 	}
 //	printf("read(%d,%x,%d)=%d\n",file,(int)ptr,len,len0);
 	return len;	
+#else
+	return len;
+#endif
 }
 
 //	fstatは何もしない.
@@ -154,13 +158,9 @@ static char *sbrk_ptr = (char *) &_heap;
 //	malloc()から呼び出される可能性がある.
 char *sbrk(int size)
 {
-	int  safe = 512;		// (stack - heap) safety guard size
-	char splev[16];
     char *ret;
 
-//	if(sbrk_ptr + size > &_splim ) {
-
-	if( (sbrk_ptr + size + safe) >= splev) {
+    if(0){//sbrk_ptr + size > &_splim ) {
 		return (char *) (-1);	// メモリーがない.
     }else {
         ret = sbrk_ptr;
