@@ -16,6 +16,7 @@ int   mem_ungetc(int c,FILE *fp);
 #define fread(buf_,size_,n_,file_) mem_fread(buf_,size_,n_,file_)
 #define fclose(file_)              mem_fclose(file_)
 #define feof(file_)                mem_feof(file_)
+#define fgetc(file_)               mem_fgetc(file_)
 #define ungetc(c_, file_)          mem_ungetc(c_, file_)
 
 //

@@ -8,6 +8,14 @@ const char system_lsp[]=
 "\n"
 "(set 'list (lambda args args))\n"
 "\n"
+;
+const char system_lspX[]=
+"; femtoLisp standard library\n"
+"; by Jeff Bezanson\n"
+"; Public Domain\n"
+"\n"
+"(set 'list (lambda args args))\n"
+"\n"
 "(set 'setq (macro (name val)\n"
 "                  (list set (list quote name) val)))\n"
 "\n"

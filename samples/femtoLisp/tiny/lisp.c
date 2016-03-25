@@ -1014,10 +1014,8 @@ value_t load_file(char *fname)
 int LISP_main(int argc, char* argv[])
 {
     value_t v;
-ZZ
     stack_bottom = ((char*)&v) - PROCESS_STACK_SIZE;
     lisp_init();
-ZZ
     if (setjmp(toplevel)) {
         SP = 0;
         fprintf(stderr, "\n");
@@ -1027,7 +1025,6 @@ ZZ
         }
         goto repl;
     }
-ZZ
     load_file("system.lsp");
     if (argc > 1) { load_file(argv[1]); return 0; }
     printf("Welcome to femtoLisp ----------------------------------------------------------\n");
