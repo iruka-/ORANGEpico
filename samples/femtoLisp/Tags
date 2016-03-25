@@ -1,4 +1,4 @@
-src/main.c
+tiny/lisp.c
 
 config.c
 dma1.c
@@ -14,12 +14,3 @@ syscalls.c
 timer.c
 undef.c
 util.c
-src/builtins_base.c
-src/builtins_datetime.c
-src/builtins_interpreter.c
-src/builtins_math.c
-src/eval.c
-src/lisp.c
-src/lispint.c
-src/print.c
-src/reader.c

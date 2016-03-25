@@ -38,7 +38,7 @@ PIC32MXを搭載した基板 [ORANGEpico](http://www.picosoft.co.jp/orange/) ユ
                |
                +-- pForth        : pForth移植テスト(完成済)
                |
-               +-- BasicLisp     : Lisp 移植テスト(仮動作中)
+               +-- femtoLisp     : Lisp 移植テスト(仮動作中)
 
 
 # microPython

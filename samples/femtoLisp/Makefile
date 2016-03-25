@@ -97,6 +97,7 @@ SRC_C = \
 	graph.c \
 	ps2keyb.c \
 	undef.c \
+	load.c \
 	tiny/lisp.c \
 
 

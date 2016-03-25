@@ -28,6 +28,11 @@
 
 #if	1
 typedef unsigned int uint32_t;
+
+//for DEBUG
+void       zz(const char *file,int line);
+#define ZZ zz(__FILE__,__LINE__);
+
 #endif
 
 #ifdef __LP64__
@@ -192,7 +197,7 @@ static unsigned char *tospace;
 static unsigned char *curheap;
 static unsigned char *lim;
 //static uint32_t heapsize = 64*1024;//bytes
-static uint32_t heapsize = 16*1024;//bytes
+static uint32_t heapsize = 4*1024;//bytes
 
 void lisp_init(void)
 {
@@ -1014,9 +1019,10 @@ value_t load_file(char *fname)
 int LISP_main(int argc, char* argv[])
 {
     value_t v;
-
+ZZ
     stack_bottom = ((char*)&v) - PROCESS_STACK_SIZE;
     lisp_init();
+ZZ
     if (setjmp(toplevel)) {
         SP = 0;
         fprintf(stderr, "\n");
@@ -1026,6 +1032,7 @@ int LISP_main(int argc, char* argv[])
         }
         goto repl;
     }
+ZZ
     load_file("system.lsp");
     if (argc > 1) { load_file(argv[1]); return 0; }
     printf("Welcome to femtoLisp ----------------------------------------------------------\n");
