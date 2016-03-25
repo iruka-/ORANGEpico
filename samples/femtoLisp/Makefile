@@ -74,9 +74,10 @@ endif
 LDFLAGS  = -L$(LIBC_DIR) -L$(LIBGCC_DIR)
 
 LDFLAGS += -nostdlib -T $(PROC).ld -T elf32pic32mx.x
-LDFLAGS += --defsym _min_heap_size=8192
+LDFLAGS += --defsym _min_heap_size=1024
 LDFLAGS += -Map=$@.map --cref --gc-sections 
 
+#LDFLAGS += --defsym _min_heap_size=8192
 
 LIBS  = $(PINGUINO_HOME)/p32/obj/non-free/$(PROC).o
 LIBS += -lc -lgcc
@@ -96,16 +97,7 @@ SRC_C = \
 	graph.c \
 	ps2keyb.c \
 	undef.c \
-	src/builtins_base.c			\
-	src/builtins_datetime.c		\
-	src/builtins_interpreter.c	\
-	src/builtins_math.c	\
-	src/eval.c          \
-	src/lisp.c          \
-	src/lispint.c		\
-	src/main.c          \
-	src/print.c         \
-	src/reader.c		\
+	tiny/lisp.c \
 
 
 SRC_S = \
