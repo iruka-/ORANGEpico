@@ -27,12 +27,7 @@
 #include <sys/types.h>
 
 #if	1
-typedef unsigned int uint32_t;
-
-//for DEBUG
-void       zz(const char *file,int line);
-#define ZZ zz(__FILE__,__LINE__);
-
+#include "../memfile.h"
 #endif
 
 #ifdef __LP64__
