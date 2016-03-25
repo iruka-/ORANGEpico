@@ -1,37 +1,75 @@
-## ...a purely symbolic gesture...
+# This is PIC32MX STAND ALONE LISP , femtoLisp 'Tiny' port.
 
-This project began with an attempt to write the fastest lisp interpreter I could in under 1000 lines of C. It snowballed from there as I kept trying to see if I could add powerful features with minimal code. At the same time I assembled a library of some of my favorite C code (by myself and others) to use as a base for a standard library. This includes `ios`, a replacement for parts of C's stdio that adds more flexible features.
+From Git Repository:
 
-Before you say "oh no, another lisp", consider the following: femtolisp is about 150kb, is very self-contained, and has the following features:
+ https://github.com/JeffBezanson/femtolisp.git
 
-  * vectors, strings, gensyms
-  * backquote
-  * exceptions
-  * printing and reading circular/shared structure
-  * all values can be printed readably
-  * prettyprinting
-  * hash tables
-  * support for directly using C data types ala Python's ctypes
-  * `equal` and ordered comparison predicates that work on circular structure
-  * proper tail recursion
-  * io and memory streams with utf8 support
-  * highly compatible with Scheme, including some `R6RS` features
-  * simple, well-organized, powerful API with as few functions as possible
-  * compacting GC
-  * and...
 
-...it is fast, ranking among the fastest non-native-compiled Scheme implementations. It achieves this level of speed even though many primitives (like `map`) are written in the language instead of C. femtolisp uses a bytecode compiler and VM, with the compiler written in femtolisp. Bytecode is first-class, can be printed and read, and is "human readable" (the representation is a string of normal low-ASCII characters).
+# SUPPORT CHIP
 
-femtolisp is a simple, elegant Scheme dialect. It is a lisp-1 with lexical scope. The core is 12 builtin special forms and 33 builtin functions.
+* PIC32MX250 (128k Flash 32k SRAM w/USB IE)
 
-A primary design goal is to keep the code concise and interesting. I strive to have each concept implemented in just one place, so the system is easy to understand and modify. The result is high reliability, because there are fewer places for bugs to hide. You want a small core of generically useful features that work _really well_ (for example, see `torture.scm`).
+* PIC32MX270 (256k Flash 64k SRAM w/USB IE)
 
-Almost everybody has their own lisp implementation. Some programmers' dogs and cats probably have _their_ own lisp implementations as well. This is great, but too often I see people omit some of the obscure but critical features that make lisp uniquely wonderful. These include read macros like `#.` and backreferences, gensyms, and properly escaped symbol names. If you're going to waste everybody's time with yet another lisp, at least do it right damnit.
+* PIC32MX150 (128k Flash 32k SRAM )
 
-Another design goal is to avoid spurious novelties. Many others offering their own "shiny new" lisp dialects get carried away and change anything that strikes their fancy. These changes have no effect except incompatibility, and often make the language worse because the new design was not as carefully thought out and has not stood the test of time. For example, how does it help to remove backquote? One design changes the syntax of `quote`. Some systems disallow dotted lists. (I've seen all three of these.) What's the point? Implementers wave the banner of "simplicity", yet wedge in all kinds of weird implicit behaviors and extra evaluation rules.
+* PIC32MX170 (256k Flash 64k SRAM )
 
-Lately a surprising amount of FUD has been spread about tail call optimization. I agree that not every language needs it, but I would like to refute the idea that it makes interpreters slow. Look at the "tiny" subdirectory or the "interpreter" branch to see a pure s-expr interpreter with efficient TCO. All you have to do is keep track of whether you're in tail position, which can be done very cheaply. These interpreters are difficult to beat for speed, yet they have lexical scope and TCO.
+# SCHEMATIC DIAGRAM
 
-This project is mostly a matter of style. Look at the code and you'll understand.
 
-This is what I do for fun, because it is the _exact opposite_ of the kind of thing people will pay for: an obscure implementation of a programming language everybody hates.
+                   3.3V
+                    |
+                    *------10Ω--------------+
+                   10k                       |
+                    |       ___    ___       | 0.1u
+      ラ   -->  ----*-MCLR [1  |__| 28] AVDD-*-||---GND
+      イ   -->  --PGD3/RA0 [2       27] AVSS--------GND  LED
+      ター -->  --PGC3/RA1 [3       26] RB15--1kΩ-------|＞|--GND
+             ---HSYNC--RB0 [4       25] RB14
+                     --RB1 [5       24] RB13--240Ω------------>Video OUT<---560Ω----RB0(HSYNC/VSYNC)
+                     --RB2 [6       23] Vusb3v3--------3.3V
+                  SCL2/RB3 [7       22] usb D-
+       Xtal     GND----Vss [8       21] usb D+   +10uF
+    +-----------------OSC1 [9       20] Vcap------||---GND
+    *--|□|--*--------OSC2 [10      19] Vss------------GND
+    |  8MHz  |    U1TX/RB4 [11      18] RB9
+    22pF    22pF  U1RX/RA4 [12      17] RB8
+    |        |   3.3v--Vdd [13      16] RB7
+    |        |         RB5 [14      15] Vbus-----------USB Vbus(5V)
+    GND    GND              ~~~~~~~~~~
+                         PIC32MX250F128B
+
+
+* Oneboard MicroComputer Board [ORANGE pico](http://www.picosoft.co.jp/orange/) based.
+
+
+# ToDo
+
+* UART1(U1TX/U1RX) Support.
+
+* NTSC VideoOut Support.
+
+* PS/2 Keyboard Input Support.
+
+* and more...
+
+# Build Instructions for PIC32MX
+
+* USE Linux or Windows ( Python required ) .
+
+* [INSTALL Pinguino-11 p32-gcc Toolchain](http://www.pinguino.cc/download.php)
+
+-
+
+    $ make
+
+# RUN
+
+* Connect U1TX(RB4) / U1RX(RA4) with TTL Level serial port ( or FT232RL ) 460,800 BPS.
+
+* Or Stand alone MCU Board , NTSC Video + PS/2 Keyboard .
+
+* type 'Enter' key and run lisp.c .
+
+* Enjoy!
