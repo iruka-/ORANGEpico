@@ -1,0 +1,10 @@
+memfile.c: In function 'mem_fgetc':
+memfile.c:57:3: error: 'size' undeclared (first use in this function)
+   size = 1;
+   ^
+memfile.c:57:3: note: each undeclared identifier is reported only once for each function it appears in
+memfile.c: In function 'mem_ungetc':
+memfile.c:67:3: error: 'size' undeclared (first use in this function)
+   size = -1;
+   ^
+make: *** [build/memfile.o] エラー 1
