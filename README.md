@@ -22,6 +22,7 @@ PIC32MXを搭載した基板 [ORANGEpico](http://www.picosoft.co.jp/orange/) ユ
 * Pinguino 自体もそうですが、このリポジトリ内にも一部non_freeなヘッダー等がありますので御注意ください。
 > (それらにはMICROCHIPのCopyRightが入っています)
 
+
 # samples/ ディレクトリのステータス
 
     samples/ --+-- LED_blinker   : いわゆるＬチカ。 (完成済)
@@ -40,6 +41,9 @@ PIC32MXを搭載した基板 [ORANGEpico](http://www.picosoft.co.jp/orange/) ユ
                |
                +-- femtoLisp     : Lisp 移植テスト(仮動作中)
 
+* samples/以下の移植物についての配布ライセンスはそれぞれのドキュメントを参照してください。
+
+* メモ:tinyBasic2 はGPLv2、microPythonとfemtoLispはMIT LICENCE
 
 # microPython
 
