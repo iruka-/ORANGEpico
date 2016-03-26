@@ -43,7 +43,8 @@ PIC32MXを搭載した基板 [ORANGEpico](http://www.picosoft.co.jp/orange/) ユ
 
 * samples/以下の移植物についての配布ライセンスはそれぞれのドキュメントを参照してください。
 
-* メモ:tinyBasic2 はGPLv2、microPythonとfemtoLispはMIT LICENCE
+* メモ :   tinyBasic2 はGPLv2、microPythonとfemtoLispはMIT LICENSEです。
+
 
 # microPython
 
