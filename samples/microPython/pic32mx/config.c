@@ -46,7 +46,8 @@
 #define	CONFIG_POSCMOD			2		/* Primary Osillator is	HS mode	*/	  
 #define	CONFIG_FSOSCEN			0		/* Secondary Osillator is Disabled */	 
 #define	CONFIG_OSCIOFNC			1		/* CLKO	output Disabled	 */	   
-#define	CONFIG_FCKSM			CSDCMD	/* Clock Switching Disabled	 */	   
+#define	CONFIG_FCKSM			CSECMD	/* Clock Switching Enabled	 */	   
+//#define	CONFIG_FCKSM			CSDCMD	/* Clock Switching Disabled	 */	   
 #endif
 
 #define	CONFIG_UPLLEN			0		/* Eable USB PLL */	   
