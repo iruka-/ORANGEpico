@@ -24,13 +24,13 @@
 
 
 #ifdef	USE_INTERNAL_FRC_OSC	// RC OSC
-#define	CONFIG_FPLLIDIV			IDIV_1	/* 4 MHz ->	4 MHz */	
-#define	CONFIG_UPLLIDIV			IDIV_1	/* 4 MHz ->	4 MHz */	
-#define	CONFIG_FNOSC			FRC		/* RC  */	   
+#define	CONFIG_FPLLIDIV			IDIV_2	/* 8 MHz ->	4 MHz */	
+#define	CONFIG_UPLLIDIV			IDIV_2	/* 8 MHz ->	4 MHz */	
+#define	CONFIG_FNOSC			FRCPLL	/* RC PLL  */	   
 #define	CONFIG_POSCMOD			0		/* Primary Osillator is	EC (External)	*/	  
 #define	CONFIG_FSOSCEN			0		/* Secondary Osillator is Disabled */	 
-#define	CONFIG_OSCIOFNC			0		/* CLKO	output Enabled	 */	   
-#define	CONFIG_FCKSM			CSECMD	/* Clock Switching Enabled	 */	   
+#define	CONFIG_OSCIOFNC			1		/* CLKO	output Disabled	 */	   
+#define	CONFIG_FCKSM			CSDCMD	/* Clock Switching Enabled	 */	   
 #else
 
 
@@ -46,8 +46,8 @@
 #define	CONFIG_POSCMOD			2		/* Primary Osillator is	HS mode	*/	  
 #define	CONFIG_FSOSCEN			0		/* Secondary Osillator is Disabled */	 
 #define	CONFIG_OSCIOFNC			1		/* CLKO	output Disabled	 */	   
-#define	CONFIG_FCKSM			CSECMD	/* Clock Switching Enabled	 */	   
-//#define	CONFIG_FCKSM			CSDCMD	/* Clock Switching Disabled	 */	   
+#define	CONFIG_FCKSM			CSDCMD	/* Clock Switching Disabled	 */	   
+//#define	CONFIG_FCKSM			CSECME	/* Clock Switching Enabled	 */	   
 #endif
 
 #define	CONFIG_UPLLEN			0		/* Eable USB PLL */	   

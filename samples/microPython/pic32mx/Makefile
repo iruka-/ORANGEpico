@@ -53,6 +53,8 @@ PROC			= 32MX250F128B
 #PROC			= 32MX270F256B
 DEFINES		    = -D__PIC32MX__ -D__$(PROC)__ -DGENERIC32MX250F128
 
+#DEFINES		   += -DUSE_INTERNAL_FRC_OSC ... --> config.h
+
 CFLAGS_PIC32MX  = -march=m4k -EL -msoft-float 
 
 #CFLAGS  = $(INC) -Wall -Werror -ansi -std=gnu99 $(CFLAGS_PIC32MX)
